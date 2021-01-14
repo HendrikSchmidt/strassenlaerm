@@ -7,6 +7,7 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function() {
+    console.log('load');
     // When a click event occurs on a feature in the places layer, open a popup at the
     // location of the feature, with description HTML from its properties.
     map.on('click', 'strassen', function(e) {
