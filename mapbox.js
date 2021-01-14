@@ -1,3 +1,5 @@
+console.log('init');
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXVyZWxmZXJyYXJpIiwiYSI6ImNranZmY3Y1cDA4a2kyb3J2Nm5laDI0Z2wifQ.vlPmQpKXmpGRgmJt6TA10A';
 var map = new mapboxgl.Map({
     container: 'map',
