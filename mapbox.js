@@ -1,7 +1,7 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXVyZWxmZXJyYXJpIiwiYSI6ImNranZmY3Y1cDA4a2kyb3J2Nm5laDI0Z2wifQ.vlPmQpKXmpGRgmJt6TA10A';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/aurelferrari/ckjvfn41e07lx17pat6iapzd3', // stylesheet location
+    style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
     center: [13.381, 52.522], // starting position [lng, lat]
     zoom: 12 // starting zoom
 });
