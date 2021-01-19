@@ -9,7 +9,6 @@ const map = new mapboxgl.Map({
 const layers = ['strassen', 'plaetze'];
 
 map.on('load', () => {
-    console.log('loaded')
     layers.map(layer => {
         // When a click event occurs on a feature in the places layer, open a popup at the
         // location of the feature, with description HTML from its properties.
@@ -34,7 +33,6 @@ map.on('load', () => {
         });
         // Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', layer, () => {
-            console.log(layer)
             map.getCanvas().style.cursor = 'pointer';
         });
         // Change it back to a pointer when it leaves.
