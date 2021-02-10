@@ -36,13 +36,14 @@ map.on('load', () => {
             closeButton: false,
             closeOnClick: false
         });
-        
+
         // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', layer, () => {
+        map.on('mouseenter', layer, (e) => {
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
-            var coordinates = e.features[0].geometry.coordinates.slice();
+            var coordinates = e.features[0].geometry.coordinates[0];
+            coordinates = layer === 'plaetze' ? coordinates[0] : coordinates;
             var description = e.features[0].properties.name;
 
             // Ensure that if the map is zoomed out such that multiple
