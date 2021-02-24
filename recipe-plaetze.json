@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "layers": {
+    "plaetze": {
+      "source": "mapbox://tileset-source/strassenlaerm/plaetze",
+      "minzoom": 5,
+      "maxzoom": 12
+    }
+  }
+}

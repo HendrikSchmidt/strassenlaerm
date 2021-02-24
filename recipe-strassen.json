@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "layers": {
+    "strassen": {
+      "source": "mapbox://tileset-source/strassenlaerm/strassen",
+      "minzoom": 5,
+      "maxzoom": 12
+    }
+  }
+}
