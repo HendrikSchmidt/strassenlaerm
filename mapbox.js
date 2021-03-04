@@ -10,33 +10,23 @@ const layers = ['strassen', 'plaetze'];
 
 map.on('load', () => {
     layers.map(layer => {
-        map.on('click', layer, (e) => {
-            const coordinates = calcCenterPoint(e, layer);
-            const name = e.features[0].properties.name;
-            const description = e.features[0].properties.description;
-            const html = '<b>' + name + '</b><br/>' + description + '<br/><a href="/objekt/#' + name + '"> > mehr </a>';
+        const popupOptions = {
+            className: 'streetname',
+            maxWidth: '400px',
+            offset: 30,
+        };
+        const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 
-            new mapboxgl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(html)
-                .addTo(map);
-        });
-
-        const popup = new mapboxgl.Popup({
-            closeButton: false,
-            closeOnClick: false
-        });
-
-        map.on('mouseenter', layer, (e) => {
+        map.on('mouseenter', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
-            const coordinates = calcCenterPoint(e, layer);
-            const description = e.features[0].properties.name;
+            const name = e.features[0].properties.name;
+            const html = `<div class="desc"><h2>${name}</h2></div><div class="more"></div>`;
 
             popup
-                .setLngLat(coordinates)
-                .setHTML(description)
+                .trackPointer()
+                .setHTML(html)
                 .addTo(map);
         });
         map.on('mouseleave', layer, () => {
@@ -44,36 +34,22 @@ map.on('load', () => {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
+
+        map.on('click', layer, e => {
+            console.log(e.features);
+            const features = e.features[0];
+            const props = features.properties;
+            const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
+                       + `<div class="more"><a href="#${features.id}"> > mehr </a></div>`;
+
+            const expPopup = new mapboxgl.Popup(popupOptions)
+                .setLngLat(e.lngLat)
+                .setHTML(html)
+                .addTo(map);
+
+            setTimeout(() => expPopup.addClassName('expanded'), 1)
+        });
+
     })
 });
 
-const calcCenterPoint = (e, layer) => {
-    const coords = e.features[0].geometry.coordinates;
-    let centerPoint = [];
-    if(layer === 'plaetze') {
-        // for a place (polygon), calculate the center to display the popup there
-        const summedCoords = coords[0].reduce((sum, coord) => [sum[0] + coord[0], sum[1] + coord[1]]);
-        const numCoords = coords[0].length;
-        centerPoint = [ summedCoords[0] / numCoords, summedCoords[1] / numCoords ];
-    } else if (layer === 'strassen') {
-        // for a street (line segments), take the center point (odd number of points)
-        // or the middle between the two middle points (even number of points)
-        const numCoords = coords.length;
-        if (numCoords % 2 === 1) {
-            centerPoint = coords[ numCoords - 1 / 2 ]
-        } else {
-            const firstPoint = coords[ numCoords / 2 - 1];
-            const secondPoint = coords[ numCoords / 2 ]
-            centerPoint = [ ( firstPoint[0] + secondPoint[0] ) / 2 , ( firstPoint[1] + secondPoint[1] ) / 2 ]
-        }
-    }
-
-    // Ensure that if the map is zoomed out such that multiple
-    // copies of the feature are visible, the popup appears
-    // over the copy being pointed to.
-    while (Math.abs(e.lngLat.lng - centerPoint[0]) > 180) {
-        centerPoint[0] += e.lngLat.lng > centerPoint[0] ? 360 : -360;
-    }
-
-    return centerPoint;
-}
