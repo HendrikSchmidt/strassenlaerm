@@ -1,31 +1,39 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
+const center = [13.381, 52.522];
+const zoom = 10;
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
-    center: [13.381, 52.522], // starting position [lng, lat]
-    zoom: 10 // starting zoom
+    // center, // starting position [lng, lat]
+    // zoom, // starting zoom
 });
 
 const layers = ['strassen', 'plaetze'];
+let features = [];
+let selectedPoint = map.getCenter();
+
+const popupOptions = {
+    className: 'streetsign attached',
+    maxWidth: '400px',
+    offset: 30,
+};
+const expPopup = new mapboxgl.Popup(popupOptions);
+const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 
 map.on('load', () => {
+    features = map.queryRenderedFeatures({ layers });
+    loadDescription();
     layers.map(layer => {
-        const popupOptions = {
-            className: 'streetname',
-            maxWidth: '400px',
-            offset: 30,
-        };
-        const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
-
         map.on('mouseenter', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
-            const name = e.features[0].properties.name;
-            const html = `<div class="desc"><h2>${name}</h2></div><div class="more"></div>`;
+            const props = e.features[0].properties;
+            const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more">1 - 99</div>`;
 
             popup
                 .trackPointer()
+                // .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
         });
@@ -36,13 +44,13 @@ map.on('load', () => {
         });
 
         map.on('click', layer, e => {
-            console.log(e.features);
+            selectedPoint = e.lngLat;
             const features = e.features[0];
             const props = features.properties;
-            const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
+            const html = `<div class="desc"><h2>${props.name} (${props.quarter})</h2><p>${props.shortDesc}</p></div>`
                        + `<div class="more"><a href="#${features.id}"> > mehr </a></div>`;
 
-            const expPopup = new mapboxgl.Popup(popupOptions)
+            expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
@@ -53,3 +61,48 @@ map.on('load', () => {
     })
 });
 
+function loadDescription() {
+    expPopup.remove();
+    if(location.hash) {
+        const id = parseInt(location.hash.substr(1));
+        const clickedObj = features.find(feature => feature.id === id);
+        const props = clickedObj.properties;
+        document.querySelector('object-information').infos = [
+            {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
+            {heading: 'Stand der Umbennenung', text: props.current},
+            {heading: 'Quellen', text: props.sources},
+        ];
+        const pad = 50;
+        map.fitBounds(
+            getBoundingBox(clickedObj.geometry.coordinates),
+            {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
+        );
+    } else {
+        document.querySelector('object-information').infos = null;
+        map.flyTo({center, zoom});
+    }
+}
+
+window.onhashchange = loadDescription;
+
+function getBoundingBox(data) {
+    const points = data.flat();
+    let latitude, longitude, xMin, xMax, yMin, yMax;
+
+    points.forEach(point => {
+        longitude = point[0];
+        latitude = point[1];
+        xMin = xMin < longitude ? xMin : longitude;
+        xMax = xMax > longitude ? xMax : longitude;
+        yMin = yMin < latitude ? yMin : latitude;
+        yMax = yMax > latitude ? yMax : latitude;
+    });
+    return [[xMin, yMin], [xMax, yMax]];
+}
+
+function getBoundingBoxCenter(data) {
+    const bbox = getBoundingBox(data);
+    let longitude = (bbox[0][0] + bbox[1][0])/2;
+    let latitude = (bbox[0][1] + bbox[1][1])/2;
+    return [longitude, latitude];
+}
