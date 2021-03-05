@@ -6,6 +6,11 @@ body { perspective: 100vw; }
 
 b { font-weight: 700; }
 
+#map {
+    width: 100%;
+    height: calc(100vh - 20rem);
+}
+
 .streetsign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
