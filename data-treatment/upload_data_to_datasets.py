@@ -115,7 +115,7 @@ def generate_geometry(street_square, parts):
         return {'type': 'Polygon', 'coordinates': coordinates}
 
 
-with open('../data/Strassenabschnitte.geojson') as f:
+with open('../../data/Strassenabschnitte.geojson') as f:
     berlin_data = json.loads(f.read())['features']
     for obj in objects:
         print('\n')
