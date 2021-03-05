@@ -74,7 +74,7 @@ function loadDescription() {
         ];
         const pad = 50;
         map.fitBounds(
-            getBoundingBox(clickedObj.geometry.coordinates),
+            getBoundingBox(clickedObj.geometry),
             {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
         );
     } else {
@@ -85,8 +85,8 @@ function loadDescription() {
 
 window.onhashchange = loadDescription;
 
-function getBoundingBox(data) {
-    const points = data.flat();
+function getBoundingBox(geom) {
+    const points = geom.type === 'MultiLineString' ? geom.coordinates.flat() : geom.coordinates;
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
