@@ -6,7 +6,13 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
     // center, // starting position [lng, lat]
     // zoom, // starting zoom
-});
+})
+    .addControl(new mapboxgl.FullscreenControl(), 'top-left')
+    .addControl(new mapboxgl.NavigationControl(), 'top-left')
+    .addControl(new mapboxgl.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+        trackUserLocation: true
+    }), 'top-left');
 
 const layers = ['strassen', 'plaetze'];
 let features = [];
