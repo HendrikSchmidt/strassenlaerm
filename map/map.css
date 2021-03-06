@@ -9,7 +9,7 @@ b { font-weight: 700; }
     height: calc(100vh - 20em);
 }
 
-.streetsign {
+#map .streetsign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
     padding: .4em 1em 0;
