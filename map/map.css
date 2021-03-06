@@ -28,7 +28,7 @@ b { font-weight: 700; }
 
 .streetsign .mapboxgl-popup-content {
     background-color: #EFEFEF;
-    box-shadow: 0 .4em 0 -.1em #444;
+    box-shadow: 0 .3em 0 -.1em #444;
     border-radius: 0;
     padding: 0;
     z-index: initial;
