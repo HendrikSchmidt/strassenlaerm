@@ -201,7 +201,7 @@ b { font-weight: 700; }
 
 #object-information .accordion-item:last-child .handle:after {
     height: 10em;
-    bottom: -10em;
+    bottom: -10.1em;
 }
 
 #object-information .accordion-button {
