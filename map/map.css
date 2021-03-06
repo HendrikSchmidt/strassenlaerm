@@ -1,36 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
 
-html { font-size: 62.5%; }
-body { perspective: 100vw; }
-
 b { font-weight: 700; }
-
 #map {
+    font-size: 62.5%;
+    perspective: 200vw;
     width: 100%;
-    height: calc(100vh - 20rem);
+    height: calc(100vh - 20em);
 }
 
 .streetsign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
-    padding: .4rem 1rem 0;
-    border: .3rem solid #444;
-    border-radius: .2rem;
+    padding: .4em 1em 0;
+    border: .3em solid #444;
+    border-radius: .2em;
 }
 
 .streetsign .mapboxgl-popup-tip { display: none; }
 
 .mapboxgl-popup-close-button {
-    top: -.5rem;
-    right: -1rem;
+    top: -.3em;
+    right: -0.8em;
     font: initial;
-    font-size: 1.5rem;
+    font-size: 1.5em;
 }
 
 .streetsign .mapboxgl-popup-content {
     background-color: #EFEFEF;
-    box-shadow: 0 .4rem 0 -.1rem #444;
+    box-shadow: 0 .4em 0 -.1em #444;
     border-radius: 0;
     padding: 0;
     z-index: initial;
@@ -38,50 +36,50 @@ b { font-weight: 700; }
 
 .streetsign h2 {
     font-weight: normal;
-    font-size: 2rem;
+    font-size: 2em;
     margin: 0;
 }
 
 .streetsign .desc p {
     font-family: 'Josefin Slab', serif;
     font-weight: 300;
-    font-size: 1.6rem;
+    font-size: 1.6em;
     line-height: 1.15;
     max-height: 0;
     max-width: 0;
     margin: 0;
-    padding: .4rem 0;
+    padding: .4em 0;
     overflow: hidden;
     transition: all .5s;
 }
 
 .streetsign.expanded .desc p {
-    max-height: 20rem;
-    max-width: 100rem;
+    max-height: 20em;
+    max-width: 100em;
 }
 
 .streetsign .more {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.8em;
     line-height: 0.8;
     position: absolute;
-    bottom: -1.3rem;
-    left: calc(50% - 2rem);
-    width: 4rem;
+    bottom: -1.4em;
+    left: calc(50% - 2em);
+    width: 4em;
     z-index: -1;
-    padding-top: .4rem;
-    border: .2rem solid #444;
-    border-radius: .2rem;
+    padding-top: .4em;
+    border: .2em solid #444;
+    border-radius: .2em;
     background-color: #EFEFEF;
     transition: all .3s ease-in-out;
 }
 
 .streetsign.expanded .more {
     line-height: 1;
-    bottom: -2.3rem;
-    font-size: 1.5rem;
-    left: calc(50% - 4rem);
-    width: 8rem;
+    bottom: -1.7em;
+    font-size: 1.5em;
+    left: calc(50% - 3em);
+    width: 6em;
 }
 
 .streetsign .more a {
@@ -93,69 +91,75 @@ b { font-weight: 700; }
     content: '\00a0';
     background-color: #444;
     position: absolute;
-    right: -.6rem;
-    width: .6rem;
-    height: .4rem;
-    border-bottom-left-radius: .3rem;
-    border-top-left-radius: .3rem;
+    right: -.6em;
+    width: .6em;
+    height: .4em;
+    border-bottom-left-radius: .3em;
+    border-top-left-radius: .3em;
 }
-.streetsign.attached:before { top: -.4rem; }
-.streetsign:after { bottom: -.4rem; }
+.streetsign.attached:before { top: -.4em; }
+.streetsign:after { bottom: -.4em; }
 
 #object-information {
     position: absolute;
     bottom: -100%;
-    right: 1rem;
+    right: 1em;
     z-index: 9;
-    height: calc(100% - 4rem);
+    height: calc(100% - 4em);
     transition: bottom 1s;
 }
 #object-information.visible { bottom: 0; }
 
 #object-information .pole {
+    position: absolute;
+    right: 0;
+    top: 0;
     background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
     height: 100%;
-    width: 2rem;
+    width: 2em;
 }
 
 #object-information .pole::before {
     content: '\00A0';
     position: absolute;
-    top: -.1rem;
-    left: -.1rem;
+    top: -.1em;
+    left: -.1em;
     background: linear-gradient(to right, rgba(94,99,98,1), rgba(123,128,124,1));
-    height: .6rem;
-    width: 2.2rem;
-    box-shadow: 0 .2rem .1rem -.1rem rgba(0,0,0,0.3);
-    border-radius: .1rem;
+    height: .6em;
+    width: 2.2em;
+    box-shadow: 0 .2em .1em -.1em rgba(0,0,0,0.3);
+    border-radius: .1em;
 }
 
 #object-information .accordion {
     position: absolute;
-    right: 2.2rem;
-    top: 1rem;
+    right: 2.2em;
+    top: 1em;
     width: 30vw;
 }
 
 #goBackHome {
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + .1em);
+    z-index: 12;
     padding: 0;
     border: none;
+    width: 2em;
 }
 
 .baer {
-    position: absolute;
-    bottom: calc(100% + .1rem);
-    z-index: 12;
-    width: 2rem;
+    width: 100%;
 }
 
 #object-information .accordion-item { position: relative; }
 
 #object-information .accordion-item .streetsign {
     position: relative;
-    margin-bottom: .5rem;
-    transform: rotate3d(0, 1, 0, -116deg);
-    transform-origin: calc(100% + 1rem) center;
+    margin-bottom: .5em;
+    transform: rotate3d(0, 1, 0, -103deg);
+    transform-origin: calc(100% + 1em) center;
     transition: all .5s ease-in-out;
 }
 #object-information.unfolded .accordion-item .streetsign { transform: rotate3d(0, 1, 0, 0deg); }
@@ -169,11 +173,11 @@ b { font-weight: 700; }
 #object-information .accordion-item .handle {
     position: absolute;
     top: 0;
-    right: -2.2rem;
+    right: -2.2em;
     z-index: 11;
     height: 100%;
-    width: 2rem;
-    padding: .2rem 0;
+    width: 2em;
+    padding: .2em 0;
     background: linear-gradient(to right, #47464C, #FDFDFE);
 }
 
@@ -188,20 +192,20 @@ b { font-weight: 700; }
     content: '\00A0';
     position: absolute;
     left: 0;
-    width: 2rem;
-    height: .5rem;
+    width: 2em;
+    height: .5em;
     background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
 }
-#object-information .accordion-item .handle:before { top: -.5rem; }
-#object-information .accordion-item .handle:after { bottom: -.5rem; }
+#object-information .accordion-item .handle:before { top: -.5em; }
+#object-information .accordion-item .handle:after { bottom: -.5em; }
 
 #object-information .accordion-item:last-child .handle:after {
-    height: 10rem;
-    bottom: -10.2rem;
+    height: 10em;
+    bottom: -10em;
 }
 
 #object-information .accordion-button {
-    font-size: 2rem;
+    font-size: 1em;
     border: none;
     padding: 0;
 }
@@ -217,11 +221,11 @@ b { font-weight: 700; }
 
 #object-information .accordion-body {
     font-family: 'Josefin Slab', serif;
-    font-size: 1.6rem;
+    font-size: 1.6em;
     font-weight: 300;
     line-height: 1.15;
-    padding: .5rem 0;
-    max-height: calc(100vh - 40rem);
+    padding: .5em 0;
+    max-height: calc(100vh - 40em);
     overflow: scroll;
 }
 
