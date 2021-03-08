@@ -92,7 +92,7 @@ function loadDescription() {
 window.onhashchange = loadDescription;
 
 function getBoundingBox(geom) {
-    const points = geom.type === 'MultiLineString' ? geom.coordinates.flat() : geom.coordinates;
+    const points = geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat();
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
