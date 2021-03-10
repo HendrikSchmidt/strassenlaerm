@@ -3,32 +3,26 @@
 
 b { font-weight: 700; }
 #map {
-    font-size: 62.5%;
     perspective: 200vw;
     width: 100%;
-    height: calc(100vh - 20em);
+    height: calc(100vh - 10rem);
 }
+
+#map .mapboxgl-ctrl-bottom-right { right: 40px; }
 
 #map .streetsign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
-    padding: .4em 1em 0;
-    border: .3em solid #444;
-    border-radius: .2em;
+    border: 3px solid #444;
+    border-radius: 2px;
 }
 
 .streetsign .mapboxgl-popup-tip { display: none; }
-
-.mapboxgl-popup-close-button {
-    top: -.3em;
-    right: -0.8em;
-    font: initial;
-    font-size: 1.5em;
-}
+.mapboxgl-popup-close-button { font: initial; }
 
 .streetsign .mapboxgl-popup-content {
     background-color: #EFEFEF;
-    box-shadow: 0 .3em 0 -.1em #444;
+    box-shadow: 0 3px #444;
     border-radius: 0;
     padding: 0;
     z-index: initial;
@@ -36,50 +30,51 @@ b { font-weight: 700; }
 
 .streetsign h2 {
     font-weight: normal;
-    font-size: 2em;
-    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1;
 }
+
+.streetsign .desc h2 { margin: 5px 5px 2px; }
 
 .streetsign .desc p {
     font-family: 'Josefin Slab', serif;
     font-weight: 300;
-    font-size: 1.6em;
+    font-size: 1rem;
     line-height: 1.15;
     max-height: 0;
     max-width: 0;
-    margin: 0;
-    padding: .4em 0;
+    margin: 5px;
     overflow: hidden;
     transition: all .5s;
 }
 
 .streetsign.expanded .desc p {
-    max-height: 20em;
-    max-width: 100em;
+    max-height: 20rem;
+    max-width: 100rem;
 }
 
 .streetsign .more {
     text-align: center;
-    font-size: 0.8em;
+    font-size: .6rem;
     line-height: 0.8;
     position: absolute;
-    bottom: -1.4em;
-    left: calc(50% - 2em);
-    width: 4em;
+    bottom: -.9rem;
+    left: calc(50% - 1.5rem);
+    width: 3rem;
     z-index: -1;
-    padding-top: .4em;
-    border: .2em solid #444;
-    border-radius: .2em;
+    padding-top: .4rem;
+    border: 2px solid #444;
+    border-radius: 1px;
     background-color: #EFEFEF;
     transition: all .3s ease-in-out;
 }
 
 .streetsign.expanded .more {
     line-height: 1;
-    bottom: -1.7em;
-    font-size: 1.5em;
-    left: calc(50% - 3em);
-    width: 6em;
+    bottom: -1.6rem;
+    font-size: 1rem;
+    left: calc(50% - 2rem);
+    width: 4rem;
 }
 
 .streetsign .more a {
@@ -91,21 +86,21 @@ b { font-weight: 700; }
     content: '\00a0';
     background-color: #444;
     position: absolute;
-    right: -.6em;
-    width: .6em;
-    height: .4em;
-    border-bottom-left-radius: .3em;
-    border-top-left-radius: .3em;
+    right: -6px;
+    width: 6px;
+    height: 4px;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
 }
-.streetsign.attached:before { top: -.4em; }
-.streetsign:after { bottom: -.4em; }
+.streetsign.attached:before { top: -4px; }
+.streetsign:after { bottom: -4px; }
 
 #object-information {
     position: absolute;
     bottom: -100%;
-    right: 1em;
+    right: 10px;
     z-index: 9;
-    height: calc(100% - 4em);
+    height: calc(100% - 40px);
     transition: bottom 1s;
 }
 #object-information.visible { bottom: 0; }
@@ -116,25 +111,25 @@ b { font-weight: 700; }
     top: 0;
     background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
     height: 100%;
-    width: 2em;
+    width: 20px;
 }
 
 #object-information .pole::before {
     content: '\00A0';
     position: absolute;
-    top: -.1em;
-    left: -.1em;
+    top: -1px;
+    left: -1px;
     background: linear-gradient(to right, rgba(94,99,98,1), rgba(123,128,124,1));
-    height: .6em;
-    width: 2.2em;
-    box-shadow: 0 .2em .1em -.1em rgba(0,0,0,0.3);
-    border-radius: .1em;
+    height: 6px;
+    width: 22px;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,0.3);
+    border-radius: 1px;
 }
 
 #object-information .accordion {
     position: absolute;
-    right: 2.2em;
-    top: 1em;
+    right: 22px;
+    top: 11px;
     width: 30vw;
 }
 
@@ -142,25 +137,23 @@ b { font-weight: 700; }
     background-color: transparent;
     position: absolute;
     right: 0;
-    bottom: calc(100% + .1em);
+    bottom: calc(100% + 1px);
     z-index: 12;
     padding: 0;
     border: none;
-    width: 2em;
+    width: 20px;
 }
 
-.baer {
-    width: 100%;
-}
+.baer { width: 100%; }
 
 #object-information .accordion-item { position: relative; }
 
 #object-information .accordion-item .streetsign {
     position: relative;
-    margin-bottom: .5em;
+    margin-bottom: 5px;
     transform: rotate3d(0, 1, 0, -103deg);
-    transform-origin: calc(100% + 1em) center;
-    transition: all .5s ease-in-out;
+    transform-origin: calc(100% + 10px) center;
+    transition: transform .5s ease-in-out;
 }
 #object-information.unfolded .accordion-item .streetsign { transform: rotate3d(0, 1, 0, 0deg); }
 #object-information .accordion-item:nth-child(1) .streetsign { z-index: 9; transition-delay: .5s; }
@@ -173,11 +166,11 @@ b { font-weight: 700; }
 #object-information .accordion-item .handle {
     position: absolute;
     top: 0;
-    right: -2.2em;
+    right: -22px;
     z-index: 11;
     height: 100%;
-    width: 2em;
-    padding: .2em 0;
+    width: 20px;
+    padding: 2px 0;
     background: linear-gradient(to right, #47464C, #FDFDFE);
 }
 
@@ -192,22 +185,26 @@ b { font-weight: 700; }
     content: '\00A0';
     position: absolute;
     left: 0;
-    width: 2em;
-    height: .5em;
+    width: 20px;
+    height: 5px;
     background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
 }
-#object-information .accordion-item .handle:before { top: -.5em; }
-#object-information .accordion-item .handle:after { bottom: -.5em; }
+#object-information .accordion-item .handle:before { top: -5px; }
+#object-information .accordion-item .handle:after { bottom: -5px; }
 
 #object-information .accordion-item:last-child .handle:after {
-    height: 10em;
-    bottom: -10.1em;
+    height: 100px;
+    bottom: -100px;
 }
 
 #object-information .accordion-button {
-    font-size: 1em;
+    font-size: 1.5rem;
     border: none;
-    padding: 0;
+    padding: 4px 5px 0;
+}
+
+#object-information .accordion-button:focus {
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, .3) inset;
 }
 
 #object-information .accordion-button:not(.collapsed) {
@@ -221,11 +218,11 @@ b { font-weight: 700; }
 
 #object-information .accordion-body {
     font-family: 'Josefin Slab', serif;
-    font-size: 1.6em;
+    font-size: 1rem;
     font-weight: 300;
     line-height: 1.15;
-    padding: .5em 0;
-    max-height: calc(100vh - 40em);
+    padding: 5px;
+    max-height: calc(100vh - 360px);
     overflow: scroll;
 }
 
