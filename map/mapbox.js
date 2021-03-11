@@ -113,4 +113,4 @@ function getBoundingBoxCenter(data) {
     return [longitude, latitude];
 }
 
-console.log(data);
+console.log(mapObjects);
