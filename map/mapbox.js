@@ -114,3 +114,4 @@ function getBoundingBoxCenter(data) {
 }
 
 console.log(mapObjects);
+console.log(sanity);
