@@ -20,8 +20,8 @@ jobs:
     steps:
       - uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.STRASSENLAERM_HOST }}
+          username: ${{ secrets.STRASSENLAERM_USERNAME }}
+          password: ${{ secrets.STRASSENLAERM_PASSWORD }}
+          port: ${{ secrets.STRASSENLAERM_PORT }}
           script: whoami
