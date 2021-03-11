@@ -13,7 +13,8 @@ $map_query = new WP_Query( $args );
 $map_objects = [];
 if ( $map_query -> have_posts() ) :
     while ( $map_query -> have_posts() ) : $map_query -> the_post();
-        $map_objects[ get_the_id() ] = get_fields();
+        $object_data = get_fields() + [ 'name' => get_the_title() ];
+        $map_objects[ get_the_id() ] = $object_data;
     endwhile;
 endif;
 ?>
