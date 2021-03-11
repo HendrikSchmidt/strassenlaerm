@@ -223,7 +223,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     font-weight: 300;
     line-height: 1.15;
     padding: 5px;
-    max-height: calc(100vh - 360px);
+    max-height: calc(100vh - 400px);
     overflow: scroll;
 }
 
