@@ -1,5 +1,5 @@
 # Straßenlärm
-This repository contains the different files that make the map on (strassenlaerm.berlin)[strassenlaerm.berlin] work and look how it does.
+This repository contains the different files that make the map on [strassenlaerm.berlin](strassenlaerm.berlin) work and look how it does.
 
 ## Dependencies
 * [mapbox.js](https://docs.mapbox.com/mapbox-gl-js/api/#quickstart)
