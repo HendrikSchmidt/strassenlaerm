@@ -112,3 +112,5 @@ function getBoundingBoxCenter(data) {
     let latitude = (bbox[0][1] + bbox[1][1])/2;
     return [longitude, latitude];
 }
+
+console.log(data);
