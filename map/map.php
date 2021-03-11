@@ -5,25 +5,21 @@ get_header();
 echo avia_title();
 do_action( 'ava_after_main_title' );
 $args = array(
-    'numberposts' => -1,
-    'category' => 'kartenobjekte',
+    'post_count' => -1,
+    'category_name' => 'kartenobjekte',
     'post_type' =>  'post'
 );
 $map_query = new WP_Query( $args );
 $map_objects = [];
 if ( $map_query -> have_posts() ) :
     while ( $map_query -> have_posts() ) : $map_query -> the_post();
-        $meta_values = get_fields();
-        $map_objects[] = $meta_values;
-        // Stop the Loop, but allow for a "if not posts" situation
+        $map_objects[ get_the_id() ] = get_fields();
     endwhile;
-    // Completely stop the Loop.
 endif;
-wp_reset_postdata();
 ?>
 
 <script>
-    const mapObjects = <?php echo json_encode($map_objects, JSON_HEX_TAG); ?>;
+    const mapObjects = <?php echo json_encode($map_objects); ?>;
 </script>
 
 <div class="container_wrap container_wrap_first main_color <?php avia_layout_class( 'main' ); ?>">
