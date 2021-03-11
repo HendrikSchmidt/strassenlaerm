@@ -15,6 +15,7 @@ const map = new mapboxgl.Map({
     }), 'top-left');
 
 const layers = ['strassen', 'plaetze'];
+let features;
 let selectedPoint = map.getCenter();
 
 const popupOptions = {
@@ -28,6 +29,7 @@ const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 const id = 340; // just mocked
 
 map.on('load', () => {
+    features = map.queryRenderedFeatures({ layers });
     loadDescription();
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
@@ -72,8 +74,8 @@ function loadDescription() {
     expPopup.remove();
     if(location.hash) {
         // const id = parseInt(location.hash.substr(1));
-        const clickedObj = mapObjects[id];
-        const props = clickedObj.properties;
+        const clickedObj = features.find(feature => feature.id === id);
+        const props = mapObjects[id];
         document.querySelector('object-information').infos = [
             {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
             {heading: 'Stand der Umbennenung', text: props.current},
