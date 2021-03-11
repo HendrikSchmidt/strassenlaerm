@@ -15,7 +15,6 @@ const map = new mapboxgl.Map({
     }), 'top-left');
 
 const layers = ['strassen', 'plaetze'];
-let features = [];
 let selectedPoint = map.getCenter();
 
 const popupOptions = {
@@ -26,15 +25,17 @@ const popupOptions = {
 const expPopup = new mapboxgl.Popup(popupOptions);
 const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 
+const id = 340; // just mocked
+
 map.on('load', () => {
-    features = map.queryRenderedFeatures({ layers });
     loadDescription();
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
-            const props = e.features[0].properties;
+            // const props = mapObjects[e.features[0].id];
+            const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more">1 - 99</div>`;
 
             popup
@@ -51,10 +52,10 @@ map.on('load', () => {
 
         map.on('click', layer, e => {
             selectedPoint = e.lngLat;
-            const features = e.features[0];
-            const props = features.properties;
+            // const id = e.features[0].id;
+            const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name} (${props.quarter})</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><a href="#${features.id}"> > mehr </a></div>`;
+                       + `<div class="more"><a href="#${id}"> > mehr </a></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)
@@ -70,8 +71,8 @@ map.on('load', () => {
 function loadDescription() {
     expPopup.remove();
     if(location.hash) {
-        const id = parseInt(location.hash.substr(1));
-        const clickedObj = features.find(feature => feature.id === id);
+        // const id = parseInt(location.hash.substr(1));
+        const clickedObj = mapObjects[id];
         const props = clickedObj.properties;
         document.querySelector('object-information').infos = [
             {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
@@ -113,4 +114,3 @@ function getBoundingBoxCenter(data) {
     return [longitude, latitude];
 }
 
-console.log(mapObjects);
