@@ -73,6 +73,7 @@ def generate_geometry(street_square, parts):
 msg = ""
 
 if len(sys.argv) > 1:
+    objects = json.loads(sys.argv[1])
     try:
         with open('../../data/Strassenabschnitte.geojson') as f:
             berlin_data = json.loads(f.read())['features']
