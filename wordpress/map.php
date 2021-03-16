@@ -15,7 +15,9 @@ if ( $map_query -> have_posts() ) :
     while ( $map_query -> have_posts() ) : $map_query -> the_post();
         $object_data = get_fields();
         $object_data['name']= get_the_title();
+        $object_data['link']= get_the_shortlink();
         $map_objects[ get_the_id() ] = $object_data;
+        the_shortlink();
     endwhile;
 endif;
 ?>
