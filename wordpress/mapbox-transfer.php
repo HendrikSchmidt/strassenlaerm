@@ -16,8 +16,13 @@ add_filter('handle_bulk_actions-edit-post', function($redirect_url, $action, $po
             $object_data['name'] = get_the_title($post_id);
             $map_objects[ $post_id ] = $object_data;
         }
-        $command = escapeshellcmd(ABSPATH . '/wp-content/strassenlaerm/data-upload/upload_data_to_datasets.py' . json_encode($map_objects));
-        $output = shell_exec($command);
+        $command = ABSPATH . 'wp-content/strassenlaerm/data-upload/upload_data_to_datasets.py 2>&1';
+        echo $command . "\n";
+        $output=null;
+        $retval=null;
+        exec($command, $output, $retval);
+        echo "Returned with status $retval and output:\n";
+        print_r($output);
         $redirect_url = add_query_arg('transfered-to-mapbox', $output, $redirect_url);
     }
     return $redirect_url;
