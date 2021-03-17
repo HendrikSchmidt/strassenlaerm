@@ -34,6 +34,7 @@ function mapbox_enqueue() {
     wp_enqueue_script( 'object-information-js', WP_CONTENT_DIR . 'strassenlaerm/map/objectInformation.js', array(), false, true );
     wp_enqueue_script( 'custom-mapbox-js', WP_CONTENT_DIR . 'strassenlaerm/map/mapbox.js', array(), false, true );
 /*    wp_add_inline_script( 'custom-mapbox-js', 'const mapObjects = <?php echo json_encode($map_objects); ?>;' );*/
+    wp_add_inline_script( 'custom-mapbox-js', 'console.log("test");' );
     wp_enqueue_style( 'map-css', WP_CONTENT_DIR . 'strassenlaerm/map/map.css', array(), false, true );
 }
 add_action( 'wp_enqueue_scripts', 'mapbox_enqueue' );
