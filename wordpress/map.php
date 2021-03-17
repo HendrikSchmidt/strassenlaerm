@@ -19,17 +19,9 @@ if ( $map_query -> have_posts() ) :
         $map_objects[ get_the_id() ] = $object_data;
     endwhile;
 endif;
-?>
-<div class="container_wrap container_wrap_first main_color <?php avia_layout_class( 'main' ); ?>">
-    <div class="container">
-        <main class="template-map content <?php avia_layout_class( 'content' ); ?> units" <?php avia_markup_helper(array('context' => 'content'));?>>
-            <div class="entry-content-wrapper entry-content clearfix">
-                <div id="map"><object-information></object-information></div>
-            </div><!--end content-->
-        </main>
-    </div><!--end container-->
-</div><!-- close default .container_wrap element -->
-<?php
+
+echo '<div id="map"><object-information></object-information></div>';
+
 wp_enqueue_script( 'mapbox-gl.js', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js' );
 wp_enqueue_style( 'mapbox-gl.css', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' );
 wp_enqueue_script( 'bootstrap.bundle.min.js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js' );
