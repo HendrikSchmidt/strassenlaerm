@@ -42,4 +42,5 @@ function mapbox_enqueue() {
     wp_add_inline_script( 'custom-mapbox-js', 'console.log("test");' );
 }
 add_action( 'wp_enqueue_scripts', 'mapbox_enqueue' );
+wp_footer();
 get_footer();
