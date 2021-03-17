@@ -4,6 +4,14 @@ class ObjectInformation extends HTMLElement {
         this.innerHTML = `
             <div id="object-information">
                 <div class="accordion accordion-flush" id="object-information-list"></div>
+                <div class="streetsign attached">
+                        <a href="">
+                            ${info.heading}
+                        </a>
+                </div>
+                <div class="handle">
+                    <div class="handle-inner">&nbsp;</div>
+                </div>
                 <button id="goBackHome"><img src="Coat_of_arms_of_Berlin.svg" class="baer" /></button>
                 <div class="pole">&nbsp;</div>
             </div>
@@ -16,9 +24,9 @@ class ObjectInformation extends HTMLElement {
         });
     }
 
-    set infos(value) {
-        this._infos = value;
-        if(this._infos) {
+    set object(value){
+        this._object = value;
+        if(this._object) {
             if (this.$objectInformation.classList.contains('unfolded')) {
                 this.collapseElems.forEach(elem => elem.hide());
                 this.$objectInformation.classList.remove('unfolded');
@@ -33,15 +41,15 @@ class ObjectInformation extends HTMLElement {
         }
     }
 
-    get infos() {
-        return this._infos;
+    get object() {
+        return this._object;
     }
 
     _renderObjectInformation() {
         this.collapseElems = [];
         this.$objectInformationList.innerHTML = '';
 
-        this._infos.forEach((info, index) => {
+        this._object.infos.forEach((info, index) => {
             let $infoItem = this._renderItem(info, index)
             let $infoItemCollapse = $infoItem.querySelector(`#target-${index}`);
             let bsCollapse = new bootstrap.Collapse($infoItemCollapse, {toggle: false, parent: this.$objectInformationList});

@@ -75,11 +75,14 @@ function loadDescription() {
         // const id = parseInt(location.hash.substr(1));
         const clickedObj = features.find(feature => feature.id === id);
         const props = mapObjects[id];
-        document.querySelector('object-information').infos = [
-            {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
-            {heading: 'Stand der Umbennenung', text: props.current},
-            {heading: 'Quellen', text: props.sources},
-        ];
+        document.querySelector('object-information').object = {
+            link: props.link,
+            infos: [
+                {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
+                {heading: 'Stand der Umbennenung', text: props.current},
+                {heading: 'Quellen', text: props.sources},
+            ]
+        };
         const pad = 50;
         map.fitBounds(
             getBoundingBox(clickedObj.geometry),
