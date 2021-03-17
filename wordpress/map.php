@@ -30,17 +30,17 @@ endif;
     </div><!--end container-->
 </div><!-- close default .container_wrap element -->
 <?php
-function mapbox_enqueue() {
-    wp_enqueue_script( 'mapbox-gl.js', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js' );
-    wp_enqueue_style( 'mapbox-gl.css', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' );
-    wp_enqueue_script( 'bootstrap.bundle.min.js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js' );
-    wp_enqueue_style( 'bootstrap.min.css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' );
-    wp_enqueue_style( 'map-css', WP_CONTENT_DIR . 'strassenlaerm/map/map.css', array(), false, true );
-    wp_enqueue_script( 'object-information-js', WP_CONTENT_DIR . 'strassenlaerm/map/objectInformation.js', array(), false, true );
-    wp_enqueue_script( 'custom-mapbox-js', WP_CONTENT_DIR . 'strassenlaerm/map/mapbox.js', array(), false, true );
-/*    wp_add_inline_script( 'custom-mapbox-js', 'const mapObjects = <?php echo json_encode($map_objects); ?>;' );*/
-    wp_add_inline_script( 'custom-mapbox-js', 'console.log("test");' );
-}
-add_action( 'wp_enqueue_scripts', 'mapbox_enqueue' );
+//function mapbox_enqueue() {
+wp_enqueue_script( 'mapbox-gl.js', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js' );
+wp_enqueue_style( 'mapbox-gl.css', 'https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' );
+wp_enqueue_script( 'bootstrap.bundle.min.js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js' );
+wp_enqueue_style( 'bootstrap.min.css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' );
+wp_enqueue_style( 'map-css', WP_CONTENT_DIR . 'strassenlaerm/map/map.css', array(), false, true );
+wp_enqueue_script( 'object-information-js', WP_CONTENT_DIR . 'strassenlaerm/map/objectInformation.js', array(), false, true );
+wp_enqueue_script( 'custom-mapbox-js', WP_CONTENT_DIR . 'strassenlaerm/map/mapbox.js', array(), false, true );
+/*wp_add_inline_script( 'custom-mapbox-js', 'const mapObjects = <?php echo json_encode($map_objects); ?>;' );*/
+wp_add_inline_script( 'custom-mapbox-js', 'console.log("test");' );
+//}
+//add_action( 'wp_enqueue_scripts', 'mapbox_enqueue' );
 wp_footer();
 get_footer();
