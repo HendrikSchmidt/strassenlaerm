@@ -31,10 +31,10 @@ endif;
 </div><!-- close default .container_wrap element -->
 <?php
 function mapbox_enqueue() {
-    wp_enqueue_script( 'object-information-js', '/wp-content/strassenlaerm/map/objectInformation.js' );
-    wp_enqueue_script( 'custom-mapbox-js', '/wp-content/strassenlaerm/map/mapbox.js' );
+    wp_enqueue_script( 'object-information-js', WP_CONTENT_DIR . 'strassenlaerm/map/objectInformation.js', false );
+    wp_enqueue_script( 'custom-mapbox-js', WP_CONTENT_DIR . 'strassenlaerm/map/mapbox.js' );
 /*    wp_add_inline_script( 'custom-mapbox-js', 'const mapObjects = <?php echo json_encode($map_objects); ?>;' );*/
-    wp_enqueue_style( 'map-css', '/wp-content/strassenlaerm/map/map.css' );
+    wp_enqueue_style( 'map-css', WP_CONTENT_DIR . 'strassenlaerm/map/map.css' );
 }
 add_action( 'wp_enqueue_scripts', 'mapbox_enqueue' );
 get_footer();
