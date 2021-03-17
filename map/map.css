@@ -5,7 +5,7 @@ b { font-weight: 700; }
 #map {
     perspective: 200vw;
     width: 100%;
-    height: calc(100vh - 12rem);
+    height: calc(100vh - 88px);
 }
 a.mapboxgl-ctrl-logo { max-width: initial; }
 #map .mapboxgl-ctrl-bottom-right { right: 40px; }
