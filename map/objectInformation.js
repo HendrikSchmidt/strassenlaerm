@@ -4,14 +4,8 @@ class ObjectInformation extends HTMLElement {
         this.innerHTML = `
             <div id="object-information">
                 <div class="accordion accordion-flush" id="object-information-list"></div>
-                <div class="streetsign attached">
-                        <a href="">
-                            ${info.heading}
-                        </a>
-                </div>
-                <div class="handle">
-                    <div class="handle-inner">&nbsp;</div>
-                </div>
+                <div class="streetsign attached"><a href="">-></a></div>
+                <div class="handle"><div class="handle-inner">&nbsp;</div></div>
                 <button id="goBackHome"><img src="Coat_of_arms_of_Berlin.svg" class="baer" /></button>
                 <div class="pole">&nbsp;</div>
             </div>
@@ -87,9 +81,7 @@ class ObjectInformation extends HTMLElement {
                     <div class="accordion-body">${info.text}</div>
                 </div>
             </div>
-            <div class="handle">
-                <div class="handle-inner">&nbsp;</div>
-            </div>
+            <div class="handle"><div class="handle-inner">&nbsp;</div></div>
         `;
         return $infoItem;
     }
