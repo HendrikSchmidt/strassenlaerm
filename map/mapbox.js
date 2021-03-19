@@ -19,6 +19,7 @@ console.log(mapObjects);
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
 const zoom = 10;
+const pad = 50;
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
@@ -32,7 +33,7 @@ const map = new mapboxgl.Map({
         trackUserLocation: true
     }), 'top-left');
 
-const layers = ['strassen', 'plaetze'];
+const layers = ['strassen-touch', 'plaetze', 'plaetze-touch'];
 let features;
 let selectedPoint = map.getCenter();
 const originalTitle = document.title;
@@ -82,7 +83,7 @@ map.on('load', () => {
                 .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
-            
+
             // add class with timeout to trigger css transitions
             setTimeout(() => expPopup.addClassName('expanded'), 1)
         });
@@ -105,7 +106,6 @@ function loadDescription() {
                 {heading: 'Quellen', text: props.sources},
             ]
         };
-        const pad = 50;
         map.fitBounds(
             getBoundingBox(clickedObj.geometry),
             {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
