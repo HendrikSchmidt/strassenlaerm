@@ -59,7 +59,7 @@ map.on('load', () => {
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name} (${props.quarter})</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><a href="#${id}"> > mehr </a></div>`;
+                       + `<div class="more"><a href="#${id}-${props.link.split('/')[3]}"> > mehr </a></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)
@@ -75,7 +75,7 @@ map.on('load', () => {
 function loadDescription() {
     expPopup.remove();
     if(location.hash) {
-        // const id = parseInt(location.hash.substr(1));
+        // const id = parseInt(location.hash.split('-')[0].substr(1));
         const clickedObj = features.find(feature => feature.id === id);
         const props = mapObjects[id];
         document.querySelector('object-information').object = {
