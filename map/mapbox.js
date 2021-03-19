@@ -14,6 +14,8 @@ const map = new mapboxgl.Map({
         trackUserLocation: true
     }), 'top-left');
 
+console.log('mapObjects');
+
 const layers = ['strassen', 'plaetze'];
 let features;
 let selectedPoint = map.getCenter();
