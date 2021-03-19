@@ -19,6 +19,7 @@ console.log(mapObjects);
 const layers = ['strassen', 'plaetze'];
 let features;
 let selectedPoint = map.getCenter();
+const originalTitle = document.title;
 
 const popupOptions = {
     className: 'streetsign attached',
@@ -90,9 +91,11 @@ function loadDescription() {
             getBoundingBox(clickedObj.geometry),
             {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
         );
+        document.title = `${props.name} (${props.quarter}) | ${originalTitle}`
     } else {
         document.querySelector('object-information').infos = null;
         map.flyTo({center, zoom});
+        document.title = originalTitle;
     }
 }
 
