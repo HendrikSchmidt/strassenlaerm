@@ -93,7 +93,9 @@ function loadDescription() {
     expPopup.remove();
     if(location.hash) {
         const id = parseInt(location.hash.split('-')[0].substr(1));
-        const clickedObj = features.find(feature => feature.id === id);
+        console.log(id)
+        // const clickedObj = features.find(feature => feature.properties.wp_id === id);
+        const clickedObj = features[0];
         const props = mapObjects[id];
         document.querySelector('object-information').object = {
             link: props.link,
