@@ -41,7 +41,9 @@ class ObjectInformation extends HTMLElement {
         this.collapseElems = [];
         this.$objectInformationList.innerHTML = '';
 
-        this._object.infos.forEach((info, index) => {
+        let infoItems = this.createInfoArray(this._object);
+
+        infoItems.forEach((info, index) => {
             let $infoItem = this._renderItem(info, index)
             let $infoItemCollapse = $infoItem.querySelector(`#target-${index}`);
             let bsCollapse = new bootstrap.Collapse($infoItemCollapse, {toggle: false, parent: this.$objectInformationList});
@@ -53,6 +55,23 @@ class ObjectInformation extends HTMLElement {
         if (!this.$objectInformation.classList.contains('visible')) {
             setTimeout(() => this.$objectInformation.classList.add('visible'), 10);
         }
+    }
+
+    createInfoArray(obj) {
+        return [
+            {
+                heading: `<h2>${obj.name}</h2><h3>${obj.quarter}</h3>`,
+                text: `${obj.longDesc ? obj.longDesc : obj.shortDesc}<p>${obj.author[0]}</p>`
+            },
+            ... obj.currentSituation ? [{
+                heading: `<h2>Aktueller Stand</h2>`,
+                text: `${obj.currentSituation}`,
+            }] : [],
+            ... obj.recommendation ? [{
+                heading: `<h2>Unsere Empfehlung</h2>`,
+                text: `${obj.recommendation}`,
+            }] : [],
+        ]
     }
 
     _renderItem(info, index) {

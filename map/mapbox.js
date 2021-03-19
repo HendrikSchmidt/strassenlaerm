@@ -98,14 +98,7 @@ function loadDescription() {
         // const clickedObj = features.find(feature => feature.properties.wp_id === id);
         const clickedObj = features[0];
         const props = mapObjects[id];
-        document.querySelector('object-information').object = {
-            link: props.link,
-            infos: [
-                {heading: `${props.name} (${props.quarter})`, text: props.longDesc},
-                {heading: 'Stand der Umbennenung', text: props.current},
-                {heading: 'Quellen', text: props.sources},
-            ]
-        };
+        document.querySelector('object-information').object = mapObjects[id];
         map.fitBounds(
             getBoundingBox(clickedObj.geometry),
             {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
