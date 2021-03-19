@@ -74,7 +74,7 @@ map.on('load', () => {
 function loadDescription() {
     expPopup.remove();
     if(location.hash) {
-        // const id = parseInt(location.hash.split('-')[0].substr(1));
+        const id = parseInt(location.hash.split('-')[0].substr(1));
         const clickedObj = features.find(feature => feature.id === id);
         const props = mapObjects[id];
         document.querySelector('object-information').object = {
