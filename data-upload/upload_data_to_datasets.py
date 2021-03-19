@@ -12,24 +12,24 @@ datasets = Datasets(access_token=os.getenv("dataset_token"))
 
 objects = [
     # Faschistisch
-    {'id': 340, 'name': 'Gotenburger Straße', 'quarter': 'Gesundbrunnen'},
-    {'id': 340, 'name': 'Kruppstraße', 'quarter': 'Moabit'},
-    {'id': 340, 'name': 'Manfred-von-Richthofen-Straße', 'quarter': 'Tempelhof'},
-    {'id': 340, 'name': 'Robert-Rössle-Straße', 'quarter': 'Buch'},
-    {'id': 340, 'name': 'Eschwegering', 'quarter': 'Tempelhof'},
+    {"id": 340, "name": "Gotenburger Straße", "quarter": "Gesundbrunnen"},
+    {"id": 340, "name": "Kruppstraße", "quarter": "Moabit"},
+    {"id": 340, "name": "Manfred-von-Richthofen-Straße", "quarter": "Tempelhof"},
+    {"id": 340, "name": "Robert-Rössle-Straße", "quarter": "Buch"},
+    {"id": 340, "name": "Eschwegering", "quarter": "Tempelhof"},
     # Kolonialistisch
-    {'id': 340, 'name': 'Wissmannstraße', 'quarter': 'Grunewald'},
-    {'id': 340, 'name': 'Wissmannstraße', 'quarter': 'Neukölln'},
-    {'id': 340, 'name': 'Lüderitzstraße', 'quarter': 'Wedding'},
-    {'id': 340, 'name': 'Nachtigalplatz', 'quarter': 'Wedding'},
-    {'id': 340, 'name': 'Mohrenstraße', 'quarter': 'Mitte'},
-    {'id': 340, 'name': 'Onkel-Tom-Straße', 'quarter': 'Zehlendorf'},
-    {'id': 340, 'name': 'Nettelbeckplatz', 'quarter': 'Wedding'},
-    {'id': 340, 'name': 'Bismarckstraße', 'quarter': 'Charlottenburg'},
-    {'id': 340, 'name': 'Bismarckstraße', 'quarter': 'Spandau'},
-    {'id': 340, 'name': 'Bismarckstraße', 'quarter': 'Steglitz'},
-    {'id': 340, 'name': 'Bismarckstraße', 'quarter': 'Zehlendorf'},
-    {'id': 340, 'name': 'Bismarckstraße', 'quarter': 'Wannsee'},
+    {"id": 340, "name": "Wissmannstraße", "quarter": "Grunewald"},
+    {"id": 340, "name": "Wissmannstraße", "quarter": "Neukölln"},
+    {"id": 340, "name": "Lüderitzstraße", "quarter": "Wedding"},
+    {"id": 340, "name": "Nachtigalplatz", "quarter": "Wedding"},
+    {"id": 340, "name": "Mohrenstraße", "quarter": "Mitte"},
+    {"id": 340, "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf"},
+    {"id": 340, "name": "Nettelbeckplatz", "quarter": "Wedding"},
+    {"id": 340, "name": "Bismarckstraße", "quarter": "Charlottenburg"},
+    {"id": 340, "name": "Bismarckstraße", "quarter": "Spandau"},
+    {"id": 340, "name": "Bismarckstraße", "quarter": "Steglitz"},
+    {"id": 340, "name": "Bismarckstraße", "quarter": "Zehlendorf"},
+    {"id": 340, "name": "Bismarckstraße", "quarter": "Wannsee"},
 ]
 
 existing_streets = datasets.list_features(os.getenv("streets_dataset")).json()['features']
@@ -87,6 +87,7 @@ if len(sys.argv) > 1:
                     'type': 'Feature',
                     'id': str(obj['id']),
                     'properties': {
+                        'wp_id': obj['id'],
                         'name': obj['name'],
                         'type': 'square' if first_match['properties']['strassen_2'] == 'PLAT' else 'street',
                         'quarter': obj['quarter'],
@@ -109,6 +110,6 @@ if len(sys.argv) > 1:
         msg += str(e)
         msg += '\n'
 else:
-    msg += 'Argument missing.'
+    msg += 'Argument missing.\n'
 
 sys.stdout.write(msg)
