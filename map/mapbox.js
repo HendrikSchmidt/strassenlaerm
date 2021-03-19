@@ -82,7 +82,8 @@ map.on('load', () => {
                 .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
-
+            
+            // add class with timeout to trigger css transitions
             setTimeout(() => expPopup.addClassName('expanded'), 1)
         });
 
