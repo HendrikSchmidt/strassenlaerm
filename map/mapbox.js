@@ -14,7 +14,7 @@ const map = new mapboxgl.Map({
         trackUserLocation: true
     }), 'top-left');
 
-console.log('mapObjects');
+console.log(mapObjects);
 
 const layers = ['strassen', 'plaetze'];
 let features;
