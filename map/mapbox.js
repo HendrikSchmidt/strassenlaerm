@@ -31,6 +31,7 @@ const id = 340; // just mocked
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
+    console.log(features);
     loadDescription();
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
@@ -122,4 +123,3 @@ function getBoundingBoxCenter(data) {
 }
 
 console.log(mapObjects);
-console.log(features);
