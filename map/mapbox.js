@@ -33,7 +33,7 @@ const map = new mapboxgl.Map({
         trackUserLocation: true
     }), 'top-left');
 
-const layers = ['strassen-touch', 'plaetze', 'plaetze-touch'];
+const layers = ['strassen-touch', 'plaetze'];
 let features;
 let selectedPoint = map.getCenter();
 const originalTitle = document.title;
