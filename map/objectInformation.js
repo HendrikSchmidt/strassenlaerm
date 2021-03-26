@@ -74,11 +74,11 @@ class ObjectInformation extends HTMLElement {
                 text: `${obj.longDesc ? obj.longDesc : obj.shortDesc}<p>${obj.author[0]}</p>`
             },
             ... obj.currentSituation ? [{
-                heading: `<h2>Aktueller Stand</h2>`,
+                heading: `<div class="street-heading"><h2>Aktueller Stand</h2></div>`,
                 text: `${obj.currentSituation}`,
             }] : [],
             ... obj.recommendation ? [{
-                heading: `<h2>Unsere Empfehlung</h2>`,
+                heading: `<div class="street-heading"><h2>Unsere Empfehlung</h2></div>`,
                 text: `${obj.recommendation}`,
             }] : [],
         ]
