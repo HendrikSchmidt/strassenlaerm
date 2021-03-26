@@ -101,11 +101,11 @@ function loadDescription() {
         document.querySelector('object-information').object = mapObjects[id];
         map.fitBounds(
             getBoundingBox(clickedObj.geometry),
-            {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 3 + pad}},
+            {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
         );
         document.title = `${props.name} (${props.quarter}) | ${originalTitle}`
     } else {
-        document.querySelector('object-information').infos = null;
+        document.querySelector('object-information').object = null;
         map.flyTo({center, zoom});
         document.title = originalTitle;
     }
