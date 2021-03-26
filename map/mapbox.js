@@ -1,3 +1,4 @@
+// mock data if nothing comes from PHP
 const mapObjects = 'mapObjectsFromPHP' in window ? mapObjectsFromPHP : {
     340: {
         "geoName": "Robert-Rössle-Straße",
@@ -13,8 +14,6 @@ const mapObjects = 'mapObjectsFromPHP' in window ? mapObjectsFromPHP : {
         "link": "https://strassenlaerm.berlin/robert-roessle-strasse/"
     }
 }
-console.log(mapObjects);
-
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
@@ -50,7 +49,6 @@ const id = 340; // just mocked
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
-    console.log(features);
     loadDescription();
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
