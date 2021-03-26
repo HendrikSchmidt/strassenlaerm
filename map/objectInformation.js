@@ -27,22 +27,15 @@ class ObjectInformation extends HTMLElement {
 
     set object(value){
         this._object = value;
-        if(this._object) {
-            // hide mapbox controls when screen too small
-            if (window.innerWidth <= 600) document.querySelector('.mapboxgl-ctrl-top-left').style.display = 'none';
-            if (this.$objectInformation.classList.contains('unfolded')) {
-                this.collapseElems.forEach(elem => elem.hide());
-                this.$objectInformation.classList.remove('unfolded');
-                setTimeout(() => this._renderObjectInformation(), 1000);
-            } else {
-                this._renderObjectInformation();
-            }
-        } else if (this.$objectInformation.classList.contains('unfolded')) {
-            document.querySelector('.mapboxgl-ctrl-top-left').style.display = 'block';
-            this.collapseElems.forEach(elem => elem.hide());
-            this.$objectInformation.classList.remove('unfolded');
-            setTimeout(() => this.$objectInformation.classList.remove('visible'), 1000);
+        this.collapseElems.forEach(elem => elem.hide());
+        const otherObjectDisplayed = this.$objectInformation.classList.contains('unfolded');
+        this.$objectInformation.classList.remove('unfolded');
+        // hide mapbox controls when screen too small
+        if (window.innerWidth <= 600) {
+            document.querySelector('.mapboxgl-ctrl-top-left').style.display = this._object ? 'none' : 'block';
         }
+        // if an object is already displayed, wait for animation to finish
+        setTimeout(() => this._renderObjectInformation(), otherObjectDisplayed ? 1000 : 0);
     }
 
     get object() {
@@ -52,21 +45,28 @@ class ObjectInformation extends HTMLElement {
     _renderObjectInformation() {
         this.collapseElems = [];
         this.$objectInformationList.innerHTML = '';
-        this.$streetLink.href = this._object.link;
 
-        let infoItems = this.createInfoArray(this._object);
+        if (this._object) {
+            this.$streetLink.href = this._object.link;
+            let infoItems = this.createInfoArray(this._object);
 
-        infoItems.forEach((info, index) => {
-            let $infoItem = this._renderItem(info, index)
-            let $infoItemCollapse = $infoItem.querySelector(`#target-${index}`);
-            let bsCollapse = new bootstrap.Collapse($infoItemCollapse, {toggle: false, parent: this.$objectInformationList});
-            this.collapseElems.push(bsCollapse);
-            if (index === 0) setTimeout(() => bsCollapse.show(), 1200);
-        });
-
-        setTimeout(() => this.$objectInformation.classList.add('unfolded'), 10);
-        if (!this.$objectInformation.classList.contains('visible')) {
-            setTimeout(() => this.$objectInformation.classList.add('visible'), 10);
+            infoItems.forEach((info, index) => {
+                let $infoItem = this._renderItem(info, index)
+                let $infoItemCollapse = $infoItem.querySelector(`#target-${index}`);
+                let bsCollapse = new bootstrap.Collapse($infoItemCollapse, {
+                    toggle: false,
+                    parent: this.$objectInformationList
+                });
+                this.collapseElems.push(bsCollapse);
+                if (index === 0) setTimeout(() => bsCollapse.show(), 1200);
+            });
+            // setTimeout to enable animations
+            setTimeout(() => {
+                this.$objectInformation.classList.add('visible');
+                this.$objectInformation.classList.add('unfolded');
+            }, 10);
+        } else {
+            this.$objectInformation.classList.remove('visible');
         }
     }
 
