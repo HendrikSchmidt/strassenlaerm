@@ -1,17 +1,22 @@
 class ObjectInformation extends HTMLElement {
     constructor() {
         super();
+        this.collapseElems = [];
         this.innerHTML = `
             <div id="object-information">
-                <div class="accordion accordion-flush" id="object-information-list"></div>
-                <button id="goBackHome"><img src="Coat_of_arms_of_Berlin.svg" class="baer" /></button>
                 <div class="pole">&nbsp;</div>
+                <div class="accordion accordion-flush" id="object-information-list"></div>
+                <div class="traffic-light">
+                    <button id="go-back-home" class="light">x</button>
+                    <hr />
+                    <a id="go-to-street" class="light">x</a>
+                </div>
             </div>
         `;
         this.$objectInformation = this.querySelector('#object-information');
         this.$objectInformationList = this.querySelector('#object-information-list');
-        this.collapseElems = [];
-        document.getElementById("goBackHome").addEventListener("click", () => {
+        this.$streetLink = this.querySelector('#go-to-street');
+        document.getElementById("go-back-home").addEventListener("click", () => {
             location.hash = '';
         });
     }
@@ -40,6 +45,7 @@ class ObjectInformation extends HTMLElement {
     _renderObjectInformation() {
         this.collapseElems = [];
         this.$objectInformationList.innerHTML = '';
+        this.$streetLink.href = this._object.link;
 
         let infoItems = this.createInfoArray(this._object);
 

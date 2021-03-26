@@ -99,9 +99,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 #object-information {
     position: absolute;
     bottom: -100%;
-    right: 10px;
+    right: 15px;
     z-index: 9;
-    height: calc(100% - 40px);
+    height: calc(100% - 10px);
     transition: bottom 1s;
 }
 #object-information.visible { bottom: 0; }
@@ -127,6 +127,34 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     border-radius: 1px;
 }
 
+#object-information .traffic-light {
+    position: absolute;
+    z-index: 20;
+    top: 10px;
+    right: -10px;
+    border-radius: 2px;
+    background: linear-gradient(250deg, #436C68, #29473d);
+}
+
+#object-information .traffic-light hr {
+    width: 100%;
+    margin: 0;
+    height: 2px;
+    background-color: #151517;
+    opacity: .8;
+}
+
+#object-information .traffic-light .light {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+    border-radius: 50%;
+    background-color: #151517;
+    border: none;
+    border-top: #5b8872 2px solid;
+}
+
 #object-information .accordion {
     position: absolute;
     right: 22px;
@@ -134,15 +162,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     width: 30vw;
 }
 
-#goBackHome {
-    background-color: transparent;
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 1px);
-    z-index: 12;
-    padding: 0;
-    border: none;
-    width: 20px;
+#go-back-home {
 }
 
 .baer { width: 100%; }
