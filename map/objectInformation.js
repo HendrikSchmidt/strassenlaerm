@@ -7,9 +7,13 @@ class ObjectInformation extends HTMLElement {
                 <div class="pole">&nbsp;</div>
                 <div class="accordion accordion-flush" id="object-information-list"></div>
                 <div class="traffic-light">
-                    <button id="go-back-home" class="light">x</button>
+                <div class="light-casing">
+                    <button id="go-back-home" class="light"></button>
+                </div>
                     <hr />
-                    <a id="go-to-street" class="light">x</a>
+                <div class="light-casing">
+                    <a id="go-to-street" class="light"></a>
+                </div>
                 </div>
             </div>
         `;
@@ -66,7 +70,7 @@ class ObjectInformation extends HTMLElement {
     createInfoArray(obj) {
         return [
             {
-                heading: `<h2>${obj.name}</h2><h3>${obj.quarter}</h3>`,
+                heading: `<div class="street-heading"><h2>${obj.name}</h2><h3>${obj.quarter}</h3></div>`,
                 text: `${obj.longDesc ? obj.longDesc : obj.shortDesc}<p>${obj.author[0]}</p>`
             },
             ... obj.currentSituation ? [{

@@ -44,7 +44,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     line-height: 1.15;
     max-height: 0;
     max-width: 0;
-    margin: 5px;
+    margin: 0 5px;
     overflow: hidden;
     transition: all .5s;
 }
@@ -141,18 +141,50 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     margin: 0;
     height: 2px;
     background-color: #151517;
-    opacity: .8;
+    opacity: .5;
+}
+
+#object-information .traffic-light .light-casing {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    margin: 3px;
+    background-color: #151517;
+    border-radius: 50%;
+    border: none;
+    border-top: #5b8872 2px solid;
+    box-sizing: content-box;
 }
 
 #object-information .traffic-light .light {
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin: 3px;
-    border-radius: 50%;
-    background-color: #151517;
+    width: 100%;
+    height: 100%;
+    padding: 0;
     border: none;
-    border-top: #5b8872 2px solid;
+}
+
+#go-back-home {
+    background: radial-gradient(circle at 50% 50%, red 1px, transparent 3px),
+                radial-gradient(circle at 35% 35%, red 1px, transparent 3px),
+                radial-gradient(circle at 42.5% 42.5%, red 1px, transparent 3px),
+                radial-gradient(circle at 35% 65%, red 1px, transparent 3px),
+                radial-gradient(circle at 42.5% 57.5%, red 1px, transparent 3px),
+                radial-gradient(circle at 65% 35%, red 1px, transparent 3px),
+                radial-gradient(circle at 57.5% 42.5%, red 1px, transparent 3px),
+                radial-gradient(circle at 65% 65%, red 1px, transparent 3px),
+                radial-gradient(circle at 57.5% 57.5%, red 1px, transparent 3px);
+}
+
+#go-to-street {
+    background: radial-gradient(circle at 30% 50%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 42.5% 50%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 55% 50%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 70% 50%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 55% 35%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 62.5% 42.5%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 55% 65%, lawngreen 1px, transparent 3px),
+                radial-gradient(circle at 62.5% 57.5%, lawngreen 1px, transparent 3px);
 }
 
 #object-information .accordion {
@@ -161,12 +193,6 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     top: 11px;
     width: 30vw;
 }
-
-#go-back-home {
-}
-
-.baer { width: 100%; }
-
 #object-information .accordion-item { position: relative; }
 
 #object-information .accordion-item .streetsign {
@@ -233,6 +259,10 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     color: black;
 }
 
+#object-information .accordion-button::after {
+    margin-right: 3px;
+}
+
 #object-information .accordion-button:not(.collapsed)::after {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
@@ -245,6 +275,16 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     padding: 5px;
     max-height: calc(100vh - 25rem);
     overflow: scroll;
+}
+
+#object-information .street-heading h2 {
+    margin: 0;
+}
+
+#object-information .street-heading h3 {
+    font-size: 1.2rem;
+    color: dimgray;
+    margin: 0;
 }
 
 #object-information .accordion-body > span { font-weight: 300 !important; }
