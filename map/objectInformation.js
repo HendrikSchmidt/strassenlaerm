@@ -28,6 +28,8 @@ class ObjectInformation extends HTMLElement {
     set object(value){
         this._object = value;
         if(this._object) {
+            // hide mapbox controls when screen too small
+            if (window.innerWidth <= 600) document.querySelector('.mapboxgl-ctrl-top-left').style.display = 'none';
             if (this.$objectInformation.classList.contains('unfolded')) {
                 this.collapseElems.forEach(elem => elem.hide());
                 this.$objectInformation.classList.remove('unfolded');
@@ -36,6 +38,7 @@ class ObjectInformation extends HTMLElement {
                 this._renderObjectInformation();
             }
         } else if (this.$objectInformation.classList.contains('unfolded')) {
+            document.querySelector('.mapboxgl-ctrl-top-left').style.display = 'block';
             this.collapseElems.forEach(elem => elem.hide());
             this.$objectInformation.classList.remove('unfolded');
             setTimeout(() => this.$objectInformation.classList.remove('visible'), 1000);
