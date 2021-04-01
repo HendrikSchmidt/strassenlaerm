@@ -22,6 +22,7 @@ const pad = 50;
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
+    attributionControl: false,
     // center, // starting position [lng, lat]
     // zoom, // starting zoom
 })
@@ -30,7 +31,8 @@ const map = new mapboxgl.Map({
     .addControl(new mapboxgl.GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true
-    }), 'top-left');
+    }), 'top-left')
+    .addControl(new mapboxgl.AttributionControl({ customAttribution: 'Geoportal Berlin / Detailnetz - Straßenabschnitte' }));
 
 const layers = ['strassen-touch', 'plaetze'];
 let features;
