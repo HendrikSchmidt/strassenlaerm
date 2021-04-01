@@ -100,9 +100,9 @@ if len(sys.argv) > 1:
                 else:
                     new_obj['geometry'] = generate_geometry(new_obj, matches)
                     if new_obj['properties']['type'] == 'street':
-                        update = datasets.update_feature(os.getenv("streets_dataset"), new_obj['id'], new_obj).json()
+                        update = datasets.update_feature(os.getenv("strassen_dataset"), new_obj['id'], new_obj).json()
                     else:
-                        update = datasets.update_feature(os.getenv("squares_dataset"), new_obj['id'], new_obj).json()
+                        update = datasets.update_feature(os.getenv("plaetze_dataset"), new_obj['id'], new_obj).json()
 
                     msg += str(update) + '\n' if 'message' in update else 'Uploaded successfully.\n'
     except Exception as e:
