@@ -1,0 +1,33 @@
+{
+  "recipe": {
+    "version": 1,
+    "layers": {
+      "strassen": {
+        "source": "mapbox://tileset-source/strassenlaerm/strassen",
+        "minzoom": 5,
+        "maxzoom": 12
+      },
+      "plaetze": {
+        "source": "mapbox://tileset-source/strassenlaerm/plaetze",
+        "minzoom": 5,
+        "maxzoom": 12
+      },
+      "denkmaeler": {
+        "source": "mapbox://tileset-source/strassenlaerm/denkmaeler",
+        "minzoom": 5,
+        "maxzoom": 12
+      },
+      "gebaeude": {
+        "source": "mapbox://tileset-source/strassenlaerm/gebaeude",
+        "minzoom": 5,
+        "maxzoom": 12
+      },
+      "viertel": {
+        "source": "mapbox://tileset-source/strassenlaerm/viertel",
+        "minzoom": 5,
+        "maxzoom": 12
+      }
+    }
+  },
+  "name": "Strassenlaerm"
+}
