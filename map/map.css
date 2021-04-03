@@ -74,12 +74,16 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     line-height: 1;
     bottom: -1.6rem;
     font-size: 1rem;
-    left: calc(50% - 2rem);
-    width: 4rem;
+    left: calc(50% - 2.5rem);
+    width: 5rem;
 }
 
-.streetsign .more #get-object-info {
-    text-decoration: none;
+.streetsign .more img {
+    vertical-align: bottom;
+}
+
+.streetsign .more button {
+    color: #5e61d0;
     border: none;
 }
 

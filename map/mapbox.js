@@ -78,7 +78,7 @@ map.on('load', () => {
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><button id="get-object-info"> > mehr </button></div>`;
+                       + `<div class="more"><button id="get-object-info"><img src="arrow-right.svg" /> mehr </button></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)
