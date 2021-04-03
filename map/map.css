@@ -78,8 +78,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     width: 4rem;
 }
 
-.streetsign .more a {
+.streetsign .more #get-object-info {
     text-decoration: none;
+    border: none;
 }
 
 .streetsign.attached:before,
@@ -196,6 +197,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 #object-information .accordion-item {
     position: relative;
     background-color: transparent;
+    border: none;
 }
 
 #object-information .accordion-item .streetsign {
@@ -236,11 +238,11 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     position: absolute;
     left: 0;
     width: 20px;
-    height: 5px;
+    height: 4px;
     background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
 }
-#object-information .accordion-item .handle:before { top: -5px; }
-#object-information .accordion-item .handle:after { bottom: -5px; }
+#object-information .accordion-item .handle:before { top: -4px; }
+#object-information .accordion-item .handle:after { bottom: -4px; }
 
 #object-information .accordion-item:last-child .handle:after {
     height: 100px;
@@ -249,7 +251,6 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 
 #object-information .accordion-button {
     font-size: 1.5rem;
-    border: none;
     padding: 4px 5px 0;
 }
 

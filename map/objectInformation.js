@@ -1,3 +1,5 @@
+import { removeInformation } from './mapbox.js';
+
 class ObjectInformation extends HTMLElement {
     constructor() {
         super();
@@ -21,7 +23,7 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformationList = this.querySelector('#object-information-list');
         this.$streetLink = this.querySelector('#go-to-street');
         document.getElementById("go-back-home").addEventListener("click", () => {
-            location.hash = '';
+            removeInformation(true);
         });
     }
 

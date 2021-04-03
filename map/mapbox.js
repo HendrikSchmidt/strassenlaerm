@@ -23,8 +23,8 @@ const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
     attributionControl: false,
-    // center, // starting position [lng, lat]
-    // zoom, // starting zoom
+    center, // starting position [lng, lat]
+    zoom, // starting zoom
 })
     .addControl(new mapboxgl.FullscreenControl(), 'top-left')
     .addControl(new mapboxgl.NavigationControl(), 'top-left')
@@ -51,7 +51,7 @@ const id = 340; // just mocked
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
-    loadDescription();
+    if(location.hash) loadInformation(location.hash.split('-')[0].substr(1));
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
@@ -74,15 +74,22 @@ map.on('load', () => {
         });
 
         map.on('click', layer, e => {
+            removeInformation(false);
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
-            const html = `<div class="desc"><h2>${props.name} (${props.quarter})</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><a href="#${id}-${props.link.split('/')[3]}"> > mehr </a></div>`;
+            const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
+                       + `<div class="more"><button id="get-object-info"> > mehr </button></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
+
+            document.getElementById("get-object-info").addEventListener("click", () => {
+                expPopup.remove();
+                location.hash = `${id}-${props.link.split('/')[3]}`;
+                loadInformation(id);
+            });
 
             // add class with timeout to trigger css transitions
             setTimeout(() => expPopup.addClassName('expanded'), 1)
@@ -91,27 +98,24 @@ map.on('load', () => {
     })
 });
 
-function loadDescription() {
-    expPopup.remove();
-    if(location.hash) {
-        const id = parseInt(location.hash.split('-')[0].substr(1));
-        // const clickedObj = features.find(feature => feature.properties.wp_id === id);
-        const clickedObj = features[0];
-        const props = mapObjects[id];
-        document.querySelector('object-information').object = mapObjects[id];
-        map.fitBounds(
-            getBoundingBox(clickedObj.geometry),
-            {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
-        );
-        document.title = `${props.name} (${props.quarter}) | ${originalTitle}`
-    } else {
-        document.querySelector('object-information').object = null;
-        map.flyTo({center, zoom});
-        document.title = originalTitle;
-    }
+export function loadInformation(id) {
+    // const clickedObj = features.find(feature => feature.properties.wp_id === id);
+    const clickedObj = features[0];
+    document.querySelector('object-information').object = mapObjects[id];
+    const props = mapObjects[id];
+    map.fitBounds(
+        getBoundingBox(clickedObj.geometry),
+        {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
+    );
+    document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
 }
 
-window.onhashchange = loadDescription;
+export function removeInformation(flyToMiddle) {
+    location.hash = '';
+    document.title = originalTitle;
+    document.querySelector('object-information').object = null;
+    if (flyToMiddle) map.flyTo({center, zoom});
+}
 
 function getBoundingBox(geom) {
     const points = geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat();
