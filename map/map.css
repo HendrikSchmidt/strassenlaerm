@@ -193,7 +193,10 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     top: 11px;
     width: calc(150px + 25vw);
 }
-#object-information .accordion-item { position: relative; }
+#object-information .accordion-item {
+    position: relative;
+    background-color: transparent;
+}
 
 #object-information .accordion-item .streetsign {
     position: relative;
