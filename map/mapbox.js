@@ -98,7 +98,7 @@ map.on('load', () => {
     })
 });
 
-export function loadInformation(id) {
+function loadInformation(id) {
     // const clickedObj = features.find(feature => feature.properties.wp_id === id);
     const clickedObj = features[0];
     document.querySelector('object-information').object = mapObjects[id];
