@@ -14,6 +14,7 @@ const mapObjects = 'mapObjectsFromPHP' in window ? mapObjectsFromPHP : {
         "link": "https://strassenlaerm.berlin/robert-roessle-strasse/"
     }
 }
+const assetPrefix = 'assetPrefixFromPHP' in window ? assetPrefixFromPHP : '';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
@@ -78,7 +79,7 @@ map.on('load', () => {
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><button id="get-object-info"><img src="arrow-right.svg" /> mehr </button></div>`;
+                       + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> mehr </button></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)
