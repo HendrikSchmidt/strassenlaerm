@@ -12,7 +12,7 @@ class ObjectInformation extends HTMLElement {
                 </div>
                     <hr />
                 <div class="light-casing">
-                    <a id="go-to-street" class="light"></a>
+                    <a id="go-to-street" class="light" target="_blank"></a>
                 </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ class ObjectInformation extends HTMLElement {
         return [
             {
                 heading: `<div class="street-heading"><h2>${obj.name}</h2><h3>${obj.quarter}</h3></div>`,
-                text: `${obj.longDesc ? obj.longDesc : obj.shortDesc}<p>${obj.author[0]}</p>`
+                text: `${obj.longDesc ? obj.longDesc : obj.shortDesc}<p class="text-end">${obj.author[0]}</p>`
             },
             ... obj.currentSituation ? [{
                 heading: `<div class="street-heading"><h2>Aktueller Stand</h2></div>`,
