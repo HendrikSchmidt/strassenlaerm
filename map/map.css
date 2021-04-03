@@ -67,7 +67,6 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     border: 2px solid #444;
     border-radius: 1px;
     background-color: #EFEFEF;
-    transition: all .3s ease-in-out;
 }
 
 .streetsign.expanded .more {
