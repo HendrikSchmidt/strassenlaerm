@@ -36,7 +36,7 @@ map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
     if(location.hash) loadInformation(location.hash.split('-')[0].substr(1));
     layers.map(layer => {
-        map.on('mouseenter', layer, e => {
+        map.on('mousemove', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -45,8 +45,7 @@ map.on('load', () => {
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
 
             popup
-                .trackPointer()
-                // .setLngLat(e.lngLat)
+                .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
         });
