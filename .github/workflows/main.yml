@@ -27,6 +27,6 @@ jobs:
           script: |
             cd ~/Karten/wp-content/strassenlaerm/
             git pull
-            cp wordpress/mapbox-transfer.php ~/Karten/wp-content/plugins/mapbox-transfer/
+            cp wordpress/strassenlaerm-mapbox.php ~/Karten/wp-content/plugins/strassenlaerm-mapbox/
             cp wordpress/map.php ~/Karten/wp-content/themes/enfold-child/
             

@@ -1,6 +1,8 @@
 <?php
 /**
-* Plugin Name: Mapbox Transfer
+* Plugin Name: Strassenlaerm Mapbox
+* Description: This Plugin adds the bulk action to transfer map objects to Mapbox as well as adding the translatable strings used in the displayed map.
+* Author: Hendrik
 */
 
 add_filter('bulk_actions-edit-post', function($bulk_actions) {
@@ -38,7 +40,7 @@ add_action('admin_notices', function() {
 add_action( 'plugins_loaded', 'add_polylang_strings' );
 
 function add_polylang_strings() {
-    $group = 'mapbox';
+    $group = 'Mapbox';
     if (function_exists('pll_register_string')) {
         pll_register_string( 'more', 'Mehr', $group );
     } else {
