@@ -31,7 +31,7 @@ wp_enqueue_script( 'object-information-js', content_url() . '/strassenlaerm/map/
 wp_enqueue_script( 'strassenlaerm-mapbox-js', content_url() . '/strassenlaerm/map/mapbox.js', array(), false, true );
 //wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
 wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
-add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
+//add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
 //function add_type_attribute($tag, $handle, $src) {
 //    if ( 'object-information-js' == $handle || 'strassenlaerm-mapbox-js' == $handle ) {
 //        $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
