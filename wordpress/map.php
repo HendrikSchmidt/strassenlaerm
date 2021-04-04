@@ -45,6 +45,8 @@ if (function_exists('pll__')) {
             'more' => pll__( 'Mehr' ),
             'close' => pll__( 'Schließen' ),
             'toSite' => pll__( 'Seite öffnen' ),
+            'currentSituation' => pll__( 'Stand der Umbennung' ),
+            'recommendation' => pll__( 'Unsere Empfehlung' ),
         )
     );
 } else {
