@@ -42,7 +42,7 @@ map.on('load', () => {
 
             // const props = mapObjects[e.features[0].id];
             const props = mapObjects[id];
-            const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more">1 - 99</div>`;
+            const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
 
             popup
                 .trackPointer()
