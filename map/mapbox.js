@@ -18,6 +18,7 @@ const assetPrefix = 'assetPrefixFromPHP' in window ? assetPrefixFromPHP : '';
 const i18n = 'i18nFromPHP' in window ? i18nFromPHP : {
     more: 'Mehr',
 };
+console.log(assetPrefix)
 
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
