@@ -18,6 +18,7 @@ const assetPrefix = 'assetPrefixFromPHP' in window ? assetPrefixFromPHP : '';
 const i18n = 'i18nFromPHP' in window ? i18nFromPHP : {
     more: 'Mehr',
 };
+console.log(mapObjects);
 console.log(assetPrefix)
 
 
