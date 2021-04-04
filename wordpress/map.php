@@ -32,7 +32,7 @@ wp_enqueue_script( 'strassenlaerm-mapbox-js', content_url() . '/strassenlaerm/ma
 add_filter('script_loader_tag', 'add_type_attribute' , 100, 3);
 function add_type_attribute($tag, $handle, $src) {
     if ( 'object-information-js' == $handle || 'strassenlaerm-mapbox-js' == $handle ) {
-//        $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+        $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
         return $tag;
     }
     return $tag;
