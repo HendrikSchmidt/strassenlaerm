@@ -63,6 +63,7 @@ map.on('load', () => {
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
                        + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
 
+
             expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)

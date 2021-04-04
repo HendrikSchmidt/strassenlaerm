@@ -42,16 +42,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     font-weight: 300;
     font-size: 1rem;
     line-height: 1.15;
-    max-height: 0;
-    max-width: 0;
+    max-height: 10rem;
     margin: 0 5px;
-    overflow: hidden;
-    transition: all .5s;
-}
-
-.streetsign.expanded .desc p {
-    max-height: 20rem;
-    max-width: 100rem;
+    overflow: scroll;
 }
 
 .streetsign .more {
