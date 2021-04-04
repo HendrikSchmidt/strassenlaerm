@@ -78,7 +78,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 .streetsign .more img {
-    vertical-align: bottom;
+    vertical-align: baseline;
 }
 
 .streetsign .more button {
