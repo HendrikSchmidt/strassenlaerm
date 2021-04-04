@@ -14,11 +14,13 @@ add_filter('handle_bulk_actions-edit-post', function($redirect_url, $action, $po
     $map_objects = [];
     if ($action == 'transfer-to-mapbox') {
         foreach ($post_ids as $post_id) {
+            echo $post_id;
+            echo get_field('geoName', $post_id);
+            echo get_field('quarter', $post_id);
             $object_data = get_fields($post_id);
             $object_data['name'] = get_the_title($post_id);
             $map_objects[ $post_id ] = $object_data;
         }
-        print_r($map_objects);
         $command = ABSPATH . 'wp-content/strassenlaerm/data-upload/upload_data_to_datasets.py 2>&1';
         echo $command . "\n";
         $output=null;
