@@ -40,7 +40,7 @@ function add_type_attribute($tag, $handle, $src) {
 wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const assetPrefix = "wp-content/strassenlaerm/map/"', 'before' );
 wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const mapObjects = ' . json_encode($map_objects), 'before' );
 if (function_exists('pll__')) {
-    wp_localize_script( 'strassenlaerm-mapbox-js', 'i18nFromPHP',
+    wp_localize_script( 'strassenlaerm-mapbox-js', 'i18n',
         array(
             'more' => pll__( 'Mehr' ),
         )

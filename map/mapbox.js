@@ -1,6 +1,4 @@
-const i18n = 'i18nFromPHP' in window ? i18nFromPHP : {
-    more: 'Mehr',
-};
+console.log(i18n);
 console.log(mapObjects);
 console.log(assetPrefix);
 
