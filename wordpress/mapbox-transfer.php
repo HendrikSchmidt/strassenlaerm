@@ -34,3 +34,10 @@ add_action('admin_notices', function() {
         printf('<div id="message" class="updated notice is-dismissible"><p>' . __('Transfered %d objects to Mapbox.', 'txtdomain') . '</p></div>', $num_changed);
     }
 });
+
+$group = 'mapbox';
+if (function_exists('pll_register_string')) {
+    pll_register_string( 'more', 'Mehr', $group );
+} else {
+    echo "pll_register_string is not available.<br />\n";
+}
