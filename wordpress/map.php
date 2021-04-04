@@ -29,7 +29,7 @@ wp_enqueue_style( 'bootstrap.min.css', 'https://cdn.jsdelivr.net/npm/bootstrap@5
 wp_enqueue_style( 'map-css', content_url() . '/strassenlaerm/map/map.css' );
 wp_enqueue_script( 'object-information-js', content_url() . '/strassenlaerm/map/objectInformation.js', array(), false, true );
 wp_enqueue_script( 'custom-mapbox-js', content_url() . '/strassenlaerm/map/mapbox.js', array(), false, true );
-wp_add_inline_script( 'custom-mapbox-js', 'const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
+//wp_add_inline_script( 'custom-mapbox-js', 'const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
 wp_add_inline_script( 'custom-mapbox-js', 'const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
 add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
 function add_type_attribute($tag, $handle, $src) {
