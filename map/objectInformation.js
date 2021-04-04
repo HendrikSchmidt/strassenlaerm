@@ -1,4 +1,4 @@
-import { removeInformation } from './mapbox.js';
+// import { removeInformation } from './mapbox.js';
 
 class ObjectInformation extends HTMLElement {
     constructor() {
@@ -22,9 +22,9 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformation = this.querySelector('#object-information');
         this.$objectInformationList = this.querySelector('#object-information-list');
         this.$streetLink = this.querySelector('#go-to-street');
-        document.getElementById("go-back-home").addEventListener("click", () => {
-            removeInformation(true);
-        });
+        // document.getElementById("go-back-home").addEventListener("click", () => {
+        //     removeInformation(true);
+        // });
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
     }

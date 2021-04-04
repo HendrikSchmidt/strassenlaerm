@@ -117,7 +117,7 @@ function loadInformation(id) {
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
 }
 
-export function removeInformation(flyToMiddle) {
+function removeInformation(flyToMiddle) {
     location.hash = '';
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
