@@ -18,6 +18,7 @@ add_filter('handle_bulk_actions-edit-post', function($redirect_url, $action, $po
             $object_data['name'] = get_the_title($post_id);
             $map_objects[ $post_id ] = $object_data;
         }
+        echo $map_objects;
         $command = ABSPATH . 'wp-content/strassenlaerm/data-upload/upload_data_to_datasets.py 2>&1';
         echo $command . "\n";
         $output=null;
