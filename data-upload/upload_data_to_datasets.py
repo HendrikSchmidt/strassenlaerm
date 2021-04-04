@@ -12,37 +12,89 @@ datasets = Datasets(access_token=os.getenv("dataset_token"))
 
 objects = [
     # Faschistisch
-    {"id": 340, "name": "Gotenburger Straße", "quarter": "Gesundbrunnen"},
-    {"id": 340, "name": "Kruppstraße", "quarter": "Moabit"},
-    {"id": 340, "name": "Manfred-von-Richthofen-Straße", "quarter": "Tempelhof"},
+    {"id": 30, "name": "Gotenburger Straße", "quarter": "Gesundbrunnen"},
+    {"id": 40, "name": "Kruppstraße", "quarter": "Moabit"},
+    {"id": 34, "name": "Manfred-von-Richthofen-Straße", "quarter": "Tempelhof"},
     {"id": 340, "name": "Robert-Rössle-Straße", "quarter": "Buch"},
-    {"id": 340, "name": "Eschwegering", "quarter": "Tempelhof"},
+    {"id": 3402, "name": "Eschwegering", "quarter": "Tempelhof"},
     # Kolonialistisch
-    {"id": 340, "name": "Wissmannstraße", "quarter": "Grunewald"},
-    {"id": 340, "name": "Wissmannstraße", "quarter": "Neukölln"},
-    {"id": 340, "name": "Lüderitzstraße", "quarter": "Wedding"},
-    {"id": 340, "name": "Nachtigalplatz", "quarter": "Wedding"},
-    {"id": 340, "name": "Mohrenstraße", "quarter": "Mitte"},
-    {"id": 340, "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf"},
-    {"id": 340, "name": "Nettelbeckplatz", "quarter": "Wedding"},
-    {"id": 340, "name": "Bismarckstraße", "quarter": "Charlottenburg"},
-    {"id": 340, "name": "Bismarckstraße", "quarter": "Spandau"},
-    {"id": 340, "name": "Bismarckstraße", "quarter": "Steglitz"},
-    {"id": 340, "name": "Bismarckstraße", "quarter": "Zehlendorf"},
-    {"id": 340, "name": "Bismarckstraße", "quarter": "Wannsee"},
+    {"id": 3403, "name": "Wissmannstraße", "quarter": "Grunewald"},
+    {"id": 3404, "name": "Wissmannstraße", "quarter": "Neukölln"},
+    {"id": 3405, "name": "Lüderitzstraße", "quarter": "Wedding"},
+    {"id": 3406, "name": "Nachtigalplatz", "quarter": "Wedding"},
+    {"id": 3407, "name": "Mohrenstraße", "quarter": "Mitte"},
+    {"id": 3408, "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf"},
+    {"id": 3409, "name": "Nettelbeckplatz", "quarter": "Wedding"},
+    {"id": 1340, "name": "Bismarckstraße", "quarter": "Charlottenburg"},
+    {"id": 2340, "name": "Bismarckstraße", "quarter": "Spandau"},
+    {"id": 3340, "name": "Bismarckstraße", "quarter": "Steglitz"},
+    {"id": 4340, "name": "Bismarckstraße", "quarter": "Zehlendorf"},
+    {"id": 5340, "name": "Bismarckstraße", "quarter": "Wannsee"},
 ]
-
-existing_streets = datasets.list_features(os.getenv("streets_dataset")).json()['features']
-existing_squares = datasets.list_features(os.getenv("squares_dataset")).json()['features']
+streets_dataset = os.getenv("strassen_dataset")
+squares_dataset = os.getenv("plaetze_dataset")
+existing_streets = datasets.list_features(streets_dataset).json()['features']
+existing_squares = datasets.list_features(squares_dataset).json()['features']
 existing_objects = existing_streets + existing_squares
-print(existing_objects)
+# print(existing_objects)
 
 
-def generate_geometry(street_square, parts):
+def generate_geometry(street_square, parts, msg):
+    def reverse_part(part_to_reverse):
+        part_to_reverse['properties']['endet_bei_'], part_to_reverse['properties']['beginnt_be'] = \
+            part_to_reverse['properties']['beginnt_be'], part_to_reverse['properties']['endet_bei_']
+        part_to_reverse['geometry']['coordinates'][0].reverse()
+
     if street_square['properties']['type'] == 'street':
-        coordinates = [line
-                       for part in parts
-                       for line in part['geometry']['coordinates']]
+        # print(street_square['properties']['name'])
+        parts_multi = []
+        # go through all parts belonging to an object to simplify geometry
+        # for p in parts:
+        #     print(p['properties']['beginnt_be'] + '  ->  ' + p['properties']['endet_bei_'] + ': ' + str(p['geometry']['coordinates']))
+        while parts:
+            initial = parts.pop(0)
+            parts_sorted = [initial]
+            parts_unconnected = []
+            # because objects can be built like trees or forks,
+            # start with an initial object and build the longest possible line
+            # by checking if the lines can be concatenated
+            while part := parts.pop(0) if parts else False:
+                if part['properties']['beginnt_be'] == parts_sorted[-1]['properties']['endet_bei_']:
+                    parts_sorted += [part]
+                elif part['properties']['endet_bei_'] == parts_sorted[0]['properties']['beginnt_be']:
+                    parts_sorted = [part] + parts_sorted
+                elif part['properties']['endet_bei_'] == parts_sorted[-1]['properties']['endet_bei_']:
+                    reverse_part(part)
+                    parts_sorted += [part]
+                elif part['properties']['beginnt_be'] == parts_sorted[0]['properties']['beginnt_be']:
+                    reverse_part(part)
+                    parts_sorted = [part] + parts_sorted
+                else:
+                    # if a part doesnt fit onto the beginning or end immediately, it could still fit later
+                    parts_unconnected += [part]
+                    # skip re-adding of unconnected parts because no change was achieved
+                    continue
+                # so we throw all the parts back into the mix after every change
+                parts += parts_unconnected
+                parts_unconnected = []
+
+            for i in range(len(parts_sorted) - 1):
+                if not parts_sorted[i]['properties']['endet_bei_'] == parts_sorted[i+1]['properties']['beginnt_be']:
+                    msg += '----------NOT SORTED CORRECTLY----------\n'
+            # if no more lines can be connected, build a new line from the remaining parts
+            # until all parts belong to a line
+            parts_multi += [parts_sorted]
+            parts = parts_unconnected
+
+        # now get the actual coordinates from the parts to build the multilinestring
+        coordinates = []
+        for p, parts_sorted in enumerate(parts_multi):
+            for i, part in enumerate(parts_sorted):
+                if i == 0:
+                    coordinates += part['geometry']['coordinates']
+                else:
+                    # because the next part starts where the last one ended, we throw away the starting point
+                    coordinates[p] += part['geometry']['coordinates'][0][1:]
         return {'type': 'MultiLineString', 'coordinates': coordinates}
     else:
         # squares need to be polygons
@@ -75,7 +127,7 @@ def generate_geometry(street_square, parts):
 msg = ""
 
 if len(sys.argv) > 1:
-    objects = json.loads(sys.argv[1])
+    # objects = json.loads(sys.argv[1])
     try:
         with open('../../data/Strassenabschnitte.geojson') as f:
             berlin_data = json.loads(f.read())['features']
@@ -98,11 +150,11 @@ if len(sys.argv) > 1:
                 if match_in_existing:
                     msg += 'Found existing.\n'
                 else:
-                    new_obj['geometry'] = generate_geometry(new_obj, matches)
+                    new_obj['geometry'] = generate_geometry(new_obj, matches, msg)
                     if new_obj['properties']['type'] == 'street':
-                        update = datasets.update_feature(os.getenv("strassen_dataset"), new_obj['id'], new_obj).json()
+                        update = datasets.update_feature(streets_dataset, new_obj['id'], new_obj).json()
                     else:
-                        update = datasets.update_feature(os.getenv("plaetze_dataset"), new_obj['id'], new_obj).json()
+                        update = datasets.update_feature(squares_dataset, new_obj['id'], new_obj).json()
 
                     msg += str(update) + '\n' if 'message' in update else 'Uploaded successfully.\n'
     except Exception as e:
