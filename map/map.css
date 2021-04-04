@@ -253,6 +253,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 #object-information .accordion-button {
+    background-color: transparent;
     font-size: 1.5rem;
     padding: 4px 5px 0;
 }
@@ -262,7 +263,6 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 #object-information .accordion-button:not(.collapsed) {
-    background-color: transparent;
     color: black;
 }
 
