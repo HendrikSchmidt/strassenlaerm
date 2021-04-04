@@ -10,11 +10,11 @@ class ObjectInformation extends HTMLElement {
                 <div class="accordion accordion-flush" id="object-information-list"></div>
                 <div class="traffic-light">
                 <div class="light-casing">
-                    <button id="go-back-home" class="light"></button>
+                    <button id="go-back-home" class="light" data-bs-toggle="tooltip" data-bs-placement="left" title="Close Information"></button>
                 </div>
                     <hr />
                 <div class="light-casing">
-                    <a id="go-to-street" class="light" target="_blank"></a>
+                    <a id="go-to-street" class="light" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Go to Site"></a>
                 </div>
                 </div>
             </div>
@@ -25,6 +25,8 @@ class ObjectInformation extends HTMLElement {
         document.getElementById("go-back-home").addEventListener("click", () => {
             removeInformation(true);
         });
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
     }
 
     set object(value){
