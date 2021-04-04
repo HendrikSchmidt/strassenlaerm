@@ -66,16 +66,14 @@ map.on('load', () => {
             expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)
-                .addTo(map);
+                .addTo(map)
+                .addClassName('expanded');
 
             document.getElementById("get-object-info").addEventListener("click", () => {
                 expPopup.remove();
                 location.hash = `${id}-${props.link.split('/')[3]}`;
                 loadInformation(id);
             });
-
-            // add class with timeout to trigger css transitions
-            setTimeout(() => expPopup.addClassName('expanded'), 1)
         });
 
     })
