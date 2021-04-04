@@ -36,8 +36,8 @@ function add_type_attribute($tag, $handle, $src) {
     }
     return $tag;
 }
-wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
-wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
+wp_add_inline_script( 'strassenlaerm-mapbox-js', 'export const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
+wp_add_inline_script( 'strassenlaerm-mapbox-js', 'export const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
 if (function_exists('pll__')) {
     wp_localize_script( 'strassenlaerm-mapbox-js', 'i18nFromPHP',
         array(
