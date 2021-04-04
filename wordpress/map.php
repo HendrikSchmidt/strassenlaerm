@@ -43,6 +43,8 @@ if (function_exists('pll__')) {
     wp_localize_script( 'strassenlaerm-mapbox-js', 'i18n',
         array(
             'more' => pll__( 'Mehr' ),
+            'close' => pll__( 'Schließen' ),
+            'toSite' => pll__( 'Seite öffnen' ),
         )
     );
 } else {

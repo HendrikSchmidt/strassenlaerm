@@ -43,6 +43,8 @@ function add_polylang_strings() {
     $group = 'Mapbox';
     if (function_exists('pll_register_string')) {
         pll_register_string( 'more', 'Mehr', $group );
+        pll_register_string( 'close', 'Schließen', $group );
+        pll_register_string( 'toSite', 'Seite öffnen', $group );
     } else {
         echo "pll_register_string is not available.<br />\n";
     }

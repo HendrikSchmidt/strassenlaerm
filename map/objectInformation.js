@@ -10,11 +10,11 @@ class ObjectInformation extends HTMLElement {
                 <div class="accordion accordion-flush" id="object-information-list"></div>
                 <div class="traffic-light">
                 <div class="light-casing">
-                    <button id="go-back-home" class="light" data-bs-toggle="tooltip" data-bs-placement="left" title="Close Information"></button>
+                    <button id="go-back-home" class="light" data-bs-toggle="tooltip" data-bs-placement="left" title="${i18n.close}"></button>
                 </div>
                     <hr />
                 <div class="light-casing">
-                    <a id="go-to-street" class="light" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="Go to Site"></a>
+                    <a id="go-to-street" class="light" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="${i18n.toSite}"></a>
                 </div>
                 </div>
             </div>
