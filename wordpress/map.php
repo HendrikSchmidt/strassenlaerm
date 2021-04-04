@@ -32,12 +32,12 @@ wp_enqueue_script( 'strassenlaerm-mapbox-js', content_url() . '/strassenlaerm/ma
 add_filter('script_loader_tag', 'add_type_attribute' , 100, 3);
 function add_type_attribute($tag, $handle, $src) {
     if ( 'object-information-js' == $handle || 'strassenlaerm-mapbox-js' == $handle ) {
-        return str_replace('text/javascript', 'module', $tag);
+        return str_replace('type="text/javascript" src', 'type="module" src', $tag);
     }
     return $tag;
 }
-wp_add_inline_script( 'strassenlaerm-mapbox-js', 'export const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
-wp_add_inline_script( 'strassenlaerm-mapbox-js', 'export const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
+wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const assetPrefixFromPHP = "wp-content/strassenlaerm/map/"', 'before' );
+wp_add_inline_script( 'strassenlaerm-mapbox-js', 'const mapObjectsFromPHP = ' . json_encode($map_objects), 'before' );
 if (function_exists('pll__')) {
     wp_localize_script( 'strassenlaerm-mapbox-js', 'i18nFromPHP',
         array(
