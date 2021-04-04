@@ -1,8 +1,3 @@
-console.log(i18n);
-console.log(mapObjects);
-console.log(assetPrefix);
-
-
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
 const zoom = 10;
@@ -98,7 +93,7 @@ function loadInformation(id) {
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
 }
 
-function removeInformation(flyToMiddle) {
+export function removeInformation(flyToMiddle) {
     location.hash = '';
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
