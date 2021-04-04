@@ -35,9 +35,13 @@ add_action('admin_notices', function() {
     }
 });
 
-$group = 'mapbox';
-if (function_exists('pll_register_string')) {
-    pll_register_string( 'more', 'Mehr', $group );
-} else {
-    echo "pll_register_string is not available.<br />\n";
+add_action( 'plugins_loaded', 'add_polylang_strings' );
+
+function add_polylang_strings() {
+    $group = 'mapbox';
+    if (function_exists('pll_register_string')) {
+        pll_register_string( 'more', 'Mehr', $group );
+    } else {
+        echo "pll_register_string is not available.<br />\n";
+    }
 }
