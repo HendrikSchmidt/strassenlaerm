@@ -277,6 +277,10 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     overflow: scroll;
 }
 
+#object-information .accordion-body p {
+    margin-bottom: .4rem;
+}
+
 #object-information .street-heading h2 {
     margin: 0;
 }
