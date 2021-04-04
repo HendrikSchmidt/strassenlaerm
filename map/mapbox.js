@@ -15,6 +15,10 @@ const mapObjects = 'mapObjectsFromPHP' in window ? mapObjectsFromPHP : {
     }
 }
 const assetPrefix = 'assetPrefixFromPHP' in window ? assetPrefixFromPHP : '';
+const i18n = 'i18nFromPHP' in window ? i18nFromPHP : {
+    more: 'Mehr',
+};
+
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
@@ -79,7 +83,7 @@ map.on('load', () => {
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> mehr </button></div>`;
+                       + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
 
             expPopup
                 .setLngLat(e.lngLat)

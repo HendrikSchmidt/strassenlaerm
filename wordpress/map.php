@@ -39,5 +39,15 @@ function add_type_attribute($tag, $handle, $src) {
     }
     return $tag;
 }
+if (function_exists('pll__')) {
+    wp_localize_script( 'custom-mapbox-js', 'i18nFromPHP',
+        array(
+            'more' => pll__( 'Mehr' ),
+        )
+    );
+} else {
+    echo "pll__ is not available.<br />\n";
+}
+
 wp_footer();
 get_footer();
