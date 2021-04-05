@@ -9,28 +9,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 datasets = Datasets(access_token=os.getenv("dataset_token"))
-
-objects = [
-    # Faschistisch
-    {"id": 30, "name": "Gotenburger Straße", "quarter": "Gesundbrunnen"},
-    {"id": 40, "name": "Kruppstraße", "quarter": "Moabit"},
-    {"id": 34, "name": "Manfred-von-Richthofen-Straße", "quarter": "Tempelhof"},
-    {"id": 340, "name": "Robert-Rössle-Straße", "quarter": "Buch"},
-    {"id": 3402, "name": "Eschwegering", "quarter": "Tempelhof"},
-    # Kolonialistisch
-    {"id": 3403, "name": "Wissmannstraße", "quarter": "Grunewald"},
-    {"id": 3404, "name": "Wissmannstraße", "quarter": "Neukölln"},
-    {"id": 3405, "name": "Lüderitzstraße", "quarter": "Wedding"},
-    {"id": 3406, "name": "Nachtigalplatz", "quarter": "Wedding"},
-    {"id": 3407, "name": "Mohrenstraße", "quarter": "Mitte"},
-    {"id": 3408, "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf"},
-    {"id": 3409, "name": "Nettelbeckplatz", "quarter": "Wedding"},
-    {"id": 1340, "name": "Bismarckstraße", "quarter": "Charlottenburg"},
-    {"id": 2340, "name": "Bismarckstraße", "quarter": "Spandau"},
-    {"id": 3340, "name": "Bismarckstraße", "quarter": "Steglitz"},
-    {"id": 4340, "name": "Bismarckstraße", "quarter": "Zehlendorf"},
-    {"id": 5340, "name": "Bismarckstraße", "quarter": "Wannsee"},
-]
 streets_dataset = os.getenv("strassen_dataset")
 squares_dataset = os.getenv("plaetze_dataset")
 existing_streets = datasets.list_features(streets_dataset).json()['features']
@@ -127,41 +105,46 @@ def generate_geometry(street_square, parts, msg):
 msg = ""
 
 if len(sys.argv) > 1:
-    # objects = json.loads(sys.argv[1])
-    try:
-        with open('../../data/Strassenabschnitte.geojson') as f:
-            berlin_data = json.loads(f.read())['features']
-            for obj in objects:
-                msg += obj['name'] + " (" + obj['quarter'] + ")\n"
-                matches = [street for street in berlin_data if street['properties']['strassenna'] == obj['name'] and street['properties']['stadtteil'] == obj['quarter']]
-                first_match = matches[0]
-                new_obj = {
-                    'type': 'Feature',
-                    'id': str(obj['id']),
-                    'properties': {
-                        'wp_id': obj['id'],
-                        'name': obj['name'],
-                        'type': 'square' if first_match['properties']['strassen_2'] == 'PLAT' else 'street',
-                        'quarter': obj['quarter'],
-                        'street_no': first_match['properties']['strassensc'],
-                    },
-                }
-                match_in_existing = next((street for street in existing_objects if street['id'] == new_obj['id']), None)
-                if match_in_existing:
-                    msg += 'Found existing.\n'
-                else:
-                    new_obj['geometry'] = generate_geometry(new_obj, matches, msg)
-                    if new_obj['properties']['type'] == 'street':
-                        update = datasets.update_feature(streets_dataset, new_obj['id'], new_obj).json()
-                    else:
-                        update = datasets.update_feature(squares_dataset, new_obj['id'], new_obj).json()
-
-                    msg += str(update) + '\n' if 'message' in update else 'Uploaded successfully.\n'
-    except Exception as e:
-        msg += '\n'
-        msg += str(e)
-        msg += '\n'
+    objects = json.loads(sys.argv[1])
 else:
-    msg += 'Argument missing.\n'
+    with open('../../data/manual.json', 'r') as f:
+        objects = json.loads(f.read())
+
+
+try:
+    with open('../../data/Strassenabschnitte.geojson') as f:
+        berlin_data = json.loads(f.read())['features']
+
+    for obj in objects:
+        msg += obj['name'] + " (" + obj['quarter'] + ")\n"
+        matches = [street for street in berlin_data if street['properties']['strassenna'] == obj['name'] and street['properties']['stadtteil'] == obj['quarter']]
+        if not matches:
+            msg += 'Street not found.\n\n'
+            continue
+        first_match = matches[0]
+        match_in_existing = next((street for street in existing_objects if street['id'] == str(obj['id'])), None)
+        if match_in_existing:
+            msg += 'Found existing.\n\n'
+            continue
+        new_obj = {
+            'type': 'Feature',
+            'id': str(obj['id']),
+            'properties': {
+                'wp_id': obj['id'],
+                'name': obj['name'],
+                'type': 'square' if first_match['properties']['strassen_2'] == 'PLAT' else 'street',
+                'quarter': obj['quarter'],
+                'street_no': first_match['properties']['strassensc'],
+            },
+        }
+        new_obj['geometry'] = generate_geometry(new_obj, matches, msg)
+        if new_obj['properties']['type'] == 'street':
+            update = datasets.update_feature(streets_dataset, new_obj['id'], new_obj).json()
+        else:
+            update = datasets.update_feature(squares_dataset, new_obj['id'], new_obj).json()
+
+        msg += str(update) + '\n' if 'message' in update else 'Uploaded successfully.\n\n'
+except Exception as e:
+    msg += '\n' + str(e) + '\n'
 
 sys.stdout.write(msg)
