@@ -34,13 +34,12 @@ const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
     // console.log(map.getStyle().layers);
-    if(location.hash) loadInformation(location.hash.split('-')[0].substr(1));
+    if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layers.map(layer => {
         map.on('mousemove', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
-            // const props = mapObjects[e.features[0].id];
             const props = mapObjects[e.features[0].id];
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
 
@@ -62,7 +61,7 @@ map.on('load', () => {
 
         map.on('click', layer, e => {
             removeInformation(false);
-            const id = e.feature[0].id
+            const id = e.features[0].id;
             // selectedFeature = e.feature[0].id;
             // map.setFeatureState(
             //     { source: 'composite', id: id, sourceLayer: 'strassen' },
@@ -91,8 +90,7 @@ map.on('load', () => {
 });
 
 function loadInformation(id) {
-    // const clickedObj = features.find(feature => feature.properties.wp_id === id);
-    const clickedObj = features[0];
+    const clickedObj = features.find(feature => feature.properties.wp_id === id);
     document.querySelector('object-information').object = mapObjects[id];
     const props = mapObjects[id];
     map.fitBounds(
