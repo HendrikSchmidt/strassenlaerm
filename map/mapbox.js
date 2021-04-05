@@ -41,7 +41,7 @@ map.on('load', () => {
             map.getCanvas().style.cursor = 'pointer';
 
             // const props = mapObjects[e.features[0].id];
-            const props = mapObjects[id];
+            const props = mapObjects[e.features[0].id];
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
 
             // map.setFeatureState(
