@@ -36,7 +36,6 @@ map.on('load', () => {
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
-            // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
             const id = e.features[0].id;
@@ -50,7 +49,6 @@ map.on('load', () => {
         });
         map.on('mousemove', layer, e => { popup.setLngLat(e.lngLat) });
         map.on('mouseleave', layer, e => {
-            // Change it back to a pointer when it leaves.
             map.getCanvas().style.cursor = '';
             removeHighlight(false);
             hoveredFeature = null;
@@ -119,7 +117,10 @@ export function removeInformation(flyToMiddle) {
     location.hash = '';
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
-    if (flyToMiddle) map.flyTo({center, zoom});
+    if (flyToMiddle) {
+        console.log({center, zoom});
+        map.flyTo({center, zoom});
+    }
     removeHighlight(true);
 }
 
