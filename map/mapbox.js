@@ -17,7 +17,7 @@ const map = new mapboxgl.Map({
     }), 'top-left')
     .addControl(new mapboxgl.AttributionControl({ customAttribution: 'Geoportal Berlin / Detailnetz - Straßenabschnitte' }));
 
-const layers = ['strassen-touch', 'plaetze'];
+const layers = ['strassen', 'plaetze'];
 let features;
 let selectedPoint = map.getCenter();
 const originalTitle = document.title;
@@ -27,52 +27,47 @@ const popupOptions = {
     maxWidth: '400px',
     offset: 30,
 };
-const expPopup = new mapboxgl.Popup(popupOptions);
 const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
-// let selectedFeature = null;
+let hoveredFeature = null;
+let selectedFeature = null;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
-    // console.log(map.getStyle().layers);
+    console.log(map.getStyle());
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layers.map(layer => {
-        map.on('mousemove', layer, e => {
+        map.on('mouseenter', layer, e => {
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.getCanvas().style.cursor = 'pointer';
 
-            const props = mapObjects[e.features[0].id];
+            const id = e.features[0].id;
+            highlightStreet(id, false);
+
+            const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
-
-            // map.setFeatureState(
-            //     { source: 'composite', id: id, sourceLayer: 'strassen' },
-            //     { selected: true }
-            // );
-
             popup
-                .setLngLat(e.lngLat)
                 .setHTML(html)
                 .addTo(map);
         });
-        map.on('mouseleave', layer, () => {
+        map.on('mousemove', layer, e => { popup.setLngLat(e.lngLat) });
+        map.on('mouseleave', layer, e => {
             // Change it back to a pointer when it leaves.
             map.getCanvas().style.cursor = '';
+            removeHighlight(false);
+            hoveredFeature = null;
             popup.remove();
         });
 
         map.on('click', layer, e => {
             removeInformation(false);
             const id = e.features[0].id;
-            // selectedFeature = e.feature[0].id;
-            // map.setFeatureState(
-            //     { source: 'composite', id: id, sourceLayer: 'strassen' },
-            //     { selected: true }
-            // );
+            highlightStreet(id, true);
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
                        + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
 
-
+            const expPopup = new mapboxgl.Popup(popupOptions);
             expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)
@@ -89,15 +84,36 @@ map.on('load', () => {
     })
 });
 
+function highlightStreet(id, selected) {
+    if (selected) selectedFeature = id;
+    else hoveredFeature = id;
+    map.setFeatureState(
+        { source: 'composite', id, sourceLayer: 'strassen' },
+        { selected: true }
+    );
+}
+
+function removeHighlight(unselected) {
+    if(selectedFeature !== hoveredFeature) {
+        map.setFeatureState(
+            { source: 'composite', id: unselected ? selectedFeature : hoveredFeature, sourceLayer: 'strassen' },
+            { selected: false }
+        );
+    }
+}
+
 function loadInformation(id) {
-    const clickedObj = features.find(feature => feature.properties.wp_id === id);
     document.querySelector('object-information').object = mapObjects[id];
-    const props = mapObjects[id];
+
+    const geometries = features.filter(f => f.properties.wp_id === id).map(f => f.geometry);
     map.fitBounds(
-        getBoundingBox(clickedObj.geometry),
+        getBoundingBox(geometries),
         {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
     );
+
+    const props = mapObjects[id];
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
+    highlightStreet(id, true);
 }
 
 export function removeInformation(flyToMiddle) {
@@ -105,10 +121,12 @@ export function removeInformation(flyToMiddle) {
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
     if (flyToMiddle) map.flyTo({center, zoom});
+    removeHighlight(true);
 }
 
-function getBoundingBox(geom) {
-    const points = geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat();
+function getBoundingBox(geoms) {
+    const points = geoms.flatMap(geom => geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat());
+    console.log(points)
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
