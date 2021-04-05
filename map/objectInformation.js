@@ -23,10 +23,10 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformationList = this.querySelector('#object-information-list');
         this.$streetLink = this.querySelector('#go-to-street');
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+        this.tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
         document.getElementById("go-back-home").addEventListener("click", () => {
             removeInformation(true);
-            tooltipList.forEach(tooltip => tooltip.hide())
+            this.tooltipList.forEach(tooltip => {tooltip.hide(); tooltip.disable()});
         });
     }
 
@@ -41,6 +41,7 @@ class ObjectInformation extends HTMLElement {
         }
         // if an object is already displayed, wait for animation to finish
         setTimeout(() => this._renderObjectInformation(), otherObjectDisplayed ? 1000 : 0);
+        this.tooltipList.forEach(tooltip => tooltip.enable());
     }
 
     get object() {
