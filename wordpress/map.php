@@ -6,7 +6,7 @@ echo avia_title();
 do_action( 'ava_after_main_title' );
 $args = array(
     'post_count' => -1,
-    'category_name' => 'kartenobjekte',
+    'category__in' => [149, 151],
     'post_type' =>  'post'
 );
 $map_query = new WP_Query( $args );
