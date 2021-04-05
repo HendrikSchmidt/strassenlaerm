@@ -14,12 +14,13 @@ add_filter('handle_bulk_actions-edit-post', function($redirect_url, $action, $po
     $map_objects = [];
     if ($action == 'transfer-to-mapbox') {
         foreach ($post_ids as $post_id) {
+            echo "{ id: ";
             echo $post_id;
-            echo "\r\n";
+            echo ", name: ";
             echo get_field('geoName', $post_id);
-            echo "\r\n";
+            echo ", quarter: ";
             echo get_field('quarter', $post_id);
-            echo "\r\n";
+            echo " },\r\n";
             $object_data = get_fields($post_id);
             $object_data['name'] = get_the_title($post_id);
             $map_objects[ $post_id ] = $object_data;
