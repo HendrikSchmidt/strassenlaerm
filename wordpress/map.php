@@ -5,10 +5,13 @@ get_header();
 echo avia_title();
 do_action( 'ava_after_main_title' );
 $args = array(
-    'post_count' => -1,
+    'posts_per_page' => -1,
     'category__in' => [149, 151],
     'post_type' =>  'post'
 );
+if ( !function_exists( 'pll_get_term' ) ) {
+    echo pll_get_term(151, '');
+}
 $map_query = new WP_Query( $args );
 $map_objects = [];
 if ( $map_query -> have_posts() ) :
