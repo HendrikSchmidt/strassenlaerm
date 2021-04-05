@@ -29,11 +29,11 @@ const popupOptions = {
 };
 const expPopup = new mapboxgl.Popup(popupOptions);
 const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
-
-const id = 807; // just mocked
+// let selectedFeature = null;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
+    // console.log(map.getStyle().layers);
     if(location.hash) loadInformation(location.hash.split('-')[0].substr(1));
     layers.map(layer => {
         map.on('mousemove', layer, e => {
@@ -43,6 +43,11 @@ map.on('load', () => {
             // const props = mapObjects[e.features[0].id];
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
+
+            // map.setFeatureState(
+            //     { source: 'composite', id: id, sourceLayer: 'strassen' },
+            //     { selected: true }
+            // );
 
             popup
                 .setLngLat(e.lngLat)
@@ -57,6 +62,12 @@ map.on('load', () => {
 
         map.on('click', layer, e => {
             removeInformation(false);
+            const id = e.feature[0].id
+            // selectedFeature = e.feature[0].id;
+            // map.setFeatureState(
+            //     { source: 'composite', id: id, sourceLayer: 'strassen' },
+            //     { selected: true }
+            // );
             selectedPoint = e.lngLat;
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
