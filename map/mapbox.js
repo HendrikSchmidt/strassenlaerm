@@ -33,7 +33,6 @@ let selectedFeature = null;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers });
-    console.log(map.getStyle());
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layers.map(layer => {
         map.on('mouseenter', layer, e => {
@@ -126,7 +125,6 @@ export function removeInformation(flyToMiddle) {
 
 function getBoundingBox(geoms) {
     const points = geoms.flatMap(geom => geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat());
-    console.log(points)
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
