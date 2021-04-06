@@ -12,6 +12,21 @@ b { font-weight: 700; }
 a.mapboxgl-ctrl-logo { max-width: initial; }
 #map .mapboxgl-ctrl-bottom-right { right: 40px; }
 
+#map .quarter-sign {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #222;
+    background-color: #EFEFEF;
+    border: 2px solid #EFEFEF;
+    border-radius: 6px;
+}
+
+#map .quarter-sign .mapboxgl-popup-content {
+    background-color: #EFEFEF;
+    border: 2px solid #222;
+    border-radius: 4px;
+    padding: 8px;
+}
+
 #map .streetsign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
@@ -19,7 +34,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     border-radius: 2px;
 }
 
-.streetsign .mapboxgl-popup-tip { display: none; }
+#map .mapboxgl-popup-tip { display: none; }
 .mapboxgl-popup-close-button { font: initial; }
 
 .streetsign .mapboxgl-popup-content {
@@ -30,8 +45,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     z-index: initial;
 }
 
-.streetsign a { color: #5e62d0 }
+.quarter-sign a, .streetsign a { color: #5e62d0 }
 
+.quarter-sign h2,
 .streetsign h2 {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: normal;
@@ -39,7 +55,18 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     line-height: 1;
 }
 
-.streetsign .desc h2 { margin: 5px 5px 2px; }
+.quarter-sign .desc p {
+    margin: 0;
+}
+
+.desc {
+    margin: 5px 5px 3px;
+}
+
+.quarter-sign h2,
+.streetsign .desc h2 {
+    margin: 0;
+}
 
 .streetsign .desc p {
     font-family: 'Josefin Slab', serif;
@@ -47,8 +74,12 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     font-size: 1rem;
     line-height: 1.15;
     max-height: 10rem;
-    margin: 0 5px;
+    margin: 0;
     overflow: scroll;
+}
+
+.quarter-sign .more {
+    text-align: center;
 }
 
 .streetsign .more {
@@ -74,11 +105,11 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     width: 5rem;
 }
 
-.streetsign .more img {
+.more img {
     vertical-align: baseline;
 }
 
-.streetsign .more button {
+.more button {
     color: #5e61d0;
     border: none;
 }
