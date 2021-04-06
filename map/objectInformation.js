@@ -30,6 +30,14 @@ class ObjectInformation extends HTMLElement {
         });
     }
 
+    showHintOnFirstLoad() {
+        if (window.sessionStorage.getItem('wasLoadedBefore') !== 'true') {
+            this.tooltipList.forEach(tooltip => tooltip.show());
+            setTimeout(() => this.tooltipList.forEach(tooltip => tooltip.hide()), 3000);
+            window.sessionStorage.setItem('wasLoadedBefore', 'true');
+        }
+    }
+
     set object(value){
         this._object = value;
         this.collapseElems.forEach(elem => elem.hide());
@@ -71,6 +79,7 @@ class ObjectInformation extends HTMLElement {
                 this.$objectInformation.classList.add('visible');
                 this.$objectInformation.classList.add('unfolded');
             }, 10);
+            setTimeout(() => this.showHintOnFirstLoad(), 1000);
         } else {
             this.$objectInformation.classList.remove('visible');
         }
