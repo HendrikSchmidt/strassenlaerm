@@ -19,8 +19,8 @@ const map = new mapboxgl.Map({
 
 const layerMap = [
     { touchLayer: 'viertel', sourceLayer: 'viertel', className: 'quarter-sign'},
-    { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'streetsign'},
-    { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'streetsign'},
+    { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'streetsign attached'},
+    { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'streetsign attached'},
     { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'monument-sign'},
     { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'monument-sign'},
 ];
@@ -28,7 +28,7 @@ let features;
 const originalTitle = document.title;
 
 const popupOptions = { maxWidth: '400px',  offset: 30 };
-const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
+const popup = new mapboxgl.Popup({...popupOptions, closeButton: false, className: ''});
 let hoveredFeature = null;
 let selectedFeature = null;
 let oldSelection = null;
@@ -42,65 +42,77 @@ map.on('load', () => {
             map.getCanvas().style.cursor = 'pointer';
 
             const id = e.features[0].id;
+
             // only change popup when hovered over new feature
             if(id !== hoveredFeature?.id) {
                 // remove popup and highlight when switching between overlapping features
-                popup.remove();
                 if(hoveredFeature) removeHighlight(hoveredFeature);
                 hoveredFeature = {id, sourceLayer: layer.sourceLayer};
                 highlightStreet(hoveredFeature);
 
                 // only show popup for features other than the selected
+                // and only when not hovering over selected
+                // const features = map.queryRenderedFeatures(e.point, { layers: [selectedFeature?.sourceLayer] });
                 if (id !== selectedFeature?.id) {
-                    const props = mapObjects[id];
+                    const wp_id = e.features[0].properties['wp_id'];
+                    const props = mapObjects[wp_id];
                     const html = `<div class="desc"><h2>${props?.name}</h2></div><div class="more"></div>`;
                     popup
                         .setHTML(html)
                         .addTo(map)
-                        .addClassName(layer.className);
+                        .setLngLat(e.lngLat);
+                    layer.className.split(' ').map(className => popup.addClassName(className));
+                } else {
+                    popup.remove();
                 }
             }
             popup.setLngLat(e.lngLat);
         });
         map.on('mouseleave', layer.touchLayer, () => {
             map.getCanvas().style.cursor = '';
-            removeHighlight(hoveredFeature);
-            hoveredFeature = null;
-            popup.remove();
+            if (hoveredFeature) {
+                removeHighlight(hoveredFeature);
+                hoveredFeature = null;
+                popup.remove();
+            }
         });
         map.on('click', layer.touchLayer, e => {
-            if(fullInfoShown) removeInformation(false);
+            // only enable click on uppermost layer by comparing against currently hovered feature
+            if(layer.sourceLayer === hoveredFeature.sourceLayer) {
+                if (fullInfoShown) removeInformation(false);
 
-            const id = e.features[0].id;
-            if (selectedFeature) oldSelection = selectedFeature;
-            selectedFeature = {id, sourceLayer: layer.sourceLayer};
-            highlightStreet(selectedFeature);
+                const id = e.features[0].id;
+                if (selectedFeature) oldSelection = selectedFeature;
+                selectedFeature = {id, sourceLayer: layer.sourceLayer};
+                highlightStreet(selectedFeature);
 
-            const props = mapObjects[id];
-            const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
-                       + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
-            const expPopup = new mapboxgl.Popup({...popupOptions, className: layer.className});
-            expPopup
-                .setLngLat(e.lngLat)
-                .setHTML(html)
-                .addTo(map)
-                .addClassName('expanded');
+                const wp_id = e.features[0].properties['wp_id'];
+                const props = mapObjects[wp_id];
+                const html = `<div class="desc"><h2>${props?.name}</h2>${props?.shortDesc}</div>`
+                    + `<div class="more"><button id="get-object-info-${wp_id}"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
+                const expPopup = new mapboxgl.Popup({...popupOptions, className: layer.className});
+                expPopup
+                    .setHTML(html)
+                    .addTo(map)
+                    .setLngLat(e.lngLat)
+                    .addClassName('expanded');
 
-            document.getElementById("get-object-info").addEventListener("click", () => {
-                expPopup.remove();
-                location.hash = `${id}-${props.link.split('/')[3]}`;
-                loadInformation(id);
-            });
+                document.getElementById("get-object-info-" + wp_id).addEventListener("click", () => {
+                    expPopup.remove();
+                    location.hash = `${wp_id}-${props.link.split('/')[3]}`;
+                    loadInformation(wp_id);
+                });
 
-            expPopup.on('close', () => {
-                if(oldSelection) {
-                    removeHighlight(oldSelection, true);
-                    oldSelection = null;
-                } else {
-                    removeHighlight(selectedFeature);
-                    selectedFeature = null;
-                }
-            });
+                expPopup.on('close', () => {
+                    if (oldSelection) {
+                        removeHighlight(oldSelection, true);
+                        oldSelection = null;
+                    } else {
+                        removeHighlight(selectedFeature);
+                        selectedFeature = null;
+                    }
+                });
+            }
         });
     })
 });
