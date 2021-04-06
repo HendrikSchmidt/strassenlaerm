@@ -17,9 +17,14 @@ const map = new mapboxgl.Map({
     }), 'top-left')
     .addControl(new mapboxgl.AttributionControl({ customAttribution: 'Geoportal Berlin / Detailnetz - Straßenabschnitte' }));
 
-const layers = ['strassen', 'plaetze'];
+const layerMap = [
+    { touchLayer: 'strassen-touch', sourceLayer: 'strassen'},
+    { touchLayer: 'plaetze', sourceLayer: 'plaetze'},
+    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude'},
+    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler'},
+    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler'},
+];
 let features;
-let selectedPoint = map.getCenter();
 const originalTitle = document.title;
 
 const popupOptions = {
@@ -32,38 +37,49 @@ let hoveredFeature = null;
 let selectedFeature = null;
 
 map.on('load', () => {
-    features = map.queryRenderedFeatures({ layers });
+    features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
-    layers.map(layer => {
-        map.on('mouseenter', layer, e => {
+    layerMap.map(layer => {
+        map.on('mousemove', layer.touchLayer, e => {
             map.getCanvas().style.cursor = 'pointer';
 
             const id = e.features[0].id;
-            highlightStreet(id, false);
+            // only change popup when hovered over new feature
+            if(id !== hoveredFeature?.id) {
+                // remove popup and highlight when switching between overlapping features
+                popup.remove();
+                if(hoveredFeature) removeHighlight(hoveredFeature);
+                hoveredFeature = {id, sourceLayer: layer.sourceLayer};
+                highlightStreet(hoveredFeature);
 
-            const props = mapObjects[id];
-            const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
-            popup
-                .setHTML(html)
-                .addTo(map);
+                // only show popup for features other than the selected
+                if (id !== selectedFeature?.id) {
+                    const props = mapObjects[id];
+                    const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
+                    popup
+                        .setHTML(html)
+                        .addTo(map);
+                }
+            }
+            popup.setLngLat(e.lngLat);
         });
-        map.on('mousemove', layer, e => { popup.setLngLat(e.lngLat) });
-        map.on('mouseleave', layer, e => {
+        map.on('mouseleave', layer.touchLayer, () => {
             map.getCanvas().style.cursor = '';
-            removeHighlight(false);
+            removeHighlight(hoveredFeature);
             hoveredFeature = null;
             popup.remove();
         });
 
-        map.on('click', layer, e => {
-            removeInformation(false);
+        map.on('click', layer.touchLayer, e => {
+            if(selectedFeature) removeInformation(false);
+
             const id = e.features[0].id;
-            highlightStreet(id, true);
-            selectedPoint = e.lngLat;
+            selectedFeature = {id, sourceLayer: layer.sourceLayer};
+            highlightStreet(selectedFeature);
+
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
                        + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
-
             const expPopup = new mapboxgl.Popup(popupOptions);
             expPopup
                 .setLngLat(e.lngLat)
@@ -81,20 +97,19 @@ map.on('load', () => {
     })
 });
 
-function highlightStreet(id, selected) {
-    if (selected) selectedFeature = id;
-    else hoveredFeature = id;
+function highlightStreet(feature) {
     map.setFeatureState(
-        { source: 'composite', id, sourceLayer: 'strassen' },
-        { selected: true }
+        { source: 'composite', ...feature },
+        { highlighted: true }
     );
 }
 
-function removeHighlight(unselected) {
-    if(selectedFeature !== hoveredFeature) {
+function removeHighlight(feature) {
+    // only remove highlight if the object is neither selected nor hovered
+    if(selectedFeature?.id !== hoveredFeature?.id) {
         map.setFeatureState(
-            { source: 'composite', id: unselected ? selectedFeature : hoveredFeature, sourceLayer: 'strassen' },
-            { selected: false }
+            { source: 'composite', ...feature },
+            { highlighted: false }
         );
     }
 }
@@ -102,7 +117,8 @@ function removeHighlight(unselected) {
 function loadInformation(id) {
     document.querySelector('object-information').object = mapObjects[id];
 
-    const geometries = features.filter(f => f.properties.wp_id === id).map(f => f.geometry);
+    const selectedFeatures = features.filter(f => f.properties.wp_id === id)
+    const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
         {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
@@ -110,7 +126,8 @@ function loadInformation(id) {
 
     const props = mapObjects[id];
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
-    highlightStreet(id, true);
+    selectedFeature = { id, sourceLayer: selectedFeatures[0]['layer']['source-layer']};
+    highlightStreet(selectedFeature);
 }
 
 export function removeInformation(flyToMiddle) {
@@ -118,10 +135,10 @@ export function removeInformation(flyToMiddle) {
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
     if (flyToMiddle) {
-        console.log({center, zoom});
         map.flyTo({center, zoom});
     }
-    removeHighlight(true);
+    removeHighlight(selectedFeature);
+    selectedFeature = null;
 }
 
 function getBoundingBox(geoms) {
