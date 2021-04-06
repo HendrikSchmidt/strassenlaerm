@@ -21,8 +21,8 @@ const layerMap = [
     { touchLayer: 'viertel', sourceLayer: 'viertel', className: 'quarter-sign'},
     { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'streetsign attached'},
     { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'streetsign attached'},
-    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'monument-sign'},
-    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'monument-sign'},
+    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'streetsign'},
+    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'streetsign'},
 ];
 let features;
 const originalTitle = document.title;
