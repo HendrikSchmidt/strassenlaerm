@@ -30,6 +30,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     z-index: initial;
 }
 
+.streetsign a { color: #5e62d0 }
+
 .streetsign h2 {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: normal;
