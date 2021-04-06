@@ -28,14 +28,16 @@ let features;
 const originalTitle = document.title;
 
 const popupOptions = { maxWidth: '400px',  offset: 30 };
+const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
 let hoveredFeature = null;
 let selectedFeature = null;
+let oldSelection = null;
+let fullInfoShown = false;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layerMap.map(layer => {
-        const popup = new mapboxgl.Popup({...popupOptions, closeButton: false, className: layer.className});
         map.on('mousemove', layer.touchLayer, e => {
             map.getCanvas().style.cursor = 'pointer';
 
@@ -55,7 +57,7 @@ map.on('load', () => {
                     popup
                         .setHTML(html)
                         .addTo(map)
-                        .addClassName(layer.sourceLayer);
+                        .addClassName(layer.className);
                 }
             }
             popup.setLngLat(e.lngLat);
@@ -67,9 +69,10 @@ map.on('load', () => {
             popup.remove();
         });
         map.on('click', layer.touchLayer, e => {
-            if(selectedFeature) removeInformation(false);
+            if(fullInfoShown) removeInformation(false);
 
             const id = e.features[0].id;
+            if (selectedFeature) oldSelection = selectedFeature;
             selectedFeature = {id, sourceLayer: layer.sourceLayer};
             highlightStreet(selectedFeature);
 
@@ -90,7 +93,13 @@ map.on('load', () => {
             });
 
             expPopup.on('close', () => {
-                if(selectedFeature) removeHighlight(selectedFeature);
+                if(oldSelection) {
+                    removeHighlight(oldSelection, true);
+                    oldSelection = null;
+                } else {
+                    removeHighlight(selectedFeature);
+                    selectedFeature = null;
+                }
             });
         });
     })
@@ -103,9 +112,9 @@ function highlightStreet(feature) {
     );
 }
 
-function removeHighlight(feature) {
-    // only remove highlight if the object is neither selected nor hovered
-    if(selectedFeature?.id !== hoveredFeature?.id) {
+function removeHighlight(feature, old = false) {
+    // only remove highlight if the object is either old (and not the same) or neither selected nor hovered
+    if (old && oldSelection?.id !== selectedFeature?.id|| selectedFeature?.id !== hoveredFeature?.id) {
         map.setFeatureState(
             { source: 'composite', ...feature },
             { highlighted: false }
@@ -114,6 +123,7 @@ function removeHighlight(feature) {
 }
 
 function loadInformation(id) {
+    fullInfoShown = true;
     document.querySelector('object-information').object = mapObjects[id];
 
     const selectedFeatures = features.filter(f => f.properties.wp_id === id)
@@ -136,6 +146,7 @@ export function removeInformation(flyToMiddle) {
     if (flyToMiddle) map.flyTo({center, zoom});
     removeHighlight(selectedFeature);
     selectedFeature = null;
+    fullInfoShown = false;
 }
 
 function getBoundingBox(geoms) {
