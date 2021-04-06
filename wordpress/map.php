@@ -48,7 +48,7 @@ if (function_exists('pll__')) {
             'more' => pll__( 'Mehr' ),
             'close' => pll__( 'Schließen' ),
             'toSite' => pll__( 'Seite öffnen' ),
-            'currentSituation' => pll__( 'Stand der Umbennung' ),
+            'currentSituation' => pll__( 'Stand der Umbenennung' ),
             'recommendation' => pll__( 'Unsere Empfehlung' ),
         )
     );

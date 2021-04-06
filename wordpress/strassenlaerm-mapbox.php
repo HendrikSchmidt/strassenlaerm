@@ -52,7 +52,7 @@ function add_polylang_strings() {
         pll_register_string( 'more', 'Mehr', $group );
         pll_register_string( 'close', 'Schließen', $group );
         pll_register_string( 'toSite', 'Seite öffnen', $group );
-        pll_register_string( 'currentSituation', 'Stand der Umbennung', $group );
+        pll_register_string( 'currentSituation', 'Stand der Umbenennung', $group );
         pll_register_string( 'recommendation', 'Unsere Empfehlung', $group );
     } else {
         echo "pll_register_string is not available.<br />\n";
