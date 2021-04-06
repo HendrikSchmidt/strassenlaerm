@@ -18,21 +18,16 @@ const map = new mapboxgl.Map({
     .addControl(new mapboxgl.AttributionControl({ customAttribution: 'Geoportal Berlin / Detailnetz - Straßenabschnitte' }));
 
 const layerMap = [
-    { touchLayer: 'strassen-touch', sourceLayer: 'strassen'},
-    { touchLayer: 'plaetze', sourceLayer: 'plaetze'},
-    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude'},
-    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler'},
-    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler'},
+    { touchLayer: 'viertel', sourceLayer: 'viertel', className: 'quarter-sign'},
+    { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'streetsign'},
+    { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'streetsign'},
+    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'monument-sign'},
+    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'monument-sign'},
 ];
 let features;
 const originalTitle = document.title;
 
-const popupOptions = {
-    className: 'streetsign attached',
-    maxWidth: '400px',
-    offset: 30,
-};
-const popup = new mapboxgl.Popup({...popupOptions, closeButton: false});
+const popupOptions = { maxWidth: '400px',  offset: 30 };
 let hoveredFeature = null;
 let selectedFeature = null;
 
@@ -40,6 +35,7 @@ map.on('load', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
     layerMap.map(layer => {
+        const popup = new mapboxgl.Popup({...popupOptions, closeButton: false, className: layer.className});
         map.on('mousemove', layer.touchLayer, e => {
             map.getCanvas().style.cursor = 'pointer';
 
@@ -55,10 +51,11 @@ map.on('load', () => {
                 // only show popup for features other than the selected
                 if (id !== selectedFeature?.id) {
                     const props = mapObjects[id];
-                    const html = `<div class="desc"><h2>${props.name}</h2></div><div class="more"></div>`;
+                    const html = `<div class="desc"><h2>${props?.name}</h2></div><div class="more"></div>`;
                     popup
                         .setHTML(html)
-                        .addTo(map);
+                        .addTo(map)
+                        .addClassName(layer.sourceLayer);
                 }
             }
             popup.setLngLat(e.lngLat);
@@ -69,7 +66,6 @@ map.on('load', () => {
             hoveredFeature = null;
             popup.remove();
         });
-
         map.on('click', layer.touchLayer, e => {
             if(selectedFeature) removeInformation(false);
 
@@ -80,7 +76,7 @@ map.on('load', () => {
             const props = mapObjects[id];
             const html = `<div class="desc"><h2>${props.name}</h2><p>${props.shortDesc}</p></div>`
                        + `<div class="more"><button id="get-object-info"><img src="${assetPrefix}arrow-right.svg" /> ${i18n.more} </button></div>`;
-            const expPopup = new mapboxgl.Popup(popupOptions);
+            const expPopup = new mapboxgl.Popup({...popupOptions, className: layer.className});
             expPopup
                 .setLngLat(e.lngLat)
                 .setHTML(html)
@@ -92,8 +88,11 @@ map.on('load', () => {
                 location.hash = `${id}-${props.link.split('/')[3]}`;
                 loadInformation(id);
             });
-        });
 
+            expPopup.on('close', () => {
+                if(selectedFeature) removeHighlight(selectedFeature);
+            });
+        });
     })
 });
 
@@ -134,9 +133,7 @@ export function removeInformation(flyToMiddle) {
     location.hash = '';
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
-    if (flyToMiddle) {
-        map.flyTo({center, zoom});
-    }
+    if (flyToMiddle) map.flyTo({center, zoom});
     removeHighlight(selectedFeature);
     selectedFeature = null;
 }
