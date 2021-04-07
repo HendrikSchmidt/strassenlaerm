@@ -1,6 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
 const zoom = 10;
+let lastPosition = { center, zoom };
 const pad = 50;
 const map = new mapboxgl.Map({
     container: 'map',
@@ -117,6 +118,13 @@ map.on('load', () => {
     })
 });
 
+map.on('zoomstart', function() {
+    lastPosition = {
+        center: map.getCenter(),
+        zoom: map.getZoom(),
+    }
+});
+
 function highlightStreet(feature) {
     map.setFeatureState(
         { source: 'composite', ...feature },
@@ -151,11 +159,11 @@ function loadInformation(id) {
     highlightStreet(selectedFeature);
 }
 
-export function removeInformation(flyToMiddle) {
+export function removeInformation(flyToLastPosition) {
     location.hash = '';
     document.title = originalTitle;
     document.querySelector('object-information').object = null;
-    if (flyToMiddle) map.flyTo({center, zoom});
+    if (flyToLastPosition) map.flyTo(lastPosition);
     removeHighlight(selectedFeature);
     selectedFeature = null;
     fullInfoShown = false;
@@ -174,13 +182,6 @@ function getBoundingBox(geoms) {
         yMax = yMax > latitude ? yMax : latitude;
     });
     return [[xMin, yMin], [xMax, yMax]];
-}
-
-function getBoundingBoxCenter(data) {
-    const bbox = getBoundingBox(data);
-    let longitude = (bbox[0][0] + bbox[1][0])/2;
-    let latitude = (bbox[0][1] + bbox[1][1])/2;
-    return [longitude, latitude];
 }
 
 document.onkeydown = evt => { if (evt.key == 'Escape') removeInformation(); };
