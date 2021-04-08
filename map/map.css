@@ -139,7 +139,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     position: absolute;
     right: 0;
     top: 0;
-    background: linear-gradient(to right, rgba(50,71,64,1), rgba(85,106,91,1));
+    background: linear-gradient(to right, rgba(50,71,64,1), rgb(85, 106, 91));
     height: 100%;
     width: 20px;
 }
@@ -159,30 +159,40 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 #object-information .traffic-light {
     position: absolute;
     z-index: 20;
-    top: 10px;
+    top: 9px;
     right: -10px;
+    box-shadow: -1px 1px 5px 0 rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 2px;
-    background: linear-gradient(250deg, #436C68, #29473d);
 }
 
-#object-information .traffic-light hr {
-    width: 100%;
-    margin: 0;
-    height: 2px;
-    background-color: #151517;
-    opacity: .5;
+/*#object-information .traffic-light:before,*/
+#object-information .traffic-light:after {
+    content: '\00A0';
+    position: absolute;
+    width: 20px;
+    left: 13px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+/*#object-information .traffic-light:before{*/
+/*    top: -26px;*/
+/*    border-bottom: 6px solid #293838;*/
+/*}*/
+#object-information .traffic-light:after {
+    bottom: -26px;
+    border-top: 6px solid #273534;
 }
 
 #object-information .traffic-light .light-casing {
     width: 35px;
     height: 35px;
-    padding: 0;
-    margin: 3px;
-    background-color: #151517;
-    border-radius: 50%;
-    border: none;
-    border-top: #5b8872 2px solid;
+    padding: 4px;
+    background: linear-gradient(250deg, #436C68, #293838);
     box-sizing: content-box;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.4) inset;
+    border-radius: 2px;
 }
 
 #object-information .traffic-light .light {
@@ -190,7 +200,15 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     width: 100%;
     height: 100%;
     padding: 0;
+    border-radius: 50%;
     border: none;
+    border-top: #5b8872 2px solid;
+    animation: flicker 1.5s linear infinite alternate;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
 
 #go-back-home {
@@ -202,7 +220,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
                 radial-gradient(circle at 65% 35%, red 1px, transparent 3px),
                 radial-gradient(circle at 57.5% 42.5%, red 1px, transparent 3px),
                 radial-gradient(circle at 65% 65%, red 1px, transparent 3px),
-                radial-gradient(circle at 57.5% 57.5%, red 1px, transparent 3px);
+                radial-gradient(circle at 57.5% 57.5%, red 1px, transparent 3px),
+                linear-gradient(to top, #072624, #030605);
 }
 
 #go-to-street {
@@ -213,7 +232,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
                 radial-gradient(circle at 55% 35%, lawngreen 1px, transparent 3px),
                 radial-gradient(circle at 62.5% 42.5%, lawngreen 1px, transparent 3px),
                 radial-gradient(circle at 55% 65%, lawngreen 1px, transparent 3px),
-                radial-gradient(circle at 62.5% 57.5%, lawngreen 1px, transparent 3px);
+                radial-gradient(circle at 62.5% 57.5%, lawngreen 1px, transparent 3px),
+                linear-gradient(to top, #072624, #030605);
 }
 
 #object-information .accordion {
