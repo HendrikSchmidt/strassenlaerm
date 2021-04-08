@@ -19,8 +19,11 @@ if ( $map_query -> have_posts() ) :
         $object_data = get_fields();
         $object_data['name']= get_the_title();
         $object_data['link']= get_the_permalink();
-        $post_id_translated = pll_get_post( get_the_id() );
-        $map_objects[ $post_id_translated ] = $object_data;
+        if (function_exists('pll_get_post_translations')) {
+            // always use the german post id, as that one is associated to the mapbox features
+            $post_id_translated = pll_get_post_translations(get_the_id())['de'];
+            $map_objects[$post_id_translated] = $object_data;
+        }
     endwhile;
 endif;
 
