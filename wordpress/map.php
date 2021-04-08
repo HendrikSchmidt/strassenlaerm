@@ -19,7 +19,8 @@ if ( $map_query -> have_posts() ) :
         $object_data = get_fields();
         $object_data['name']= get_the_title();
         $object_data['link']= get_the_permalink();
-        $map_objects[ get_the_id() ] = $object_data;
+        $post_id_translated = pll_get_post( get_the_id() );
+        $map_objects[ $post_id_translated ] = $object_data;
     endwhile;
 endif;
 
