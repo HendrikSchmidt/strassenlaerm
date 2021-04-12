@@ -4,6 +4,6 @@
 	 height="300px" viewBox="0 0 200 300" enable-background="new 0 0 200 300" xml:space="preserve">
 <g id="denkmal">
 	<rect y="0" fill="#FFFFFF" width="200" height="200"/>
-	<path fill="#255DDA" d="M0 0 h200 l-200 200 l100 100 l100 -100z"/>
+	<path fill="#5e62d0" d="M0 0 h200 l-200 200 l100 100 l100 -100z"/>
 </g>
 </svg>
