@@ -104,6 +104,8 @@ map.on('load', () => {
                     loadInformation(wp_id);
                 });
 
+                // reacts on clicking anywhere else, on 'x' and 'more'
+                // behaviour change depending on whether the user switches from one feature to another, or selects a new one
                 expPopup.on('close', () => {
                     if (oldSelection) {
                         removeHighlight(oldSelection, true);
@@ -134,7 +136,7 @@ function highlightStreet(feature) {
 
 function removeHighlight(feature, old = false) {
     // only remove highlight if the object is either old (and not the same) or neither selected nor hovered
-    if (old && oldSelection?.id !== selectedFeature?.id|| selectedFeature?.id !== hoveredFeature?.id) {
+    if (old && oldSelection?.id !== selectedFeature?.id || selectedFeature?.id !== hoveredFeature?.id) {
         map.setFeatureState(
             { source: 'composite', ...feature },
             { highlighted: false }
@@ -142,22 +144,22 @@ function removeHighlight(feature, old = false) {
     }
 }
 
-function loadInformation(id) {
-    const selectedFeatures = features.filter(f => f.properties.wp_id === id);
+function loadInformation(wpId) {
+    const selectedFeatures = features.filter(f => f.properties.wp_id === wpId);
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
         {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
     );
 
-    const props = mapObjects[id];
+    const props = mapObjects[wpId];
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
     const sourceLayer = selectedFeatures[0]['layer']['source-layer'];
-    selectedFeature = { id, sourceLayer};
+    selectedFeature = { id: selectedFeatures[0].id, sourceLayer};
     highlightStreet(selectedFeature);
     fullInfoShown = true;
     document.querySelector('object-information').object = {
-        ...mapObjects[id],
+        ...props,
         className: layerMap.find(f => f.sourceLayer === sourceLayer).className,
     };
 }
