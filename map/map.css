@@ -11,32 +11,35 @@ b { font-weight: 700; }
 a.mapboxgl-ctrl-logo { max-width: initial; }
 #map .mapboxgl-ctrl-bottom-right { right: 40px; }
 
-#map .quarter-sign {
-    font-family: 'Josefin Sans', sans-serif;
-    color: #222;
-    background-color: #EFEFEF;
-    border: 2px solid #EFEFEF;
-    border-radius: 6px;
-}
-
-#map .quarter-sign .mapboxgl-popup-content {
-    background-color: #EFEFEF;
-    border: 2px solid #222;
-    border-radius: 4px;
-    padding: 8px;
-}
-
-#map .streetsign {
+#map .sign {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
+}
+
+#map .street {
     border: 3px solid #444;
     border-radius: 2px;
 }
 
+#map .quarter {
+    color: #222;
+    border: 3px solid #EFEFEF;
+    border-radius: 6px;
+}
+
+#map .quarter .mapboxgl-popup-content,
+#map .quarter .content {
+    background-color: #EFEFEF;
+    border: 3px solid #222;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+
 #map .mapboxgl-popup-tip { display: none; }
 .mapboxgl-popup-close-button { font: initial; }
 
-.streetsign .mapboxgl-popup-content {
+.street .mapboxgl-popup-content {
     background-color: #EFEFEF;
     box-shadow: 0 3px #444;
     border-radius: 0;
@@ -44,48 +47,39 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     z-index: initial;
 }
 
-.quarter-sign a, .streetsign a { color: #5e62d0 }
+.sign a { color: #5e62d0 }
 
-.quarter-sign h2,
-.streetsign h2 {
+.sign h2 {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: normal;
     font-size: 1.5rem;
     line-height: 1;
 }
 
-.quarter-sign .desc p {
+.desc { margin: 5px 5px 3px; }
+
+.quarter .desc p,
+.quarter h2,
+.street .desc h2 {
     margin: 0;
 }
 
-.desc {
-    margin: 5px 5px 3px;
-}
-
-.quarter-sign h2,
-.streetsign .desc h2 {
-    margin: 0;
-}
-
-.streetsign .desc p,
-.streetsign .desc span {
+.sign .desc p,
+.sign .desc span {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.15;
     font-weight: 300 !important;
 }
 
-.streetsign .desc p {
+.street .desc p {
     margin: 0;
     overflow: scroll;
 }
 
+.quarter .more { text-align: center; }
 
-.quarter-sign .more {
-    text-align: center;
-}
-
-.streetsign .more {
+.street .more {
     text-align: center;
     font-size: .6rem;
     line-height: 0.8;
@@ -100,36 +94,39 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     background-color: #EFEFEF;
 }
 
-.streetsign.expanded .more {
+.street.expanded .more {
     line-height: 1;
     bottom: -1.6rem;
-    font-size: 1rem;
     left: calc(50% - 2.5rem);
     width: 5rem;
 }
 
-.more img {
-    vertical-align: baseline;
-}
+.expanded .more { font-size: 1rem; }
+
+.more img { vertical-align: baseline; }
 
 .more button {
     color: #5e61d0;
     border: none;
 }
 
-.streetsign.attached:before,
-.streetsign.attached:after {
+.attached:before,
+.attached:after {
     content: '\00a0';
     background-color: #444;
     position: absolute;
     right: -6px;
     width: 6px;
     height: 4px;
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
 }
-.streetsign.attached:before { top: -4px; }
-.streetsign:after { bottom: -4px; }
+.attached:before {
+    border-top-left-radius: 3px;
+    top: -4px;
+}
+:after {
+    border-bottom-left-radius: 3px;
+    bottom: -4px;
+}
 
 #object-information {
     position: absolute;
@@ -254,20 +251,20 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     border: none;
 }
 
-#object-information .accordion-item .streetsign {
+#object-information .accordion-item .sign {
     position: relative;
     margin-bottom: 5px;
     transform: rotate3d(0, 1, 0, -103deg);
     transform-origin: calc(100% + 10px) center;
     transition: transform .5s ease-in-out;
 }
-#object-information.unfolded .accordion-item .streetsign { transform: rotate3d(0, 1, 0, 0deg); }
-#object-information .accordion-item:nth-child(1) .streetsign { z-index: 9; transition-delay: .5s; }
-#object-information .accordion-item:nth-child(2) .streetsign { z-index: 8; transition-delay: .3s; }
-#object-information .accordion-item:nth-child(3) .streetsign { z-index: 7; transition-delay: .1s; }
-#object-information.unfolded .accordion-item:nth-child(1) .streetsign { transition-delay: .1s; }
-#object-information.unfolded .accordion-item:nth-child(2) .streetsign { transition-delay: .3s; }
-#object-information.unfolded .accordion-item:nth-child(3) .streetsign { transition-delay: .5s; }
+#object-information.unfolded .accordion-item .sign { transform: rotate3d(0, 1, 0, 0deg); }
+#object-information .accordion-item:nth-child(1) .sign { z-index: 9; transition-delay: .5s; }
+#object-information .accordion-item:nth-child(2) .sign { z-index: 8; transition-delay: .3s; }
+#object-information .accordion-item:nth-child(3) .sign { z-index: 7; transition-delay: .1s; }
+#object-information.unfolded .accordion-item:nth-child(1) .sign { transition-delay: .1s; }
+#object-information.unfolded .accordion-item:nth-child(2) .sign { transition-delay: .3s; }
+#object-information.unfolded .accordion-item:nth-child(3) .sign { transition-delay: .5s; }
 
 #object-information .accordion-item .handle {
     position: absolute;
@@ -317,6 +314,10 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     color: black;
 }
 
+.quarter .accordion-button:not(.collapsed) {
+    box-shadow: none;
+}
+
 #object-information .accordion-button::after {
     margin-right: 3px;
 }
@@ -352,7 +353,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 #object-information .accordion-body > span { font-weight: 300 !important; }
 
 @media only screen and (max-width: 600px) {
-    .mapboxgl-popup.streetsign.expanded {
+    .mapboxgl-popup.sign.expanded {
         position: absolute;
         top: initial;
         bottom: 2rem;

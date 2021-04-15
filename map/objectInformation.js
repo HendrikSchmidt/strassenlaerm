@@ -61,10 +61,10 @@ class ObjectInformation extends HTMLElement {
 
         if (this._object) {
             this.$streetLink.href = this._object.link;
-            let infoItems = this.createInfoArray(this._object);
+            let infoItems = this._createInfoArray(this._object);
 
             infoItems.forEach((info, index) => {
-                let $infoItem = this._renderItem(info, index)
+                let $infoItem = this._renderItem(info, index, this._object.className)
                 let $infoItemCollapse = $infoItem.querySelector(`#target-${index}`);
                 let bsCollapse = new bootstrap.Collapse($infoItemCollapse, {
                     toggle: false,
@@ -84,7 +84,7 @@ class ObjectInformation extends HTMLElement {
         }
     }
 
-    createInfoArray(obj) {
+    _createInfoArray(obj) {
         return [
             {
                 heading: `<div class="street-heading"><h2>${obj.name}</h2><h3>${obj.quarter}</h3></div>`,
@@ -101,28 +101,30 @@ class ObjectInformation extends HTMLElement {
         ]
     }
 
-    _renderItem(info, index) {
+    _renderItem(info, index, className) {
         let $infoItem = document.createElement('div');
         $infoItem.classList.add('accordion-item');
         this.$objectInformationList.appendChild($infoItem);
         $infoItem.innerHTML = `
-            <div class="streetsign attached">
-                <h2 class="accordion-header" id="item-${index}">
-                    <button
-                        class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#target-${index}"
-                        aria-expanded="false"
-                        aria-controls="target-${index}">
-                        ${info.heading}
-                    </button>
-                </h2>
-                <div
-                    id="target-${index}"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="item-${index}">
-                    <div class="accordion-body">${info.text}</div>
+            <div class="${className} attached">
+                <div class="content">
+                    <h2 class="accordion-header" id="item-${index}">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#target-${index}"
+                            aria-expanded="false"
+                            aria-controls="target-${index}">
+                            ${info.heading}
+                        </button>
+                    </h2>
+                    <div
+                        id="target-${index}"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="item-${index}">
+                        <div class="accordion-body">${info.text}</div>
+                    </div>
                 </div>
             </div>
             <div class="handle"><div class="handle-inner">&nbsp;</div></div>

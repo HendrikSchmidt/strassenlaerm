@@ -19,11 +19,11 @@ const map = new mapboxgl.Map({
     .addControl(new mapboxgl.AttributionControl({ customAttribution: 'Geoportal Berlin / Detailnetz - Straßenabschnitte' }));
 
 const layerMap = [
-    { touchLayer: 'viertel', sourceLayer: 'viertel', className: 'quarter-sign'},
-    { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'streetsign attached'},
-    { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'streetsign attached'},
-    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'streetsign'},
-    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'streetsign'},
+    { touchLayer: 'viertel', sourceLayer: 'viertel', className: 'sign quarter'},
+    { touchLayer: 'plaetze', sourceLayer: 'plaetze', className: 'sign street'},
+    { touchLayer: 'strassen-touch', sourceLayer: 'strassen', className: 'sign street'},
+    { touchLayer: 'gebaeude', sourceLayer: 'gebaeude', className: 'sign street'},
+    { touchLayer: 'denkmaeler', sourceLayer: 'denkmaeler', className: 'sign street'},
 ];
 let features;
 const originalTitle = document.title;
@@ -143,10 +143,7 @@ function removeHighlight(feature, old = false) {
 }
 
 function loadInformation(id) {
-    fullInfoShown = true;
-    document.querySelector('object-information').object = mapObjects[id];
-
-    const selectedFeatures = features.filter(f => f.properties.wp_id === id)
+    const selectedFeatures = features.filter(f => f.properties.wp_id === id);
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
@@ -155,8 +152,14 @@ function loadInformation(id) {
 
     const props = mapObjects[id];
     document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
-    selectedFeature = { id, sourceLayer: selectedFeatures[0]['layer']['source-layer']};
+    const sourceLayer = selectedFeatures[0]['layer']['source-layer'];
+    selectedFeature = { id, sourceLayer};
     highlightStreet(selectedFeature);
+    fullInfoShown = true;
+    document.querySelector('object-information').object = {
+        ...mapObjects[id],
+        className: layerMap.find(f => f.sourceLayer === sourceLayer).className,
+    };
 }
 
 export function removeInformation(flyToLastPosition) {
