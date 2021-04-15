@@ -107,7 +107,7 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformationList.appendChild($infoItem);
         $infoItem.innerHTML = `
             <div class="${className} attached">
-                <div class="content">
+                <div class="sign-content">
                     <h2 class="accordion-header" id="item-${index}">
                         <button
                             class="accordion-button collapsed"

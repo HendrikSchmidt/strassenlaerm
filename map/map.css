@@ -28,7 +28,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 #map .quarter .mapboxgl-popup-content,
-#map .quarter .content {
+#map .quarter .sign-content {
     background-color: #EFEFEF;
     border: 3px solid #222;
     border-radius: 4px;
