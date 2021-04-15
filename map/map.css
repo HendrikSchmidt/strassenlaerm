@@ -67,14 +67,19 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     margin: 0;
 }
 
-.streetsign .desc p {
+.streetsign .desc p,
+.streetsign .desc span {
     font-family: 'Josefin Sans', sans-serif;
-    font-weight: 300;
     font-size: 1rem;
     line-height: 1.15;
+    font-weight: 300 !important;
+}
+
+.streetsign .desc p {
     margin: 0;
     overflow: scroll;
 }
+
 
 .quarter-sign .more {
     text-align: center;
