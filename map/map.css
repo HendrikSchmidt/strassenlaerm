@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;1,300&display=swap');
+
 b { font-weight: 700; }
 .tooltip-inner { background-color: #5e61d0; }
 .tooltip .tooltip-arrow:before { border-left-color: #5e61d0; }
