@@ -65,11 +65,18 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 .sign .desc p,
-.sign .desc span {
+.sign .desc span,
+.accordion-body p,
+.accordion-body span {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.15;
     font-weight: 300 !important;
+}
+
+.sign .desc b,
+.accordion-body b {
+    font-weight: 500;
 }
 
 .street .desc p {
