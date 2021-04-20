@@ -153,7 +153,7 @@ function loadInformation(wpId) {
     );
 
     const props = mapObjects[wpId];
-    document.title = `${props.name} (${props.quarter}) | ${originalTitle}`;
+    document.title = `${htmlDecode(props.name)} (${htmlDecode(props.quarter)}) | ${originalTitle}`;
     const sourceLayer = selectedFeatures[0]['layer']['source-layer'];
     selectedFeature = { id: selectedFeatures[0].id, sourceLayer};
     highlightStreet(selectedFeature);
@@ -187,6 +187,11 @@ function getBoundingBox(geoms) {
         yMax = yMax > latitude ? yMax : latitude;
     });
     return [[xMin, yMin], [xMax, yMax]];
+}
+
+function htmlDecode(input) {
+    const doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
 }
 
 document.onkeydown = evt => { if (evt.key == 'Escape') removeInformation(); };
