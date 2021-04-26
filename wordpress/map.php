@@ -55,6 +55,7 @@ if (function_exists('pll__')) {
             'toSite' => pll__( 'Seite öffnen' ),
             'currentSituation' => pll__( 'Stand der Umbenennung' ),
             'recommendation' => pll__( 'Unsere Empfehlung' ),
+            'notFound' => pll__( 'Objekt nicht gefunden' ),
         )
     );
 } else {

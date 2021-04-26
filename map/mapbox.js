@@ -37,7 +37,31 @@ let fullInfoShown = false;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
-    if(location.hash) loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
+    if(location.hash) {
+        try {
+            loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
+        }
+        catch (error) {
+            // remove hash and show toast to notify failure
+            location.hash = '';
+            let errorToast = document.createElement("DIV");
+            errorToast.innerHTML = `
+                <div class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="d-flex">
+                    <div class="toast-body">${i18n.notFound}</div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                </div>`;
+            document.getElementById('map').appendChild(errorToast);
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            var toastList = toastElList.map(function (toastEl) {
+                let toast =  new bootstrap.Toast(toastEl, { autohide: true });
+                toast.show();
+                return toast;
+            })
+            console.error(error);
+        }
+    }
     layerMap.map(layer => {
         map.on('mousemove', layer.touchLayer, e => {
             map.getCanvas().style.cursor = 'pointer';
@@ -149,7 +173,10 @@ function loadInformation(wpId) {
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
-        {padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}},
+        {
+            maxZoom: 16,
+            padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
+        },
     );
 
     const props = mapObjects[wpId];
@@ -175,7 +202,22 @@ export function removeInformation(flyToLastPosition) {
 }
 
 function getBoundingBox(geoms) {
-    const points = geoms.flatMap(geom => geom.type === 'LineString' ? geom.coordinates : geom.coordinates.flat());
+    console.log(geoms)
+    let points;
+    switch (geoms[0].type) {
+        case 'Point':
+            points = [geoms[0].coordinates];
+            break;
+        case 'LineString':
+            points = geoms.flatMap(geom => geom.coordinates);
+            break;
+        case 'MultiLineString':
+            points = geoms.flatMap(geom => geom.coordinates.flat());
+            break;
+        default:
+            console.error('Can\'t read geometry of object.')
+    }
+    console.log(points)
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
@@ -186,6 +228,7 @@ function getBoundingBox(geoms) {
         yMin = yMin < latitude ? yMin : latitude;
         yMax = yMax > latitude ? yMax : latitude;
     });
+    console.log([[xMin, yMin], [xMax, yMax]])
     return [[xMin, yMin], [xMax, yMax]];
 }
 
