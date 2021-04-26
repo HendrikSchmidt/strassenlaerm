@@ -78,7 +78,7 @@ class ObjectInformation extends HTMLElement {
                 this.$objectInformation.classList.add('visible');
                 this.$objectInformation.classList.add('unfolded');
             }, 10);
-            setTimeout(() => this.showHintOnFirstLoad(), 1000);
+            this.$objectInformation.addEventListener('transitionend', this.showHintOnFirstLoad);
         } else {
             this.$objectInformation.classList.remove('visible');
         }
