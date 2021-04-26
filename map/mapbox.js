@@ -202,7 +202,6 @@ export function removeInformation(flyToLastPosition) {
 }
 
 function getBoundingBox(geoms) {
-    console.log(geoms)
     let points;
     switch (geoms[0].type) {
         case 'Point':
@@ -217,7 +216,6 @@ function getBoundingBox(geoms) {
         default:
             console.error('Can\'t read geometry of object.')
     }
-    console.log(points)
     let latitude, longitude, xMin, xMax, yMin, yMax;
 
     points.forEach(point => {
@@ -228,7 +226,6 @@ function getBoundingBox(geoms) {
         yMin = yMin < latitude ? yMin : latitude;
         yMax = yMax > latitude ? yMax : latitude;
     });
-    console.log([[xMin, yMin], [xMax, yMax]])
     return [[xMin, yMin], [xMax, yMax]];
 }
 
