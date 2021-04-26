@@ -100,7 +100,7 @@ map.on('load', () => {
 
                 document.getElementById("get-object-info-" + wp_id).addEventListener("click", () => {
                     expPopup.remove();
-                    location.hash = props.link;
+                    location.hash = props['map-link'];
                     loadInformation(wp_id);
                 });
 

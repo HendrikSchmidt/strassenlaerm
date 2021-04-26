@@ -60,7 +60,7 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformationList.innerHTML = '';
 
         if (this._object) {
-            this.$streetLink.href = this._object.link;
+            this.$streetLink.href = this._object.permalink;
             let infoItems = this._createInfoArray(this._object);
 
             infoItems.forEach((info, index) => {
