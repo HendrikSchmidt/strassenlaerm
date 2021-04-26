@@ -13,7 +13,7 @@ class ObjectInformation extends HTMLElement {
                         <button id="go-back-home" class="light" data-bs-toggle="tooltip" data-bs-placement="left" title="${i18n.close}"></button>
                     </div>
                     <div class="light-casing">
-                        <a id="go-to-street" class="light" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" title="${i18n.toSite}"></a>
+                        <a id="go-to-street" class="light" data-bs-toggle="tooltip" data-bs-placement="left" title="${i18n.toSite}"></a>
                     </div>
                 </div>
             </div>
