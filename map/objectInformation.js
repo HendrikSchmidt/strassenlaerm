@@ -21,10 +21,11 @@ class ObjectInformation extends HTMLElement {
         this.$objectInformation = this.querySelector('#object-information');
         this.$objectInformationList = this.querySelector('#object-information-list');
         this.$streetLink = this.querySelector('#go-to-street');
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipTriggerList = [].slice.call(this.querySelectorAll('[data-bs-toggle="tooltip"]'));
         this.tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
-        document.getElementById("go-back-home").addEventListener("click", () => {
+        this.querySelector('#go-back-home').addEventListener("click", () => {
             removeInformation(true);
+            // disable to prevent buggy display
             this.tooltipList.forEach(tooltip => {tooltip.hide(); tooltip.disable()});
         });
     }
@@ -47,8 +48,14 @@ class ObjectInformation extends HTMLElement {
             document.querySelector('.mapboxgl-ctrl-top-left').style.display = this._object ? 'none' : 'block';
         }
         // if an object is already displayed, wait for animation to finish
-        setTimeout(() => this._renderObjectInformation(), otherObjectDisplayed ? 1000 : 0);
-        this.tooltipList.forEach(tooltip => tooltip.enable());
+        if (otherObjectDisplayed) {
+            const lastSign = this.querySelector('#object-information .accordion-item:last-child .sign')
+            lastSign.addEventListener('transitionend', () => this._renderObjectInformation());
+        } else {
+            this._renderObjectInformation();
+        }
+        // tooltips might have been disabled before
+        this.tooltipList.forEach(tooltip => tooltip.enable() );
     }
 
     get object() {
@@ -71,14 +78,19 @@ class ObjectInformation extends HTMLElement {
                     parent: this.$objectInformationList
                 });
                 this.collapseElems.push(bsCollapse);
-                if (index === 0) setTimeout(() => bsCollapse.show(), 1200);
             });
             // setTimeout to enable animations
             setTimeout(() => {
                 this.$objectInformation.classList.add('visible');
                 this.$objectInformation.classList.add('unfolded');
-            }, 10);
-            this.$objectInformation.addEventListener('transitionend', this.showHintOnFirstLoad);
+            }, 1);
+            this.$objectInformation.addEventListener('transitionend', (e) => {
+                // don't fire for child transitions
+                if (e.propertyName === 'bottom') {
+                    this.showHintOnFirstLoad();
+                    this.collapseElems[0].show();
+                }
+            });
         } else {
             this.$objectInformation.classList.remove('visible');
         }
