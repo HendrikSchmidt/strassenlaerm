@@ -88,7 +88,7 @@ class ObjectInformation extends HTMLElement {
                 // don't fire for child transitions
                 if (e.propertyName === 'bottom') {
                     this.showHintOnFirstLoad();
-                    this.collapseElems[0].show();
+                    this.collapseElems[0]?.show();
                 }
             });
         } else {
