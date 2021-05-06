@@ -37,7 +37,7 @@ let fullInfoShown = false;
 
 map.on('load', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
-    if(location.hash) {
+    if(location.hash !== '') {
         try {
             loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
         }
