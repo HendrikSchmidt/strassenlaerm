@@ -213,6 +213,9 @@ function getBoundingBox(geoms) {
         case 'MultiLineString':
             points = geoms.flatMap(geom => geom.coordinates.flat());
             break;
+        case 'Polygon':
+            points = geoms.flatMap(geom => geom.coordinates.flat());
+            break;
         default:
             console.error('Can\'t read geometry of object.')
     }
