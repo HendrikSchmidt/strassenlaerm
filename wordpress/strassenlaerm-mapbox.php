@@ -52,8 +52,12 @@ function add_polylang_strings() {
         pll_register_string( 'more', 'Mehr', $group );
         pll_register_string( 'close', 'Schließen', $group );
         pll_register_string( 'toSite', 'Seite öffnen', $group );
+        pll_register_string( 'toMap', 'Zur Karte', $group );
+        pll_register_string( 'toDirectory', 'Zum Verzeichnis', $group );
+        pll_register_string( 'shareObject', 'Beitrag teilen', $group );
         pll_register_string( 'currentSituation', 'Stand der Umbenennung', $group );
         pll_register_string( 'recommendation', 'Unsere Empfehlung', $group );
+        pll_register_string( 'literature', 'Literatur', $group );
         pll_register_string( 'notFound', 'Objekt nicht gefunden', $group );
     } else {
         echo "pll_register_string is not available.<br />\n";
