@@ -12,7 +12,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 #map .mapboxgl-ctrl-bottom-right { right: 40px; }
 
 #map .sign {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'static', 'Josefin Sans', sans-serif;
     background-color: #EFEFEF;
 }
 
@@ -49,7 +49,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 .sign a { color: #5e62d0 }
 
 .sign h2 {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'static', 'Josefin Sans', sans-serif;
     font-weight: normal;
     font-size: 1.5rem;
     line-height: 1;
@@ -67,7 +67,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 .sign .desc span,
 .accordion-body p,
 .accordion-body span {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'static', 'Josefin Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.15;
     font-weight: 300 !important;
@@ -333,7 +333,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 }
 
 #object-information .accordion-body {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'static', 'Josefin Sans', sans-serif;
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.15;
