@@ -58,6 +58,7 @@ function add_polylang_strings() {
         pll_register_string( 'currentSituation', 'Stand der Umbenennung', $group );
         pll_register_string( 'recommendation', 'Unsere Empfehlung', $group );
         pll_register_string( 'literature', 'Literatur', $group );
+        pll_register_string( 'author', 'Autor:in', $group );
         pll_register_string( 'notFound', 'Objekt nicht gefunden', $group );
     } else {
         echo "pll_register_string is not available.<br />\n";
