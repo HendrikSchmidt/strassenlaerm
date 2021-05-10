@@ -130,7 +130,7 @@ try:
             'type': 'Feature',
             'id': str(obj['id']),
             'properties': {
-                'wp_id': obj['id'],
+                'wp_id': int(obj['id']),
                 'name': obj['name'],
                 'type': 'square' if first_match['properties']['strassen_2'] == 'PLAT' else 'street',
                 'quarter': obj['quarter'],
