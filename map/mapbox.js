@@ -169,7 +169,7 @@ function removeHighlight(feature, old = false) {
 }
 
 function loadInformation(wpId) {
-    const selectedFeatures = features.filter(f => f.properties.wp_id === wpId);
+    const selectedFeatures = features.filter(f => f.properties.wp_id === parseInt(wpId));
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
