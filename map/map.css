@@ -88,8 +88,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     line-height: 0.8;
     position: absolute;
     bottom: -.5rem;
-    left: calc(50% - 1rem);
-    width: 2rem;
+    left: calc(50% - 1.1rem);
+    width: 2.2rem;
     z-index: -1;
     padding-top: .4rem;
     border: 2px solid #444;
