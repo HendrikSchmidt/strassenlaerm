@@ -5,7 +5,7 @@ let lastPosition = { center, zoom };
 const pad = 50;
 
 const header = document.getElementById('header');
-const headerHeight = header?.offsetHeight ?? 0;
+const headerHeight = header?.getBoundingClientRect().bottom ?? 0;
 document.getElementById('map').style.height = `${window.innerHeight - headerHeight}px`;
 
 const map = new mapboxgl.Map({
