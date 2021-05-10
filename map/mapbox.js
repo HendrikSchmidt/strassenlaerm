@@ -39,7 +39,7 @@ map.on('load', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash !== '') {
         try {
-            loadInformation(parseInt(location.hash.split('-')[0].substr(1)));
+            loadInformation(location.hash.split('-')[0].substr(1));
         }
         catch (error) {
             // remove hash and show toast to notify failure
@@ -169,7 +169,7 @@ function removeHighlight(feature, old = false) {
 }
 
 function loadInformation(wpId) {
-    const selectedFeatures = features.filter(f => f.properties.wp_id === parseInt(wpId));
+    const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
