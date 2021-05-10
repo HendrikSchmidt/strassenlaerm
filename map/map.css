@@ -88,8 +88,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     line-height: 0.8;
     position: absolute;
     bottom: -.5rem;
-    left: calc(50% - 1.1rem);
-    width: 2.2rem;
+    left: calc(50% - 1rem);
+    width: 2rem;
     z-index: -1;
     padding-top: .4rem;
     border: 2px solid #444;
@@ -100,8 +100,8 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 .street.expanded .more {
     line-height: 1;
     bottom: -1.6rem;
-    left: calc(50% - 2.5rem);
-    width: 5rem;
+    left: calc(50% - 2.8rem);
+    width: 5.6rem;
 }
 
 .expanded .more { font-size: 1rem; }
