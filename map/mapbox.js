@@ -3,6 +3,11 @@ const center = [13.381, 52.522];
 const zoom = 10;
 let lastPosition = { center, zoom };
 const pad = 50;
+
+const header = document.getElementById('header_main');
+const headerHeight = header ? header.style.height : 0;
+document.getElementById('map').style.height = `${window.innerHeight - headerHeight}px`;
+
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/strassenlaerm/ckk4e90yl5bid17nyu9uangjg', // stylesheet location
