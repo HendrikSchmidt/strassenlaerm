@@ -1,6 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
 const center = [13.381, 52.522];
 const zoom = 10;
+const bounds = [[13.075, 52.35], [13.775, 52.675]];
 let lastPosition = { center, zoom };
 const pad = 50;
 
@@ -18,6 +19,7 @@ const map = new mapboxgl.Map({
     attributionControl: false,
     center, // starting position [lng, lat]
     zoom, // starting zoom
+    bounds,
 })
     .addControl(new mapboxgl.FullscreenControl(), 'top-left')
     .addControl(new mapboxgl.NavigationControl(), 'top-left')
@@ -44,8 +46,19 @@ let selectedFeature = null;
 let oldSelection = null;
 let fullInfoShown = false;
 
-map.on('load', () => {
+map.on('moveend', () => {
     features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
+});
+
+map.on('load', () => {
+    // features = layerMap.flatMap(layer =>
+    //     map.querySourceFeatures('composite', {sourceLayer: layer.sourceLayer}).map(
+    //         feature => ({
+    //             ...feature,
+    //             sourceLayer: layer.sourceLayer,
+    //         })
+    //     ),
+    // );
     if(location.hash !== '') {
         try {
             loadInformation(location.hash.split('-')[0].substr(1));
@@ -178,7 +191,6 @@ function removeHighlight(feature, old = false) {
 }
 
 function loadInformation(wpId) {
-    // console.log('wpId', parseInt(wpId))
     const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
     console.log(features.length);
     console.log(features);
@@ -197,7 +209,7 @@ function loadInformation(wpId) {
 
     const props = mapObjects[wpId];
     document.title = `${htmlDecode(props.name)} (${htmlDecode(props.quarter)}) | ${originalTitle}`;
-    const sourceLayer = selectedFeatures[0]['layer']['source-layer'];
+    const sourceLayer = selectedFeatures[0]['sourceLayer'];
     selectedFeature = { id: selectedFeatures[0].id, sourceLayer};
     highlightStreet(selectedFeature);
     fullInfoShown = true;
