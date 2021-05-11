@@ -202,8 +202,10 @@ function loadInformation(wpId) {
     console.log(selectedFeatures[0].geometry);
     const geometries = selectedFeatures.map(f => f.geometry);
     console.log(geometries);
+    const bbox = getBoundingBox(geometries);
+    console.log(bbox);
     map.fitBounds(
-        getBoundingBox(geometries),
+        bbox,
         {
             maxZoom: 16,
             padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
@@ -263,7 +265,7 @@ function getBoundingBox(geoms) {
         yMax = yMax > latitude ? yMax : latitude;
     });
     console.log([[xMin, yMin], [xMax, yMax]]);
-    return [[xMin, yMin], [xMax, yMax]];
+    return new mapboxgl.LngLatBounds([[xMin, yMin], [xMax, yMax]]);
 }
 
 function htmlDecode(input) {
