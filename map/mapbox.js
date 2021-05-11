@@ -195,9 +195,7 @@ function loadInformation(wpId) {
     const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
     const geometries = selectedFeatures.map(f => f.geometry);
     const bbox = getBoundingBox(geometries);
-    // console.log(bbox.toArray()[0], bbox.toArray()[1])
     try {
-        x()
         map.fitBounds(
             bbox,
             {
