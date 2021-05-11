@@ -46,10 +46,6 @@ let selectedFeature = null;
 let oldSelection = null;
 let fullInfoShown = false;
 
-map.on('moveend', () => {
-    features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
-});
-
 map.on('load', () => {
     // features = layerMap.flatMap(layer =>
     //     map.querySourceFeatures('composite', {sourceLayer: layer.sourceLayer}).map(
@@ -59,6 +55,7 @@ map.on('load', () => {
     //         })
     //     ),
     // );
+    features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash !== '') {
         try {
             loadInformation(location.hash.split('-')[0].substr(1));
@@ -166,7 +163,11 @@ map.on('load', () => {
     })
 });
 
-map.on('zoomstart', function() {
+map.on('moveend', () => {
+    features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
+});
+
+map.on('zoomstart', () => {
     lastPosition = {
         center: map.getCenter(),
         zoom: map.getZoom(),
