@@ -370,4 +370,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     #object-information .accordion {
         width: calc(100vw - 45px);
     }
+
+    .desc {
+        max-height: 250px;
+        overflow: scroll;
+    }
 }
