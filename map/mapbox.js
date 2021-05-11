@@ -308,7 +308,6 @@ class ObjectInformation extends HTMLElement {
     }
 
     set object(value){
-        console.log(value);
         this._object = value;
         this.collapseElems.forEach(elem => elem.hide());
         const otherObjectDisplayed = this.$objectInformation.classList.contains('unfolded');
