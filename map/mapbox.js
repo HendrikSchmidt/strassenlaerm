@@ -193,24 +193,25 @@ function removeHighlight(feature, old = false) {
 
 function loadInformation(wpId) {
     const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
-    console.log(features.length);
     console.log(features);
     console.log(selectedFeatures);
-    console.log(Object.entries(mapObjects).length);
     console.log(mapObjects);
     console.log(mapObjects[wpId]);
     console.log(selectedFeatures[0].geometry);
     const geometries = selectedFeatures.map(f => f.geometry);
     console.log(geometries);
-    const bbox = getBoundingBox(geometries);
-    console.log(bbox);
-    map.fitBounds(
-        bbox,
-        {
-            maxZoom: 16,
-            padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
-        },
-    );
+    console.log(getBoundingBox(geometries));
+    try {
+        map.fitBounds(
+            getBoundingBox(geometries),
+            {
+                maxZoom: 16,
+                padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
+            },
+        );
+    } catch (error) {
+        console.error(error);
+    }
 
     const props = mapObjects[wpId];
     document.title = `${htmlDecode(props.name)} (${htmlDecode(props.quarter)}) | ${originalTitle}`;
