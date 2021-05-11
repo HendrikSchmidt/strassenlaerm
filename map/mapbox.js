@@ -193,23 +193,24 @@ function removeHighlight(feature, old = false) {
 
 function loadInformation(wpId) {
     const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
-    console.log(features);
-    console.log(selectedFeatures);
-    console.log(mapObjects);
-    console.log(mapObjects[wpId]);
-    console.log(selectedFeatures[0].geometry);
     const geometries = selectedFeatures.map(f => f.geometry);
-    console.log(geometries);
-    console.log(getBoundingBox(geometries));
+    const bbox = getBoundingBox(geometries);
+    // console.log(bbox.toArray()[0], bbox.toArray()[1])
     try {
+        x()
         map.fitBounds(
-            getBoundingBox(geometries),
+            bbox,
             {
                 maxZoom: 16,
                 padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
             },
         );
     } catch (error) {
+        map.flyTo({
+            center: bbox.getCenter(),
+            zoom: 13.5,
+            padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad},
+        });
         console.error(error);
     }
 
@@ -265,7 +266,6 @@ function getBoundingBox(geoms) {
         yMin = yMin < latitude ? yMin : latitude;
         yMax = yMax > latitude ? yMax : latitude;
     });
-    console.log([[xMin, yMin], [xMax, yMax]]);
     return new mapboxgl.LngLatBounds([xMin, yMin], [xMax, yMax]);
 }
 
