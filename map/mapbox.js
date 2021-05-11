@@ -179,6 +179,11 @@ function removeHighlight(feature, old = false) {
 
 function loadInformation(wpId) {
     const selectedFeatures = features.filter(f => parseInt(f.properties.wp_id) === parseInt(wpId));
+    console.log(features.length);
+    console.log(selectedFeatures[0]);
+    console.log(mapObjects.length);
+    console.log(mapObjects);
+    console.log(mapObjects[wpId]);
     const geometries = selectedFeatures.map(f => f.geometry);
     map.fitBounds(
         getBoundingBox(geometries),
