@@ -4,9 +4,13 @@ const zoom = 10;
 let lastPosition = { center, zoom };
 const pad = 50;
 
-const header = document.getElementById('header');
-const headerHeight = header?.getBoundingClientRect().bottom ?? 0;
-document.getElementById('map').style.height = `${window.innerHeight - headerHeight}px`;
+const sizeMap = () => {
+    const header = document.getElementById('header');
+    const headerHeight = header?.getBoundingClientRect().bottom ?? 0;
+    document.getElementById('map').style.height = `${window.innerHeight - headerHeight}px`;
+}
+sizeMap();
+window.onresize = sizeMap;
 
 const map = new mapboxgl.Map({
     container: 'map',
