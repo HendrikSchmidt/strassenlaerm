@@ -262,6 +262,7 @@ function getBoundingBox(geoms) {
         yMin = yMin < latitude ? yMin : latitude;
         yMax = yMax > latitude ? yMax : latitude;
     });
+    console.log([[xMin, yMin], [xMax, yMax]]);
     return [[xMin, yMin], [xMax, yMax]];
 }
 
