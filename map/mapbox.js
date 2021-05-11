@@ -199,7 +199,9 @@ function loadInformation(wpId) {
     console.log(Object.entries(mapObjects).length);
     console.log(mapObjects);
     console.log(mapObjects[wpId]);
+    console.log(selectedFeatures[0].geometry);
     const geometries = selectedFeatures.map(f => f.geometry);
+    console.log(geometries);
     map.fitBounds(
         getBoundingBox(geometries),
         {
@@ -207,7 +209,6 @@ function loadInformation(wpId) {
             padding: {top: pad, bottom: pad, left: pad, right: window.innerWidth / 4 + 170 + pad}
         },
     );
-    console.log(selectedFeatures[0].geometry);
 
     const props = mapObjects[wpId];
     document.title = `${htmlDecode(props.name)} (${htmlDecode(props.quarter)}) | ${originalTitle}`;
