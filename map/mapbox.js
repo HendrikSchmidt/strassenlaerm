@@ -164,10 +164,10 @@ map.on('load', () => {
 });
 
 map.on('moveend', () => {
-    features = {
+    features = [
         ...features,
         ...map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) })
-    };
+    ];
 });
 
 map.on('zoomstart', () => {
