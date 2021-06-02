@@ -45,7 +45,7 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
 
 .sign a { color: #5e62d0 }
 
-.sign h2 {
+#top #wrap_all .sign h2 {
     font-family: 'static', 'Josefin Sans', sans-serif;
     font-weight: normal;
     font-size: 1.5rem;
