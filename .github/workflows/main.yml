@@ -29,4 +29,5 @@ jobs:
             git pull
             cp wordpress/strassenlaerm-mapbox.php ~/Karten/wp-content/plugins/strassenlaerm-mapbox/
             cp wordpress/map.php ~/Karten/wp-content/themes/enfold-child/
+            cp wordpress/mappost.php ~/Karten/wp-content/themes/enfold-child/
             
