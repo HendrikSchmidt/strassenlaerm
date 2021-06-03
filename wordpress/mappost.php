@@ -117,7 +117,7 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
         }px`;
 
         document.getElementById('tooltip-arrow').innerHTML = `
-        .tooltip .tooltiptext::after { left: calc(50% + ${tooltipMiddle - tooltiptextMiddle}px; }`;
+        .tooltip .tooltiptext::after { left: calc(50% + ${tooltipMiddle - tooltiptextMiddle}px); }`;
     }
     const positionTooltips = () => {
         for (const tooltip of tooltips) positionTooltip(tooltip);
