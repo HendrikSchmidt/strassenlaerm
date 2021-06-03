@@ -116,6 +116,7 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
                 main.offsetWidth - tooltiptext.offsetWidth)
         }px`;
 
+        console.log(tooltipMiddle, tooltiptextMiddle)
         document.getElementById('tooltip-arrow').innerHTML = `
         .tooltip .tooltiptext::after { left: calc(50% + ${tooltipMiddle - tooltiptextMiddle}px); }`;
     }
