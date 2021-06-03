@@ -112,7 +112,7 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
         }px`;
     }
     const positionTooltips = () => {
-        tooltips.foreach(tooltip => positionTooltip(tooltip))
+        for (const tooltip of tooltips) positionTooltip(tooltip);
     }
     positionTooltips();
     window.onresize = positionTooltips;
