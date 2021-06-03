@@ -8,7 +8,7 @@ b { font-weight: 700; }
 a.mapboxgl-ctrl-logo { max-width: initial; }
 #map .mapboxgl-ctrl-bottom-right { right: 40px; }
 
-#map a {
+#map a.contact {
     position: absolute;
     top: 0;
     right: 0;
