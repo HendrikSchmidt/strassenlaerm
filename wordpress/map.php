@@ -28,7 +28,7 @@ if ( $map_query -> have_posts() ) :
     endwhile;
 endif;
 
-echo '<div id="map"><a class="contact" target="_blank" href="mailto:info@strassenlaerm.berlin">';
+echo '<div id="map"><a class="contact" href="https://strassenlaerm.berlin/projekt/#kontakt">';
 if (function_exists('pll_e')) {
     pll_e('Schreibt uns');
 }
