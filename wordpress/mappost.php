@@ -100,7 +100,7 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
     </div><!-- close default .container_wrap element -->
 
 <script type="application/javascript">
-    const main = document.getElementsByClassName('main')[0];
+    const main = document.getElementsByTagName('main')[0];
     const tooltips = document.getElementsByClassName('tooltip');
     const positionTooltip = (tooltip) => {
         const tooltiptext = tooltip.getElementsByClassName('tooltiptext')[0];
