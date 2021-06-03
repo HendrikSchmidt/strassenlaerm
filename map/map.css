@@ -14,9 +14,9 @@ a.mapboxgl-ctrl-logo { max-width: initial; }
     right: 0;
     z-index: 9;
     padding: 5px;
-    color: #5e62d0
-    background-color: black;
-    opacity: 0.3;
+    color: #5e62d0;
+    background-color: #E6E7F9;
+    opacity: 0.5;
 }
 
 #map .sign {
