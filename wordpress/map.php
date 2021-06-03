@@ -28,7 +28,11 @@ if ( $map_query -> have_posts() ) :
     endwhile;
 endif;
 
-echo '<div id="map"><object-information></object-information></div>';
+echo '<div id="map"><a class="contact" href="mailto:info@strassenlaerm.berlin">';
+if (function_exists('pll_e')) {
+    pll_e('Schreibt uns');
+}
+echo '</a></div><object-information></object-information></div>';
 
 wp_enqueue_script( 'mapbox-gl.js', 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js' );
 wp_enqueue_style( 'mapbox-gl.css', 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' );
