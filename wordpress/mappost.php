@@ -99,17 +99,23 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
 
     </div><!-- close default .container_wrap element -->
 
+<style id="tooltip-arrow"></style>
+
 <script type="application/javascript">
     const main = document.getElementsByTagName('main')[0];
     const tooltips = document.getElementsByClassName('tooltip');
     const positionTooltip = (tooltip) => {
         const tooltiptext = tooltip.getElementsByClassName('tooltiptext')[0];
+        const tooltipMiddle = tooltip.offsetLeft + (tooltip.offsetWidth / 2);
         tooltiptext.style.top = `${tooltip.offsetTop + tooltip.offsetHeight}px`;
         tooltiptext.style.left = `${
             Math.min(
-                Math.max(0, tooltip.offsetLeft + (tooltip.offsetWidth / 2) - (tooltiptext.offsetWidth / 2)),
+                Math.max(0, tooltipMiddle - (tooltiptext.offsetWidth / 2)),
                 main.offsetWidth - tooltiptext.offsetWidth)
         }px`;
+
+        document.getElementById('tooltip-arrow').innerHTML = `
+        .tooltip .tooltiptext::after { left: ${tooltipMiddle}px; }`;
     }
     const positionTooltips = () => {
         for (const tooltip of tooltips) positionTooltip(tooltip);
