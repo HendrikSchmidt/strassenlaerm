@@ -98,4 +98,23 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
 
     </div><!-- close default .container_wrap element -->
 
+<script type="application/javascript">
+    const main = document.getElementsByClassName('main')[0];
+    const tooltips = document.getElementsByClassName('tooltip');
+    const positionTooltip = (tooltip) => {
+        const tooltiptext = tooltip.getElementsByClassName('tooltiptext');
+        tooltiptext.style.top = `${tooltip.offsetTop + tooltip.offsetHeight}px`;
+        tooltiptext.style.left = `${
+            Math.min(
+                Math.max(0, tooltip.offsetLeft + (tooltip.offsetWidth / 2) - (tooltiptext.offsetWidth / 2)),
+                main.offsetWidth - tooltiptext.offsetWidth)
+        }px`;
+    }
+    const positionTooltips = () => {
+        tooltips.foreach(tooltip => positionTooltip(tooltip))
+    }
+    positionTooltips();
+    window.onresize = positionTooltips;
+</script>
+
 <?php get_footer(); ?>
