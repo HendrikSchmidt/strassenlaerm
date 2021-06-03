@@ -36,26 +36,26 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
                 <div>
 
                 <?php if( get_field('shortDesc') ): ?>
-                    <p><?php the_field('shortDesc'); ?><p>
+                    <p><?php do_shortcode(the_field('shortDesc')); ?><p>
                 <?php endif; ?>
 
                 <?php if( get_field('longDesc') ): ?>
-                    <?php the_field('longDesc'); ?>
+                    <?php do_shortcode(the_field('longDesc')); ?>
                 <?php endif; ?>
 
                 <?php if( get_field('currentSituation') ): ?>
                     <h2><?php if (function_exists('pll_e')) { pll_e( 'Stand der Umbenennung' ); } ?></h2>
-                    <p><?php the_field('currentSituation'); ?><p>
+                    <p><?php do_shortcode(the_field('currentSituation')); ?><p>
                 <?php endif; ?>
 
                 <?php if( get_field('recommendation') ): ?>
                     <h2><?php if (function_exists('pll_e')) { pll_e( 'Unsere Empfehlung' ); } ?></h2>
-                    <p><?php the_field('recommendation'); ?><p>
+                    <p><?php do_shortcode(the_field('recommendation')); ?><p>
                 <?php endif; ?>
 
                 <?php if( get_field('literature') ): ?>
                     <h2><?php if (function_exists('pll_e')) { pll_e( 'Literatur' ); } ?></h2>
-                    <p><?php the_field('literature'); ?><p>
+                    <p><?php do_shortcode(the_field('literature')); ?><p>
                 <?php endif; ?>
 
                 <?php
