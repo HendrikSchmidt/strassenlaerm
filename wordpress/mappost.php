@@ -21,9 +21,10 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
 
     <div class='container_wrap container_wrap_first main_color fullsize streetsign-header-container'>
         <div class="container">
-            <div class="streetsign-post"></div>
-            <h1 class="streetsign-header"><?php the_title();?></h1>
-            <h2 class="header-quarter"><?php the_field( "quarter" );?></h2>
+            <div class="streetsign-post">
+                <h1 class="streetsign-header"><?php the_title();?></h1>
+                <h2 class="header-quarter"><?php the_field( "quarter" );?></h2>
+            </div>
         </div>
     </div>
 
