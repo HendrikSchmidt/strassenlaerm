@@ -107,12 +107,13 @@ msg = ""
 if len(sys.argv) > 1:
     objects = json.loads(sys.argv[1])
 else:
-    with open('../../data/manual.json', 'r') as f:
+    with open('mapobjects.json', 'r') as f:
         objects = json.loads(f.read())
 
 
 try:
-    with open('../../data/Strassenabschnitte.geojson') as f:
+    # needs to be available
+    with open('Strassenabschnitte.geojson') as f:
         berlin_data = json.loads(f.read())['features']
 
     for obj in objects:
