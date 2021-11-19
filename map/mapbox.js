@@ -1,6 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyYXNzZW5sYWVybSIsImEiOiJja2s0ZHl3YXgxMzFnMndvYmhiY2oyMm5uIn0.jnfXWu8Bb-wd2A9FMo1fEg';
-const center = [13.381, 52.522];
-const zoom = 10;
+const center = [13.35, 52.52];
+const zoom = 9;
 const bounds = [[13.075, 52.35], [13.775, 52.675]];
 let lastPosition = { center, zoom };
 const pad = 50;
@@ -19,7 +19,7 @@ const map = new mapboxgl.Map({
     attributionControl: false,
     center, // starting position [lng, lat]
     zoom, // starting zoom
-    bounds,
+    // bounds,
 })
     .addControl(new mapboxgl.FullscreenControl(), 'top-left')
     .addControl(new mapboxgl.NavigationControl(), 'top-left')
@@ -47,6 +47,7 @@ let oldSelection = null;
 let fullInfoShown = false;
 
 map.on('load', () => {
+    map.fitBounds(bounds);
     features = layerMap.flatMap(layer =>
         map.querySourceFeatures('composite', {sourceLayer: layer.sourceLayer}).map(
             feature => ({
@@ -164,12 +165,13 @@ map.on('load', () => {
     })
 });
 
-map.on('moveend', () => {
-    features = [
-        ...features,
-        ...map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) })
-    ];
-});
+// only needed if features generated with map.queryRenderedFeatures()
+// map.on('moveend', () => {
+//     features = [
+//         ...features,
+//         ...map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) })
+//     ];
+// });
 
 map.on('zoomstart', () => {
     lastPosition = {
