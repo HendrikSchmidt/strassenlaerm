@@ -1,11 +1,11 @@
 <?php
 /**
- * Child theme stylesheet einbinden in Abhängigkeit vom Original-Stylesheet
- */
+* Child theme stylesheet einbinden in Abhängigkeit vom Original-Stylesheet
+*/
 
 function child_theme_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'child-theme-css', get_stylesheet_directory_uri() .'/style.css' , array('parent-style'));
+	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+	wp_enqueue_style( 'child-theme-css', get_stylesheet_directory_uri() .'/style.css' , array('parent-style'));
 }
 add_action( 'wp_enqueue_scripts', 'child_theme_styles' );
 
@@ -99,7 +99,7 @@ if(!function_exists('avia_custom_query_extension'))
 add_action('avia_builder_mode', "builder_set_debug");
 function builder_set_debug()
 {
-    return "debug";
+  return "debug";
 }
 
 // [tooltip id="2"] Text [/tooltip]
@@ -124,30 +124,32 @@ function tooltip__shortcode( $atts, $content = null ) {
     if ( ! $post ) {
         return '';
     }
-
-    $description = $id === get_the_ID() || $id === get_queried_object_id()
-        ? '' // no recursive loops!
-        : $post->post_content;
+	
+	$description = $id === get_the_ID() || $id === get_queried_object_id()
+                ? '' // no recursive loops!
+				: $post->post_content;
 //                 : apply_filters( 'the_content', $post->post_content );
-    $glossary_link = get_permalink(pll_get_post(2445)) . '#' . $id;
-    return '<a href="' . $glossary_link . '" class="tooltip">' . $content . '<span class="tooltiptext"><span class="tooltipheader">' . $post->post_title . '</span>' . $description . '</span></a>';
+	$glossary_link = get_permalink(pll_get_post(2445)) . '#' . $id;
+	return '<a href="' . $glossary_link . '" class="tooltip">' . $content . '<span class="tooltiptext"><span class="tooltipheader">' . $post->post_title . '</span>' . $description . '</span></a>';
 }
 
 add_shortcode( 'tooltip', 'tooltip__shortcode' );
 
 function add_tooltip_shortcodes( $text ) {
-    $args = array('category' => pll_get_term(246));
-    $glossary = get_posts($args);
-    $pattern_array = [];
-    $replacement_array = [];
-    foreach ($glossary as $term)  {
-        $termID = $term->ID;
-        $words_to_replace = explode(',', get_field('words', $termID));
-        $pattern_array = array_merge($pattern_array, array_map(fn($word) => '/(^|\s)(' . trim($word) . ')([.]|\s)/i', $words_to_replace));
-        $replacement_array = array_merge($replacement_array, array_map(fn() => '$1[tooltip id="' . $termID . '"]$2[/tooltip]$3', $words_to_replace));
-    };
-    $text_with_shortcodes = preg_replace($pattern_array, $replacement_array, $text);
-    return do_shortcode($text_with_shortcodes);
+	$args = array(
+    'posts_per_page' => -1,
+    'cat' => pll_get_term(246),
+    'post_type' => 'post'
+	);
+	// $glossary_query = new WP_Query( $args );
+	// if ( $glossary_query -> have_posts() ) {
+	// 	while ( $glossary_query ->have_posts() ) {
+ 	//		echo the_title();
+	// 	}
+	// }
+	// wp_reset_postdata();
+	$text_with_shortcodes = do_shortcode($text);
+    return $text_with_shortcodes;
 }
 add_filter( 'tooltip_shortcodes_filter', 'add_tooltip_shortcodes' );
 ?>
