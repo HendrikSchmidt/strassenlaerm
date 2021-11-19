@@ -47,15 +47,16 @@ let oldSelection = null;
 let fullInfoShown = false;
 
 map.on('load', () => {
-    // features = layerMap.flatMap(layer =>
-    //     map.querySourceFeatures('composite', {sourceLayer: layer.sourceLayer}).map(
-    //         feature => ({
-    //             ...feature,
-    //             sourceLayer: layer.sourceLayer,
-    //         })
-    //     ),
-    // );
-    features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
+    features = layerMap.flatMap(layer =>
+        map.querySourceFeatures('composite', {sourceLayer: layer.sourceLayer}).map(
+            feature => ({
+                ...feature,
+                geometry: feature.geometry,
+                sourceLayer: layer.sourceLayer,
+            })
+        ),
+    );
+    // features = map.queryRenderedFeatures({ layers: layerMap.map(l => l.sourceLayer) });
     if(location.hash !== '') {
         try {
             loadInformation(location.hash.split('-')[0].substr(1));
