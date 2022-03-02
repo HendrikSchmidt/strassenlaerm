@@ -109,14 +109,10 @@ if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title();
 
         tooltiptext.style.top = `${tooltip.offsetTop + tooltip.offsetHeight}px`;
         tooltiptext.style.left = `${
-            Math.min(
+            tooltipMiddle - Math.min(
                 Math.max(0, tooltipMiddle - (tooltiptext.offsetWidth / 2)),
                 main.offsetWidth - tooltiptext.offsetWidth)
         }px`;
-
-        const tooltiptextMiddle = tooltiptext.offsetLeft + (tooltiptext.offsetWidth / 2);
-        document.getElementById('tooltip-arrow').innerHTML = `
-        .tooltip .tooltiptext::after { left: calc(50% + ${tooltipMiddle - tooltiptextMiddle}px); }`;
     }
     const positionTooltips = () => {
         for (const tooltip of tooltips) positionTooltip(tooltip);
