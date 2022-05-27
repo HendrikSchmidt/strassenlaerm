@@ -33,9 +33,14 @@ function child_theme_styles() {
 
 ## Upload of map objects to Mapbox
 
+### prerequisites 
+- `pip3 install -r requirements.txt`
+- make sure you have the .env-files with the necessary keys
+
 ### Option 1: With existing geodata (strassen, plaetze)
 1. Make sure the [Strassenabschnitte.geojson](https://daten.odis-berlin.de/de/dataset/detailnetz_strassenabschnitte/) from ODIS Berlin are in `data-upload/`
 2. Add map object with Wordpress `id`, object `name` (that is also in `Strassenabschnitte.geojson` as `strassenna`) and `quarter` (`stadtteil`) to `data-upload/mapobjects.json`
+	- make sure to commit the changes to GIT
 3. `cd data-upload/`
 4. `python3 upload_data_to_datasets.py`
 5. `python3 update_tilesets.py replace_source <strassen|plaetze>` (choose one or run sequentially)
@@ -48,9 +53,8 @@ function child_theme_styles() {
     3. Add property `wp_id` to object and fill in the Worpress id
     4. Save
 2. `cd data-upload/`
-3. `python3 upload_data_to_datasets.py`
-4. `python3 update_tilesets.py replace_source <viertel|gebaeude|denkmaeler>` (choose one or run sequentially)
-5. `python3 update_tilesets.py publish_tileset strassenlaerm`
+3. `python3 update_tilesets.py replace_source <viertel|gebaeude|denkmaeler>` (choose one or run sequentially)
+4. `python3 update_tilesets.py publish_tileset strassenlaerm`
 
 ## Dataflow
 For the moment, [mapbox.js](https://github.com/HendrikSchmidt/strassenlaerm/blob/master/map/mapbox.js) depends on the data being loaded into `mapObjects` by [map.php](https://github.com/HendrikSchmidt/strassenlaerm/blob/master/wordpress/map.php), which gets the data from `The Loop`.
