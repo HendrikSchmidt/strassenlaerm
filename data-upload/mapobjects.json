@@ -27,15 +27,14 @@
   { "id": "1356", "name": "Bismarckstraße", "quarter": "Steglitz" },
   { "id": "1344", "name": "Bismarckstraße", "quarter": "Spandau" },
   { "id": "1336", "name": "Bismarckstraße", "quarter": "Zehlendorf" },
-  { "id": "555", "name": "Wissmannstraße", "quarter": "Grunewald" },
   { "id": "558", "name": "Werner-Voß-Damm", "quarter": "Tempelhof" },
   { "id": "546", "name": "Wintgensstraße", "quarter": "Tempelhof" },
   { "id": "545", "name": "Woermannkehre", "quarter": "Britz" },
   { "id": "532", "name": "Wolffring", "quarter": "Tempelhof" },
-  { "id": "520", "name": "Wissmannstraße", "quarter": "Neukölln" },
   { "id": "510", "name": "Nachtigalplatz", "quarter": "Wedding" },
   { "id": "504", "name": "Wüsthoffstraße", "quarter": "Tempelhof" },
   { "id": "340", "name": "Robert-Rössle-Straße", "quarter": "Buch" },
   { "id": "1774", "name": "Bismarckallee", "quarter": "Grunewald" },
-  { "id": "2730", "name": "Nettelbeckplatz", "quarter": "Wedding" }
+  { "id": "2730", "name": "Nettelbeckplatz", "quarter": "Wedding" },
+  { "id": "2936", "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf" }
 ]
