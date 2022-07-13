@@ -36,7 +36,6 @@
   { "id": "340", "name": "Robert-Rössle-Straße", "quarter": "Buch" },
   { "id": "1774", "name": "Bismarckallee", "quarter": "Grunewald" },
   { "id": "2730", "name": "Nettelbeckplatz", "quarter": "Wedding" },
-<<<<<<< HEAD
   { "id": "2936", "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf" },
   { "id": "3037", "name": "Arndtstraße", "quarter": "Kreuzberg" },
   { "id": "3033", "name": "Cecilienstraße", "quarter": "Kaulsdorf" },
@@ -102,7 +101,3 @@
 { "id": "3027", "name": "Eitelstraße", "quarter": "Rummelsburg" },
 { "id": "3029", "name": "Eitelstraße", "quarter": "Biesdorf" },
 ]
-=======
-  { "id": "2936", "name": "Onkel-Tom-Straße", "quarter": "Zehlendorf" }
-]
->>>>>>> 9a5f9c782f703e3bc35413f47f59ebc458a282e7
