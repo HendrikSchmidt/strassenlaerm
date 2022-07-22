@@ -23,38 +23,40 @@ def generate_geometry(street_square, parts, msg):
             part_to_reverse['properties']['beginnt_be'], part_to_reverse['properties']['endet_bei_']
         part_to_reverse['geometry']['coordinates'][0].reverse()
 
+    def build_line_from_multi_line(parts):
+        initial = parts.pop(0)
+        parts_sorted = [initial]
+        parts_unconnected = []
+        # because objects can be built like trees or forks,
+        # start with an initial object and build the longest possible line
+        # by checking if the lines can be concatenated
+        while part := parts.pop(0) if parts else False:
+            if part['properties']['beginnt_be'] == parts_sorted[-1]['properties']['endet_bei_']:
+                parts_sorted += [part]
+            elif part['properties']['endet_bei_'] == parts_sorted[0]['properties']['beginnt_be']:
+                parts_sorted = [part] + parts_sorted
+            elif part['properties']['endet_bei_'] == parts_sorted[-1]['properties']['endet_bei_']:
+                reverse_part(part)
+                parts_sorted += [part]
+            elif part['properties']['beginnt_be'] == parts_sorted[0]['properties']['beginnt_be']:
+                reverse_part(part)
+                parts_sorted = [part] + parts_sorted
+            else:
+                # if a part doesnt fit onto the beginning or end immediately, it could still fit later
+                parts_unconnected += [part]
+                # skip re-adding of unconnected parts because no change was achieved
+                continue
+            # so we throw all the parts back into the mix after every change
+            parts += parts_unconnected
+            parts_unconnected = []
+        
+        return parts_sorted, parts_unconnected
+
     if street_square['properties']['type'] == 'street':
-        # print(street_square['properties']['name'])
         parts_multi = []
         # go through all parts belonging to an object to simplify geometry
-        # for p in parts:
-        #     print(p['properties']['beginnt_be'] + '  ->  ' + p['properties']['endet_bei_'] + ': ' + str(p['geometry']['coordinates']))
         while parts:
-            initial = parts.pop(0)
-            parts_sorted = [initial]
-            parts_unconnected = []
-            # because objects can be built like trees or forks,
-            # start with an initial object and build the longest possible line
-            # by checking if the lines can be concatenated
-            while part := parts.pop(0) if parts else False:
-                if part['properties']['beginnt_be'] == parts_sorted[-1]['properties']['endet_bei_']:
-                    parts_sorted += [part]
-                elif part['properties']['endet_bei_'] == parts_sorted[0]['properties']['beginnt_be']:
-                    parts_sorted = [part] + parts_sorted
-                elif part['properties']['endet_bei_'] == parts_sorted[-1]['properties']['endet_bei_']:
-                    reverse_part(part)
-                    parts_sorted += [part]
-                elif part['properties']['beginnt_be'] == parts_sorted[0]['properties']['beginnt_be']:
-                    reverse_part(part)
-                    parts_sorted = [part] + parts_sorted
-                else:
-                    # if a part doesnt fit onto the beginning or end immediately, it could still fit later
-                    parts_unconnected += [part]
-                    # skip re-adding of unconnected parts because no change was achieved
-                    continue
-                # so we throw all the parts back into the mix after every change
-                parts += parts_unconnected
-                parts_unconnected = []
+            parts_sorted, parts_unconnected = build_line_from_multi_line(parts)
 
             for i in range(len(parts_sorted) - 1):
                 if not parts_sorted[i]['properties']['endet_bei_'] == parts_sorted[i+1]['properties']['beginnt_be']:
@@ -83,21 +85,17 @@ def generate_geometry(street_square, parts, msg):
             coordinates[0] += [coordinates[0][0]]
         else:
             # multiple matches found, we need to piece together the different multilinestrings
-            initial = parts.pop(0)
-            parts_sorted = [initial]
-            while part := parts.pop(0) if parts else False:
-                if part['properties']['beginnt_be'] == parts_sorted[-1]['properties']['endet_bei_']:
-                    parts_sorted += [part]
-                elif part['properties']['endet_bei_'] == parts_sorted[0]['properties']['beginnt_be']:
-                    parts_sorted = [part] + parts_sorted
-                else:
-                    parts += [part]
+            parts_sorted = build_line_from_multi_line(parts)[0]
 
             for i, part in enumerate(parts_sorted):
                 if i == 0:
                     coordinates = part['geometry']['coordinates']
                 else:
                     coordinates[0] += part['geometry']['coordinates'][0][1:]
+            
+            if coordinates[0][0] != coordinates[0][-1]:
+                # close the polygon if the data doesn't represent a polygon already
+                coordinates[0] += [coordinates[0][0]]
 
         return {'type': 'Polygon', 'coordinates': coordinates}
 
